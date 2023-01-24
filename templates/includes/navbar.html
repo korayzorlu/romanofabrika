@@ -1,0 +1,32 @@
+{% include "./modal.html" %}
+
+<nav class="navbarv2">
+    <div class="menu">
+        <input type="checkbox" id="check">
+        <div class="logo">
+            <a href="{% url 'index' %}">
+                <img src="/static/images/logo/sg-logo-2-white.png" alt="Site Logo" style="height: 35px;">
+            </a>
+        </div>
+        <ul>
+            <label class="buttonMainMobileMenu cancel" for="check">
+                <i class='bx bx-x' ></i>
+            </label>
+            <li>
+                <a href="/">Seçim 2023</a>
+            </li>
+            <li>
+                <a href="/#overview">Geçmiş Seçimler</a>
+            </li>
+            <li>
+                <a href="/about">Anketler</a>
+            </li>
+            <li>
+                <a href="/contact">Haberler</a>
+            </li>  
+        </ul>
+        <label class="buttonMainMobileMenu bars" for="check">
+            <i class='bx bx-menu'></i>
+        </label>
+    </div>
+</nav>
