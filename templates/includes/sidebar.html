@@ -1,0 +1,124 @@
+{% if request.path == "/user/dashboard/" %}
+    <style>.sidebarv2 ul li a.dashboard{color: #11101d;background: #ff6961;}</style>
+{% elif request.path == "/user/products/" or request.path == "/user/addproduct/" %}
+    <style>.sidebarv2 ul li a.products{color: #11101d;background: #ff6961;}</style>
+{% elif request.path == "/user/categories/" %}
+    <style>.sidebarv2 ul li a.categories{color: #11101d;background: #ff6961;}</style>
+{% elif request.path == "/user/settings/" or request.path == "/user/settings/account/" or request.path == "/user/settings/marketplace/" or request.path == "/user/settings/shop/" %}
+    <style>.sidebarv2 ul li a.settings{color: #11101d;background: #ff6961;}</style>
+{% endif %}
+<div class="sidebarContainer">
+    <div class="sidebarv2">
+        <div class="logo_content">
+            <div class="logo">
+                <!-- <i class='bx bxl-c-plus-plus'></i> -->
+                <i class='icon'></i>
+                <!-- <div class="logo_name">
+                    Maxima
+                </div> -->
+            </div>
+            <i class='bx bx-menu' id="btnmenu"></i>
+        </div>
+        <ul class="nav_list" style="list-style-type: none; padding-left: 0px;">
+            <!-- <li>
+                <i class='bx bx-search' ></i>
+                <input type="text" placeholder="Ara">
+                <span class="tooltipv2">Ara</span>
+            </li> -->
+            <li>
+                <a href="/user/dashboard" class="dashboard">
+                    <i class='bx bxs-grid' ></i>
+                    <span class="links_name">Kontrol Paneli</span>
+                </a>
+                <span class="tooltipv2">Kontrol Paneli</span>
+            </li>
+            <li>
+                <a href="/user/products" class="products">
+                    <i class='bx bx-purchase-tag' ></i>
+                    <span class="links_name">Ürünler</span>
+                </a>
+                <span class="tooltipv2">Ürünler</span>
+            </li>
+            <li>
+                <a href="/user/categories" class="categories">
+                    <i class='bx bx-category' ></i>
+                    <span class="links_name">Kategoriler</span>
+                </a>
+                <span class="tooltipv2">Kategoriler</span>
+            </li>
+            <li>
+                <a href="">
+                    <i class='bx bx-cart-alt' ></i>
+                    <span class="links_name">Siparişler</span>
+                </a>
+                <span class="tooltipv2">Siparişler</span>
+            </li>
+            <li>
+                <a href="">
+                    <div class="plus" style="position: absolute; margin-top: -25px;">
+                        <i class='fas fa-crown' style="font-size: 12px; color: #Fae29c;"></i>
+                    </div>
+                    <i class='bx bx-pie-chart-alt-2' ></i>
+                    <span class="links_name">Raporlar</span>
+                </a>
+                <span class="tooltipv2">Raporlar</span>
+            </li>
+            <li>
+                <a href="">
+                    <i class='bx bx-money' ></i>
+                    <span class="links_name">Finans</span>
+                </a>
+                <span class="tooltipv2">Finans</span>
+            </li>
+            <li>
+                <a href="">
+                    <i class='bx bx-chat' ></i>
+                    <span class="links_name">Mesajlar</span>
+                </a>
+                <span class="tooltipv2">Mesajlar</span>
+            </li>
+            <li>
+                <a href="">
+                    <i class='bx bx-barcode' ></i>
+                    <span class="links_name">Pos</span>
+                </a>
+                <span class="tooltipv2">Pos</span>
+            </li>
+            <li>
+                <a href="/user/settings" class="settings">
+                    <i class='bx bx-cog' ></i>
+                    <span class="links_name">Ayarlar</span>
+                </a>
+                <span class="tooltipv2">Ayarlar</span>
+            </li>
+        </ul>
+        <div class="profile_content">
+            <div class="profile">
+                <div class="profile_details">
+                    {% if request.user.employee.image %}
+                    <img src="{{request.user.employee.image.url}}" alt="">
+                    {% else %}
+                    <img src="/static/images/user.png" alt="">
+                    {% endif %}
+                    <div class="name_job">
+                        <div class="name">{{request.user}}</div>
+                        <div class="job">
+                            {% if request.user.username == "korayzorlu" %}
+                            Admin
+                            {% else %}
+                            {{ request.user.employee.membership }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <a title="Çıkış Yap" data-toggle="modal" data-target="#logoutModalCenter">
+                    <i class='bx bx-log-out' id="log_out"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    
+</script>
