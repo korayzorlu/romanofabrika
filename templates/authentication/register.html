@@ -1,0 +1,70 @@
+{% extends 'layout/homeLayout.html' %}
+
+{% block title %}
+<title>Kayıt Ol - Maxima</title>
+{% endblock title %}
+
+
+{% block body %}
+{% load crispy_forms_tags %}
+
+<div class="register-content">
+    <div class="login-container">
+        <input type="checkbox" id="flip">
+        <div class="cover">
+            <div class="front">
+                <img src="/static/images/uploads/login-image2.jpg" alt="">
+                <div class="text">
+                    <span class="text-1">Bir adımla binlerce siparişi <br> kontrol et</span>
+                    <span class="text-2">Hadi başlayalım</span>
+                </div>
+            </div>
+            <!-- <div class="back">
+                <img class="backImg" src="/static/images/img05.jpg" alt="">
+                <div class="text">
+                    <span class="text-1">Complete miles of journey <br> with one step</span>
+                    <span class="text-2">Let's get started</span>
+                </div>
+            </div> -->
+        </div>
+        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+            <div class="form-content">
+                <!-- Login -->
+                <div class="login-form"></div>
+                <!-- Register -->
+                <div class="signup-form">
+                    <div class="title">Kayıt</div>
+                    <div class="input-boxes">
+                        <div class="input-box">
+                            <i class="fas fa-user icon"></i>
+                            <!-- <input type="text" name="usernameRegister" placeholder="Kullanıcı Adı"> -->
+                            {{ form.username }}
+                        </div>
+                        <div class="input-box">
+                            <i class="fas fa-envelope icon"></i>
+                            <!-- <input type="text" name="emailRegister" placeholder="E-Posta"> -->
+                            {{ form.email }}
+                        </div>
+                        <div class="input-box">
+                            <i class="fas fa-lock icon"></i>
+                            <!-- <input type="text" name="passwordRegister" placeholder="Parola"> -->
+                            {{ form.password }}
+                        </div>
+                        <div class="input-box">
+                            <i class="fas fa-lock icon"></i>
+                            <!-- <input type="text" name="comfirm" placeholder="Parola Onayla"> -->
+                            {{ form.confirm }}
+                        </div>
+                        <div class="button input-box">
+                            <input type="submit" name="submit" value="Kaydol">
+                        </div>
+                        <div class="text signup-text">Hesabın var mı? <!--<label for="flip">Giriş Yap</label>--><a class="alink" href="/user/login">Giriş Yap</a></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock body %}

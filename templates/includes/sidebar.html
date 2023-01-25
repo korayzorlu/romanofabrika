@@ -80,9 +80,9 @@
             <li>
                 <a href="">
                     <i class='bx bx-barcode' ></i>
-                    <span class="links_name">Pos</span>
+                    <span class="links_name">Ustalar</span>
                 </a>
-                <span class="tooltipv2">Pos</span>
+                <span class="tooltipv2">Ustalar</span>
             </li>
             <li>
                 <a href="/user/settings" class="settings">
@@ -98,7 +98,7 @@
                     {% if request.user.employee.image %}
                     <img src="{{request.user.employee.image.url}}" alt="">
                     {% else %}
-                    <img src="/static/images/user.png" alt="">
+                    <img src="/static/images/uploads/login-image1.jpg" alt="">
                     {% endif %}
                     <div class="name_job">
                         <div class="name">{{request.user}}</div>

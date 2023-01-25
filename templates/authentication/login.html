@@ -1,0 +1,63 @@
+{% extends 'layout/homeLayout.html' %}
+
+{% block title %}
+<title>Giriş Yap - Maxima</title>
+{% endblock title %}
+
+
+{% block body %}
+{% load crispy_forms_tags %}
+
+<div class="login-content">
+    <div class="login-container">
+        <input type="checkbox" id="flip">
+        <div class="cover">
+            <div class="front">
+                <img src="/static/images/uploads/login-image1.jpg" alt="">
+                <div class="text">
+                    <span class="text-1">Her yeni satış yeni bir <br> kilometre taşıdır</span>
+                    <span class="text-2">Hadi bağlanalım</span>
+                </div>
+            </div>
+            <div class="back">
+                <img class="backImg" src="/static/images/img05.jpg" alt="">
+                <div class="text">
+                    <span class="text-1">Complete miles of journey <br> with one step</span>
+                    <span class="text-2">Let's get started</span>
+                </div>
+            </div>
+        </div>
+        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+            <div class="form-content">
+                <!-- Login -->
+                <div class="login-form">
+                    <div class="title">Giriş</div>
+                    <div class="input-boxes">
+                        <div class="input-box">
+                            <i class="fas fa-user icon"></i>
+                            <!-- <input type="text" name="username" placeholder="Kullanıcı Adı"> -->
+                            {{ form.username }}
+                        </div>
+                        <div class="input-box">
+                            <i class="fas fa-lock icon"></i>
+                            <!-- <input type="password" name="password" placeholder="Parola"> -->
+                            {{ form.password }}
+                        </div>
+                        <div class="text">
+                            <a href="/user/password_reset">Şifreni mi unuttun?</a>
+                        </div>
+                        <div class="button input-box">
+                            <input type="submit" name="submit" value="Giriş">
+                        </div>
+                        <div class="text login-text">Hesabın yok mu? <!--<label for="flip">Kayıt Ol</label>--><a class="alink" href="/user/register">Kayıt Ol</a></div>
+                    </div>
+                </div>
+                <!-- Register -->
+                <div class="signup-form"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock body %}

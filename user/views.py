@@ -69,26 +69,19 @@ def register(request):
     form = RegisterForm(request.POST or None)
 
     if form.is_valid():
-        """
+        
         username = form.cleaned_data.get("username")
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
         newUser = User(username = username, email = email)
         newUser.set_password(password)
         newUser.save()
-        user_membership = UserMembership.objects.create(user = newUser, membership = demo_membership)
-        user_membership.save()
-        user_subscription = Subscription()
-        user_subscription.user_membership = user_membership
-        user_subscription.save()
         
         newemployee = Employee.objects.create(user = newUser)
         newemployee.save()
-        newUser.employee.membership = str(user_membership.membership.membership_type)
-        newUser.employee.save()
         login(request, newUser)
         messages.info(request, "Başarıyla kayıt oldunuz...")
-        """
+        
         return redirect("index")
 
     if request.user.is_authenticated:
