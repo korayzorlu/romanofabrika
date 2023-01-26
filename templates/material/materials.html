@@ -11,6 +11,7 @@
                 <th>Malzeme İsmi</th>
                 <th>Birim</th>
                 <th>Birim Fiyat</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,9 @@
                     <td>{{material.title}}</td>
                     <td>{{material.get_quantity_type_display}}</td>
                     <td>{{material.price}}</td>
+                    <td><a class="logoutButton" title="Çıkış Yap" data-bs-toggle="modal" data-bs-target="#materialDetailModalCenter">
+                        <i class='bx bx-log-out' id="log_out"></i>
+                    </a></td>
                 </tr>
             {% endfor %}
             
@@ -30,6 +34,7 @@
                 <th>Malzeme İsmi</th>
                 <th>Birim</th>
                 <th>Birim Fiyat</th>
+                <th></th>
             </tr>
         </tfoot>
     </table>
