@@ -131,10 +131,11 @@ footer .bottom-details .bottom-text a{margin-right: 10px;}
 .profile .profile_details .name_job{margin-left: 10px;}
 .profile .profile_details .name{font-size: 15px;font-weight: 400;}
 .profile .profile_details .job{font-size: 12px;}
-.profile #log_out{position: absolute;bottom: 5px;left: 50%;transform: translateX(-50%);min-width: 50px;line-height: 50px;font-size: 20px;border-radius: 12px;text-align: center;transition: all 0.4s ease;background: #1b1d31;}
+.profile #log_out{position: absolute;bottom: 5px;left: 50%;transform: translateX(-50%);min-width: 50px;line-height: 50px;font-size: 20px;border-radius: 12px;text-align: center;transition: all 0.4s ease;background: #1b1d31; color: #fff;}
 .sidebarv2.active .profile #log_out{left: 88%;background: none;}
 .sidebarContainer{width: 80px;transition: all 0.5s ease;position: relative;z-index: 1;}
 .sidebarContainer.active{width: 200px;transition: all 0.5s ease;}
+.sidebarv2 .logoutButton{cursor: pointer;}
 /***********************************************************************************************/
 
 
@@ -165,6 +166,8 @@ footer .bottom-details .bottom-text a{margin-right: 10px;}
 
 
 /***************************************************DASHBOARD********************************************************/
+.home-section .home-content .globalBoxes{display: flex;justify-content: space-between;padding: 0 20px;flex-wrap: wrap;}
+.home-section .home-content .globalBoxes .box{width: 100%;align-items: center;justify-content: center;padding: 15px;background: #fff;border-radius: 12px;box-shadow: 0 5px 10px rgba(0, 0, 0, .1);}
 .home-section .home-content .overview-boxes{display: flex;justify-content: space-between;padding: 0 20px;flex-wrap: wrap;}
 .home-section .home-content .overview-boxes .box{display: flex;width: calc(100% / 4 - 15px);align-items: center;justify-content: center;padding: 15px 0;background: #fff;border-radius: 12px;box-shadow: 0 5px 10px rgba(0, 0, 0, .1);}
 .home-section .home-content .overview-boxes .box .left-side{text-align: center;}

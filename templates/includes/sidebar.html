@@ -1,7 +1,9 @@
-{% if request.path == "/user/dashboard/" %}
+{% if request.path == "/dashboard/" %}
     <style>.sidebarv2 ul li a.dashboard{color: #11101d;background: #ff6961;}</style>
 {% elif request.path == "/user/products/" or request.path == "/user/addproduct/" %}
     <style>.sidebarv2 ul li a.products{color: #11101d;background: #ff6961;}</style>
+{% elif request.path == "/materials/" %}
+    <style>.sidebarv2 ul li a.materials{color: #11101d;background: #ff6961;}</style>
 {% elif request.path == "/user/categories/" %}
     <style>.sidebarv2 ul li a.categories{color: #11101d;background: #ff6961;}</style>
 {% elif request.path == "/user/settings/" or request.path == "/user/settings/account/" or request.path == "/user/settings/marketplace/" or request.path == "/user/settings/shop/" %}
@@ -26,11 +28,18 @@
                 <span class="tooltipv2">Ara</span>
             </li> -->
             <li>
-                <a href="/user/dashboard" class="dashboard">
+                <a href="/dashboard" class="dashboard">
                     <i class='bx bxs-grid' ></i>
                     <span class="links_name">Kontrol Paneli</span>
                 </a>
                 <span class="tooltipv2">Kontrol Paneli</span>
+            </li>
+            <li>
+                <a href="">
+                    <i class='bx bx-cart-alt' ></i>
+                    <span class="links_name">Siparişler</span>
+                </a>
+                <span class="tooltipv2">Siparişler</span>
             </li>
             <li>
                 <a href="/user/products" class="products">
@@ -40,18 +49,11 @@
                 <span class="tooltipv2">Ürünler</span>
             </li>
             <li>
-                <a href="/user/categories" class="categories">
-                    <i class='bx bx-category' ></i>
-                    <span class="links_name">Kategoriler</span>
+                <a href="/materials" class="materials">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span class="links_name">Malzemeler</span>
                 </a>
-                <span class="tooltipv2">Kategoriler</span>
-            </li>
-            <li>
-                <a href="">
-                    <i class='bx bx-cart-alt' ></i>
-                    <span class="links_name">Siparişler</span>
-                </a>
-                <span class="tooltipv2">Siparişler</span>
+                <span class="tooltipv2">Malzemeler</span>
             </li>
             <li>
                 <a href="">
@@ -103,15 +105,11 @@
                     <div class="name_job">
                         <div class="name">{{request.user}}</div>
                         <div class="job">
-                            {% if request.user.username == "korayzorlu" %}
-                            Admin
-                            {% else %}
-                            {{ request.user.employee.membership }}
-                            {% endif %}
+                            {{ request.user.employee.user_type }}
                         </div>
                     </div>
                 </div>
-                <a title="Çıkış Yap" data-toggle="modal" data-target="#logoutModalCenter">
+                <a class="logoutButton" title="Çıkış Yap" data-bs-toggle="modal" data-bs-target="#logoutModalCenter">
                     <i class='bx bx-log-out' id="log_out"></i>
                 </a>
             </div>

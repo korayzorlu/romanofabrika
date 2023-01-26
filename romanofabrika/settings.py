@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "user",
     "crispy_forms",
     "order",
+    "material",
 ]
 
 MIDDLEWARE = [

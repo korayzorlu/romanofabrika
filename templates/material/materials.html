@@ -1,0 +1,46 @@
+{% extends 'layout/dashboardLayout.html' %}
+
+{% block body %}
+
+<div class="globalBoxes">
+<div class="box">
+    <table id="example" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Malzeme Tipi</th>
+                <th>Malzeme İsmi</th>
+                <th>Birim</th>
+                <th>Birim Fiyat</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for material in materials %}
+                <tr>
+                    <td>{{material.get_type_display}}</td>
+                    <td>{{material.title}}</td>
+                    <td>{{material.get_quantity_type_display}}</td>
+                    <td>{{material.price}}</td>
+                </tr>
+            {% endfor %}
+            
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Malzeme Tipi</th>
+                <th>Malzeme İsmi</th>
+                <th>Birim</th>
+                <th>Birim Fiyat</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+
+{% endblock body %}

@@ -10,21 +10,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     
     <link rel="stylesheet" href="{% static 'css/style.css' now 'U'%}">
-    <link rel="stylesheet" href="{% static 'css/jquery-datatables.css' %}">
-    <link rel="stylesheet" href="{% static 'css/jquery-datatables-select-1.3.3-min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/jquery-datatables-buttons-2.0.1-min.css' %}">
     <link rel="shortcut icon" type="image/jpg" href="/static/images/instalogo2.png"/>
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
-    <title>{{ tag }} - Maxima</title>
+
+    <title>{{ tag }} - Romano</title>
+
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
 
-        <!-- Font Awesome -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Font Awesome -->
     <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     rel="stylesheet"
@@ -39,14 +43,95 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css"
     rel="stylesheet"
     />
+
+    <!--DataTables-->
+    <link
+    href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css"
+    rel="stylesheet"
+    />
     
 </head>
 <body>
 
-
+    {% include "includes/modal.html" %}
     {% include "includes/sidebar.html" %}
     
     <section class="home-section">
+        {% if messages %}
+            
+            {% for message in messages %}
+
+                {% if message.tags == "info" %}
+                <!-- <div class="alert alert-danger align-middle text-center" style="max-height: 30px; padding: 0; border: 0px solid; background-color: #ff3800; color: #fff;">{{ message }}</div> -->
+                <!-- <div class='headerTop'>
+                    <div class='headerTopIn'>
+                        <div class='headerTopText'>{{ message }}</div>
+                    </div>
+                </div>
+                <style>
+                    .headerTop{width: 100%; height: 20px; background-color: #ff3800; color: #fff; text-align: center; font-size: 14px; font-weight: 500; display: table;}
+                    .headerTopIn{display: table-cell; vertical-align: middle;}
+                
+                    @media screen and (max-width:767px) {
+                    .headerTop{font-size: 12px;}
+                    }
+                
+                </style> -->
+                <div class='alert headerTop'>
+                    <div class='headerTopIn'>
+                        <div class='headerTopText'>{{ message }}</div>
+                    </div>
+                    <a href="#" class="close" data-bs-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+                <style>
+                    .alert{height: 20px; padding: 0;}
+                    .headerTop{padding: 0 20px; width: 100%; height: 20px; background-color: #ff3800; color: #fff; text-align: center; font-size: 14px; font-weight: 500; display: table; z-index: 200;}
+                    .headerTopIn{display: table-cell; vertical-align: middle;}
+                    .headerTop a{color: #fff; font-size: 24px; background: none; border: none;line-height:20px;}
+                
+                    @media screen and (max-width:767px) {
+                    .headerTop{font-size: 12px;}
+                    }
+                
+                </style>
+                {% else %}
+                <!-- <div class="alert alert-{{ message.tags }} align-middle text-center" style="max-height: 30px; padding: 0; border: 0px solid; background-color: #ff3800; color: #fff;">{{ message }}</div> -->
+                <!-- <div class='headerTop'>
+                    <div class='headerTopIn'>
+                        <div class='headerTopText'>{{ message }}</div>
+                    </div>
+                </div>
+                <style>
+                    .headerTop{width: 100%; height: 20px; background-color: #ff3800; color: #fff; text-align: center; font-size: 14px; font-weight: 500; display: table;}
+                    .headerTopIn{display: table-cell; vertical-align: middle;}
+                
+                    @media screen and (max-width:767px) {
+                    .headerTop{font-size: 12px;}
+                    }
+                
+                </style> -->
+                <div class='alert headerTop'>
+                    <div class='headerTopIn'>
+                        <div class='headerTopText'>{{ message }}</div>
+                    </div>
+                    <a href="#" class="close" data-bs-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+                <style>
+                    .alert{height: 20px; padding: 0;}
+                    .headerTop{padding: 0 20px; width: 100%; height: 20px; background-color: #ff3800; color: #fff; text-align: center; font-size: 14px; font-weight: 500; display: table; z-index: 200;}
+                    .headerTopIn{display: table-cell; vertical-align: middle;}
+                    .headerTop a{color: #fff; font-size: 24px; background: none; border: none;line-height:20px;}
+                
+                    @media screen and (max-width:767px) {
+                    .headerTop{font-size: 12px;}
+                    }
+                
+                </style>
+                {% endif %}
+
+            {% endfor %}
+    
+        {% endif %}
         <nav>
             <div class="buttonMobileMenu">
                 <i class="bx bx-menu" id="btnMobileeMenu"></i>
@@ -59,7 +144,7 @@
             <div class="input-group">
                 <div class="form-outline">
                   <input type="search" id="form1" class="form-control" />
-                  <label class="form-label" for="form1">Search</label>
+                  <label class="form-label" for="form1">Ara</label>
                 </div>
                 <button type="button" class="btn btn-primary">
                   <i class="fas fa-search"></i>
@@ -67,7 +152,7 @@
               </div>
             <div class="dashboard-logo">
                 <div class="logo">
-                    <a href="{% url 'user:dashboard' %}">
+                    <a href="{% url 'dashboard' %}">
                         <img src={% static 'images/logo/romano-logo1.svg' %} alt="Site Logo" style="height: 35px;">
                     </a>
                 </div>
@@ -80,81 +165,7 @@
         </nav>
         <div class="home-content">
 
-            {% if messages %}
             
-                {% for message in messages %}
-
-                    {% if message.tags == "info" %}
-                    <!-- <div class="alert alert-danger align-middle text-center" style="max-height: 30px; padding: 0; border: 0px solid; background-color: #ff3800; color: #fff;">{{ message }}</div> -->
-                    <!-- <div class='headerTop'>
-                        <div class='headerTopIn'>
-                            <div class='headerTopText'>{{ message }}</div>
-                        </div>
-                    </div>
-                    <style>
-                        .headerTop{width: 100%; height: 20px; background-color: #ff3800; color: #fff; text-align: center; font-size: 14px; font-weight: 500; display: table;}
-                        .headerTopIn{display: table-cell; vertical-align: middle;}
-                    
-                        @media screen and (max-width:767px) {
-                        .headerTop{font-size: 12px;}
-                        }
-                    
-                    </style> -->
-                    <div class='alert headerTop'>
-                        <div class='headerTopIn'>
-                            <div class='headerTopText'>{{ message }}</div>
-                        </div>
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    </div>
-                    <style>
-                        .alert{height: 20px; padding: 0;}
-                        .headerTop{padding: 0 20px; width: 100%; height: 20px; background-color: #ff3800; color: #fff; text-align: center; font-size: 14px; font-weight: 500; display: table; z-index: 200;}
-                        .headerTopIn{display: table-cell; vertical-align: middle;}
-                        .headerTopIn a{color: #fff; font-size: 16px; background: none; border: none;}
-                    
-                        @media screen and (max-width:767px) {
-                        .headerTop{font-size: 12px;}
-                        }
-                    
-                    </style>
-                    {% else %}
-                    <!-- <div class="alert alert-{{ message.tags }} align-middle text-center" style="max-height: 30px; padding: 0; border: 0px solid; background-color: #ff3800; color: #fff;">{{ message }}</div> -->
-                    <!-- <div class='headerTop'>
-                        <div class='headerTopIn'>
-                            <div class='headerTopText'>{{ message }}</div>
-                        </div>
-                    </div>
-                    <style>
-                        .headerTop{width: 100%; height: 20px; background-color: #ff3800; color: #fff; text-align: center; font-size: 14px; font-weight: 500; display: table;}
-                        .headerTopIn{display: table-cell; vertical-align: middle;}
-                    
-                        @media screen and (max-width:767px) {
-                        .headerTop{font-size: 12px;}
-                        }
-                    
-                    </style> -->
-                    <div class='alert headerTop'>
-                        <div class='headerTopIn'>
-                            <div class='headerTopText'>{{ message }}</div>
-                        </div>
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    </div>
-                    <style>
-                        .alert{height: 20px; padding: 0;}
-                        .headerTop{padding: 0 20px; width: 100%; height: 20px; background-color: #ff3800; color: #fff; text-align: center; font-size: 14px; font-weight: 500; display: table; z-index: 200;}
-                        .headerTopIn{display: table-cell; vertical-align: middle;}
-                        .headerTopIn a{color: #fff; font-size: 16px; background: none; border: none;}
-                    
-                        @media screen and (max-width:767px) {
-                        .headerTop{font-size: 12px;}
-                        }
-                    
-                    </style>
-                    {% endif %}
-
-                {% endfor %}
-    
-            {% endif %}
 
         {% block body %}
         
@@ -164,17 +175,8 @@
         </div>
     </section>
     
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-    <script src="{% static 'js/sidebar.js' %}"></script>
-    <script src="{% static 'js/jquery-3.5.1.js' %}"></script>
-    <script src="{% static 'js/jquery-datatables.js' %}"></script>
-    <script src="{% static 'js/jquery-datatables-select-1.3.3-min.js' %}"></script>
-    <script src="{% static 'js/jquery-datatables-buttons-2.0.1-min.js' %}"></script>
 
     <script src="{% static 'js/main.js' %}"></script>
 
@@ -183,5 +185,21 @@
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
     ></script>
+
+    <!-- DataTables -->
+    <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"
+    ></script>
+    <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"
+    ></script>
+
+
+
+
+
 </body>
 </html>
+

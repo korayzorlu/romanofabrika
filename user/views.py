@@ -20,50 +20,11 @@ from django.utils.encoding import force_bytes
 from django import template
 from django.core.mail import EmailMultiAlternatives
 
-from datetime import date, timedelta
+
 
 
 # Create your views here.
-@login_required(login_url = "user:login")
-def dashboard(request):
-    tag = "Kontrol Paneli"
 
-
-    #Line Graph
-    days = []
-
-    for i in range(30):
-        days.append((date.today()-timedelta(days=i)).isoformat())
-
-    days.reverse()
-    
-    sales = [3,4,3,6,5,8,4,14,12,8,9,6,16,9,10,8,7,8,8,9,12,11,13,13,12,7,17,18,19,19]
-
-    lineData = []
-
-    for i in range(30):
-        lineData.append({
-            "day" : days[i],
-            "sale" : sales[i]
-        })
-    
-    #Pie Graph
-    pieData = [
-        {"shop" : "Trendyol", "sale" : 12},
-        {"shop" : "Hepsiburada", "sale" : 30},
-        {"shop" : "N11", "sale" : 20},
-        {"shop" : "Gittigidiyor", "sale" : 7},
-        {"shop" : "Çiçeksepeti", "sale" : 5},
-        {"shop" : "Amazon", "sale" : 9}
-    ]
-
-    context = {
-                "tag" : tag,
-                "lineData" : lineData,
-                "pieData" : pieData
-            }
-
-    return render(request, "dashboard/dashboard.html", context)
 
 def register(request):
     form = RegisterForm(request.POST or None)
@@ -135,7 +96,7 @@ def loginUser(request):
 
         messages.success(request, "Başarıyla giriş yaptınız...")
         login(request, user)
-        return redirect("index")
+        return redirect("dashboard")
 
     if request.user.is_authenticated:
         return redirect("index")

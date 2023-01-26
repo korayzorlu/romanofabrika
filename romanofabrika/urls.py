@@ -20,12 +20,15 @@ from django.urls.conf import include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from home.views import index
+from home.views import index, dashboard
+from material.views import materials
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name="index"),
+    path('dashboard/', dashboard, name="dashboard"),
     path('user/', include("user.urls")),
+    path('materials/', materials, name="materials"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
