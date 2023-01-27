@@ -50,6 +50,10 @@ a,a:hover,a:focus {color: inherit;text-decoration: none;transition: all 0.3s;}
 .home-section .home-content .contentBoxes .box .boxIn .attribute.logo img{height: 50px;}
 /*Content Boxes Save Buttons*/
 .home-section .home-content .contentBoxes .box .boxIn .attribute.button{justify-content: center;}
+/*Box Go Detail Button*/
+.home-section .home-content .goDetailButton{width: 100%;display: flex;justify-content: flex-end;}
+.home-section .home-content .goDetailButton a{font-size: 15px;font-weight: 400;color: #fff;background: #11101d;padding: 4px 12px;border-radius: 4px;text-decoration: none;transition: all 0.3s ease;}
+
 /********************************************************************/
 
 
@@ -166,7 +170,7 @@ footer .bottom-details .bottom-text a{margin-right: 10px;}
 
 
 /***************************************************DASHBOARD********************************************************/
-.home-section .home-content .globalBoxes{display: flex;justify-content: space-between;padding: 0 20px;flex-wrap: wrap;}
+.home-section .home-content .globalBoxes{display: flex;justify-content: space-between;padding: 0 20px;flex-wrap: wrap; margin-bottom: 20px;}
 .home-section .home-content .globalBoxes .box{width: 100%;align-items: center;justify-content: center;padding: 15px;background: #fff;border-radius: 12px;box-shadow: 0 5px 10px rgba(0, 0, 0, .1);}
 .home-section .home-content .overview-boxes{display: flex;justify-content: space-between;padding: 0 20px;flex-wrap: wrap;}
 .home-section .home-content .overview-boxes .box{display: flex;width: calc(100% / 4 - 15px);align-items: center;justify-content: center;padding: 15px 0;background: #fff;border-radius: 12px;box-shadow: 0 5px 10px rgba(0, 0, 0, .1);}
@@ -370,12 +374,12 @@ footer .bottom-details .bottom-text a{margin-right: 10px;}
     /******************************************************/
     /***************************SIDEBAR V2***************************/
     .sidebarv2 #btnmenu{display: none;}
-    .sidebarContainer{left: -200px;transition: all 0.5s ease; z-index: -1;}
+    .sidebarContainer{left: -200px;transition: all 0.5s ease; z-index: 1;}
     .sidebarv2{display: none;}
     .sidebarContainer.active .sidebarv2{display: block;transition: all 0.5s ease;}
     /******************************************************/
     /***************************LAYOUT DASHBOARD***************************/
-    .home-section{width: 100%;left: 0;transition: all 0.5s ease;}
+    .home-section{width: 100%;left: 0;transition: all 0.5s ease;z-index: 9;}
     .home-section nav{width: 100%;left: 0;}
     .home-section nav .buttonMobileMenu i{display: flex;}
     .home-section nav .dashboard-logo .logo a img{display: flex;}

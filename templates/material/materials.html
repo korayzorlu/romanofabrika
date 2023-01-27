@@ -1,9 +1,10 @@
 {% extends 'layout/dashboardLayout.html' %}
 
 {% block body %}
-
+<tbody ></tbody>
 <div class="globalBoxes">
 <div class="box">
+    <button class="btn btn-info" hx-get="{% url 'material:add-material' %}" hx-target="#addMaterialDialog" style="margin-bottom: 20px;">Malzeme Ekle</button>
     <table id="example" class="table table-striped" style="width:100%">
         <thead>
             <tr>
@@ -11,7 +12,7 @@
                 <th>Malzeme İsmi</th>
                 <th>Birim</th>
                 <th>Birim Fiyat</th>
-                <th></th>
+                <th>Düzenle</th>
             </tr>
         </thead>
         <tbody>
@@ -21,9 +22,9 @@
                     <td>{{material.title}}</td>
                     <td>{{material.get_quantity_type_display}}</td>
                     <td>{{material.price}}</td>
-                    <td><a class="logoutButton" title="Çıkış Yap" data-bs-toggle="modal" data-bs-target="#materialDetailModalCenter">
-                        <i class='bx bx-log-out' id="log_out"></i>
-                    </a></td>
+                    <td>
+                        <button class="btn btn-info" hx-get="{% url 'material:update-material' material.id %}" hx-target="#updateMaterialDialog">Düzenle</button>
+                    </td>
                 </tr>
             {% endfor %}
             
@@ -34,11 +35,24 @@
                 <th>Malzeme İsmi</th>
                 <th>Birim</th>
                 <th>Birim Fiyat</th>
-                <th></th>
+                <th>düzenle</th>
             </tr>
         </tfoot>
     </table>
 </div>
+</div>
+
+<div class="globalBoxes">
+    <div class="line-graph box">
+        <div class="head">
+            <div class="title">Grafik</div>
+            <i class='bx bx-cog'></i>
+        </div>
+        <canvas id="line-chart"></canvas>
+        <div class="button goDetailButton">
+            <a href="">Detaylı Raporlar</a>
+        </div>
+    </div>
 </div>
 
 
@@ -46,6 +60,46 @@
     $(document).ready(function () {
         $('#example').DataTable();
     });
+
+    /*Line Chart*/
+    const lineChart = document.getElementById('line-chart').getContext('2d');
+    const myLineChart = new Chart(lineChart, {
+    type: 'line',
+    data: {
+        labels: [{% for item in lineData %} "{{ item.day }}", {% endfor %}],
+        datasets: [{
+            label: '',
+            data: [{% for item in lineData %} {{ item.sale }}, {% endfor %}],
+            backgroundColor: [
+                'rgba(255, 56, 0, 0.2)',
+            ],
+            borderColor: [
+                '#ff3800',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            },
+            xAxes: [{
+            gridLines: {
+                color: "rgba(0, 0, 0, 0)",
+            }
+        }],
+        yAxes: [{
+            gridLines: {
+                color: "rgba(0, 0, 0, 0.05)",
+            }   
+        }]
+        },
+        legend: {
+            display: false
+        }
+    }
+});
 </script>
 
 {% endblock body %}

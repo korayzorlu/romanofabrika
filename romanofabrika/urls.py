@@ -28,6 +28,7 @@ urlpatterns = [
     path('', index, name="index"),
     path('dashboard/', dashboard, name="dashboard"),
     path('user/', include("user.urls")),
+    path('materials/', include("material.urls")),
     path('materials/', materials, name="materials"),
 ]
 
