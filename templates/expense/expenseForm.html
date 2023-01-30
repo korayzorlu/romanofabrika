@@ -1,0 +1,33 @@
+<form hx-post="{{ request.path }}" class="modal-content">
+    {% csrf_token %}
+    <div class="modal-header">
+      <h5 class="modal-title">Gider Ekle</h5>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Firma</label>
+        <select class="form-select" aria-label="Default select example" name="company">
+          {% for company in form.company %}
+          <option value="{{ company.id }}">{{ company }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Kategori</label>
+        <select class="form-select" aria-label="Default select example" name="company">
+          {% for category in form.category %}
+          <option value="{{ category.id }}">{{ category }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Ürün/Hizmet</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">{{ form.title }}</textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" data-bs-dismiss="modal">Vazgeç</button>
+      <button type="submit">Kaydet</button>
+    </div>
+</form>
+

@@ -1,29 +1,32 @@
 {% extends 'layout/dashboardLayout.html' %}
 
 {% block body %}
+{% load crispy_forms_tags %}
 <tbody ></tbody>
 <div class="globalBoxes">
 <div class="box">
-    <button class="btn btn-info" hx-get="{% url 'material:add-material' %}" hx-target="#addMaterialDialog" style="margin-bottom: 20px;">Malzeme Ekle</button>
-    <table id="example" class="table table-striped" style="width:100%">
+    <button class="btn btn-info" hx-get="{% url 'expense:add-expense' %}" hx-target="#addExpenseDialog" style="margin-bottom: 20px;">Gider Ekle</button>
+    <table id="expenseTable" class="table table-striped" style="width:100%">
         <thead>
             <tr>
+                <th>Firma</th>
                 <th>Kategori</th>
-                <th>Malzeme İsmi</th>
+                <th>Ürün/Hizmet</th>
                 <th>Birim</th>
                 <th>Birim Fiyat</th>
                 <th>Düzenle</th>
             </tr>
         </thead>
         <tbody>
-            {% for material in materials %}
+            {% for expense in expenses %}
                 <tr>
-                    <td>{{material.category}}</td>
-                    <td>{{material.title}}</td>
-                    <td>{{material.unit}}</td>
-                    <td>{{material.price}}</td>
+                    <td>{{expense.company}}</td>
+                    <td>{{expense.category}}</td>
+                    <td>{{expense.title}}</td>
+                    <td>{{expense.unit}}</td>
+                    <td>{{expense.price}}</td>
                     <td>
-                        <button class="btn btn-info" hx-get="{% url 'material:update-material' material.id %}" hx-target="#updateMaterialDialog">Düzenle</button>
+                        <button class="btn btn-info" hx-get="{% url 'expense:update-expense' expense.id %}" hx-target="#updateExpenseDialog">Düzenle</button>
                     </td>
                 </tr>
             {% endfor %}
@@ -31,11 +34,12 @@
         </tbody>
         <tfoot>
             <tr>
-                <th>Malzeme Tipi</th>
-                <th>Malzeme İsmi</th>
+                <th>Firma</th>
+                <th>Kategori</th>
+                <th>Ürün/Hizmet</th>
                 <th>Birim</th>
                 <th>Birim Fiyat</th>
-                <th>düzenle</th>
+                <th>Düzenle</th>
             </tr>
         </tfoot>
     </table>
@@ -58,7 +62,7 @@
 
 <script>
     $(document).ready(function () {
-        $('#example').DataTable();
+        $('#expenseTable').DataTable();
     });
 
     /*Line Chart*/

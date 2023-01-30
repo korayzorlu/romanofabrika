@@ -1,11 +1,11 @@
 from django import forms
 
-from .models import Material
+from .models import Expense
 
-class MaterialForm(forms.ModelForm):
+class ExpenseForm(forms.ModelForm):
     class Meta:
-        model = Material
-        fields = ["source", "category", "title", "unit", "quantity", "price"]
+        model = Expense
+        fields = ["company", "category", "title", "unit", "quantity", "price"]
         
         widgets = {
             "source" : forms.Select(attrs = {"class" : "form-control", "style" : "background-color: #fff;"}),

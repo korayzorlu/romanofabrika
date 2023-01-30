@@ -10,6 +10,8 @@ $(document).ready(function() {
 //htmx dialog gösterme
 const addMaterialModal = new bootstrap.Modal(document.getElementById("addMaterialModal"))
 const updateMaterialModal = new bootstrap.Modal(document.getElementById("updateMaterialModal"))
+const addExpenseModal = new bootstrap.Modal(document.getElementById("addExpenseModal"))
+const updateExpenseModal = new bootstrap.Modal(document.getElementById("updateExpenseModal"))
 htmx.on("htmx:afterSwap", (e) => {
   // Response targeting #dialog => show the modal
   if (e.detail.target.id == "addMaterialDialog") {
@@ -17,6 +19,12 @@ htmx.on("htmx:afterSwap", (e) => {
   }
   if (e.detail.target.id == "updateMaterialDialog") {
     updateMaterialModal.show()
+  }
+  if (e.detail.target.id == "addExpenseDialog") {
+    addExpenseModal.show()
+  }
+  if (e.detail.target.id == "updateExpenseDialog") {
+    updateExpenseModal.show()
   }
 })
 
@@ -33,12 +41,24 @@ htmx.on("htmx:beforeSwap", (e) => {
         e.detail.shouldSwap = false
         window.location.href = "/materials"
       }
+    if (e.detail.target.id == "addExpenseDialog" && !e.detail.xhr.response) {
+      addExpenseModal.hide()
+      e.detail.shouldSwap = false
+      window.location.href = "/expenses"
+    }
+    if (e.detail.target.id == "updateExpenseDialog" && !e.detail.xhr.response) {
+      updateExpenseModal.hide()
+      e.detail.shouldSwap = false
+      window.location.href = "/expenses"
+    }
   })
 
 //htmx iptalden sonra içeriği temizleme
 htmx.on("hidden.bs.modal", () => {
-    document.getElementById("addMaterialDialog").innerHTML = ""
-    document.getElementById("updateMaterialDialog").innerHTML = ""
+    document.getElementById("addMaterialDialog").innerHTML = "";
+    document.getElementById("updateMaterialDialog").innerHTML = "";
+    document.getElementById("addExpenseDialog").innerHTML = "";
+    document.getElementById("updateExpenseDialog").innerHTML = "";
   })
 
 let btnMenu = $("#btnmenu");

@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 
 from home.views import index, dashboard
 from material.views import materials
+from expense.views import expenses
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,6 +31,8 @@ urlpatterns = [
     path('user/', include("user.urls")),
     path('materials/', include("material.urls")),
     path('materials/', materials, name="materials"),
+    path('expenses/', include("expense.urls")),
+    path('expenses/', expenses, name="expenses"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
