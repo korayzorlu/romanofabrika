@@ -20,16 +20,16 @@ def dashboard(request):
     #Line Graph
     days = []
 
-    for i in range(30):
+    for i in range(31):
         days.append((date.today()-timedelta(days=i)).isoformat())
 
     days.reverse()
     
-    sales = [3,4,3,6,5,8,4,14,12,8,9,6,16,9,10,8,7,8,8,9,12,11,13,13,12,7,17,18,19,19]
+    sales = [1,3,4,3,6,5,8,4,14,12,8,9,6,16,9,10,8,7,8,8,9,12,11,13,13,12,7,17,18,19,19]
 
     lineData = []
 
-    for i in range(30):
+    for i in range(31):
         lineData.append({
             "day" : days[i],
             "sale" : sales[i]

@@ -216,7 +216,7 @@ const myLineChart = new Chart(lineChart, {
     data: {
         labels: [{% for item in lineData %} "{{ item.day }}", {% endfor %}],
         datasets: [{
-            label: '',
+            label: 'Ciro',
             data: [{% for item in lineData %} {{ item.sale }}, {% endfor %}],
             backgroundColor: [
                 'rgba(255, 56, 0, 0.2)',

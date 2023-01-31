@@ -7,59 +7,31 @@ $(document).ready(function() {
     }, 2000); // <-- time in milliseconds, 1000 =  1 sec
 });
 
+///////////////////////////////////HTMX////////////////////////////////
 //htmx dialog gösterme
-const addMaterialModal = new bootstrap.Modal(document.getElementById("addMaterialModal"))
-const updateMaterialModal = new bootstrap.Modal(document.getElementById("updateMaterialModal"))
-const addExpenseModal = new bootstrap.Modal(document.getElementById("addExpenseModal"))
-const updateExpenseModal = new bootstrap.Modal(document.getElementById("updateExpenseModal"))
+const addUpdateDataModal = new bootstrap.Modal(document.getElementById("addUpdateDataModal"))
 htmx.on("htmx:afterSwap", (e) => {
   // Response targeting #dialog => show the modal
-  if (e.detail.target.id == "addMaterialDialog") {
-    addMaterialModal.show()
-  }
-  if (e.detail.target.id == "updateMaterialDialog") {
-    updateMaterialModal.show()
-  }
-  if (e.detail.target.id == "addExpenseDialog") {
-    addExpenseModal.show()
-  }
-  if (e.detail.target.id == "updateExpenseDialog") {
-    updateExpenseModal.show()
+  if (e.detail.target.id == "addUpdateDataDialog") {
+    addUpdateDataModal.show()
   }
 })
 
 //htmx dialog gizleme
 htmx.on("htmx:beforeSwap", (e) => {
     // Empty response targeting #dialog => hide the modal
-    if (e.detail.target.id == "addMaterialDialog" && !e.detail.xhr.response) {
-      addMaterialModal.hide()
+    if (e.detail.target.id == "addUpdateDataDialog" && !e.detail.xhr.response) {
+      addUpdateDataModal.hide()
       e.detail.shouldSwap = false
-      window.location.href = "/materials"
-    }
-    if (e.detail.target.id == "updateMaterialDialog" && !e.detail.xhr.response) {
-        updateMaterialModal.hide()
-        e.detail.shouldSwap = false
-        window.location.href = "/materials"
-      }
-    if (e.detail.target.id == "addExpenseDialog" && !e.detail.xhr.response) {
-      addExpenseModal.hide()
-      e.detail.shouldSwap = false
-      window.location.href = "/expenses"
-    }
-    if (e.detail.target.id == "updateExpenseDialog" && !e.detail.xhr.response) {
-      updateExpenseModal.hide()
-      e.detail.shouldSwap = false
-      window.location.href = "/expenses"
+      window.location.reload()
     }
   })
 
 //htmx iptalden sonra içeriği temizleme
 htmx.on("hidden.bs.modal", () => {
-    document.getElementById("addMaterialDialog").innerHTML = "";
-    document.getElementById("updateMaterialDialog").innerHTML = "";
-    document.getElementById("addExpenseDialog").innerHTML = "";
-    document.getElementById("updateExpenseDialog").innerHTML = "";
+    document.getElementById("addUpdateDataDialog").innerHTML = "";
   })
+///////////////////////////////////HTMX-END////////////////////////////////
 
 let btnMenu = $("#btnmenu");
 let btnMobileMenu = document.querySelector("#btnMobileeMenu");

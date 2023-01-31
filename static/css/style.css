@@ -53,6 +53,8 @@ a,a:hover,a:focus {color: inherit;text-decoration: none;transition: all 0.3s;}
 /*Box Go Detail Button*/
 .home-section .home-content .goDetailButton{width: 100%;display: flex;justify-content: flex-end;}
 .home-section .home-content .goDetailButton a{font-size: 15px;font-weight: 400;color: #fff;background: #11101d;padding: 4px 12px;border-radius: 4px;text-decoration: none;transition: all 0.3s ease;}
+/*Add Attribute Button*/
+.modal-content .addAttributeButton{font-size: 16px;font-weight: 400;color: #11101d;padding: 0 10px;text-decoration: none;transition: all 0.3s ease;cursor: pointer;}
 
 /********************************************************************/
 

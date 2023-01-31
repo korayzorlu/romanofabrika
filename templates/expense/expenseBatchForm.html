@@ -1,0 +1,16 @@
+{% load crispy_forms_tags %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    <div class="row" style="justify-content: space-between; padding: 20px; gap: 20px;">
+        <div class="col-sm" style="background-color: #fff; border-radius: 10px; padding: 20px; text-align: center;">
+            <div class="row-full">
+                {{ form|crispy }}
+            </div>
+            <button type="submit" class="btn btn-danger" style="border: 0px solid; border-radius: 50px; background-color: #2b2d2f;">
+                <i class="fas fa-cloud-upload-alt" style="color: #fff;"></i>
+                Ürünleri Yükle
+            </button>
+        </div>
+    </div>
+    </form>

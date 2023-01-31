@@ -25,7 +25,10 @@ class UnitAdmin(admin.ModelAdmin):
                
 @admin.register(Expense)
 class ExpenseAdmin(admin.ModelAdmin):
-    list_display = ["id", "category", "title", "unit"]
+    list_display = ["created_date", "id", "category", "title", "unit"]
+    list_display_links = ["title"]
+    search_fields = ["title"]
+    list_filter = ["created_date"]
     ordering = ["created_date"]
     class Meta:
         model = Expense

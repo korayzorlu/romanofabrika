@@ -1,0 +1,9 @@
+<div hx-post="{{ request.path }}" class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Silinsin mi?</h5>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Vazgeç</button>
+        <a class="btn btn-danger" type="submit" href="/expenses/delete-expense/{{expense.id}}">Sil</a>
+    </div>
+</div>

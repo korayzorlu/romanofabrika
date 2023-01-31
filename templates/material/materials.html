@@ -4,7 +4,7 @@
 <tbody ></tbody>
 <div class="globalBoxes">
 <div class="box">
-    <button class="btn btn-info" hx-get="{% url 'material:add-material' %}" hx-target="#addMaterialDialog" style="margin-bottom: 20px;">Malzeme Ekle</button>
+    <button class="btn btn-info" hx-get="{% url 'material:add-material' %}" hx-target="#addUpdateDataDialog" style="margin-bottom: 20px;">Malzeme Ekle</button>
     <table id="example" class="table table-striped" style="width:100%">
         <thead>
             <tr>
@@ -23,7 +23,7 @@
                     <td>{{material.unit}}</td>
                     <td>{{material.price}}</td>
                     <td>
-                        <button class="btn btn-info" hx-get="{% url 'material:update-material' material.id %}" hx-target="#updateMaterialDialog">Düzenle</button>
+                        <button class="btn btn-info" hx-get="{% url 'material:update-material' material.id %}" hx-target="#addUpdateDataDialog">Düzenle</button>
                     </td>
                 </tr>
             {% endfor %}
