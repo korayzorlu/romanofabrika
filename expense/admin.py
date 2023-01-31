@@ -7,7 +7,7 @@ from .models import Company, Expense, Category, Unit
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ["id", "title", "slug"]
+    list_display = ["id", "title"]
     class Meta:
         model = Company
         

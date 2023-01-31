@@ -5,11 +5,10 @@ from .models import Expense, Company, Excel
 class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
-        fields = ["title", "slug"]
+        fields = ["title"]
         
         widgets = {
-            "title" : forms.Textarea(attrs = {"class" : "form-control", "rows" : "1", "style" : "background-color: #fff;"}),
-            "slug" : forms.Textarea(attrs = {"class" : "form-control", "rows" : "1", "style" : "background-color: #fff;"})
+            "title" : forms.Textarea(attrs = {"class" : "form-control", "rows" : "1", "style" : "background-color: #fff;"})
         }
 
 class ExpenseForm(forms.ModelForm):
@@ -26,6 +25,10 @@ class ExpenseForm(forms.ModelForm):
             "quantity" : forms.NumberInput(attrs = {"class" : "form-control", "style" : "background-color: #fff;"}),
             "price" : forms.NumberInput(attrs = {"class" : "form-control", "style" : "background-color: #fff;"})
         }
+    
+    # def __init__(self, *args, **kwargs):
+    #     super(ExpenseForm, self).__init__(*args, **kwargs)
+    #     self.fields['company'].empty_label = "Firma Seçiniz"
         
 class ExcelForm(forms.ModelForm):
     class Meta:

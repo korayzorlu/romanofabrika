@@ -10,10 +10,8 @@ import datetime
 
 class Company(models.Model):
     title = models.CharField(max_length=200, verbose_name = "Firma")
-    slug = models.SlugField(unique=True)
 
     class Meta:
-        unique_together = ('slug',)    
         verbose_name_plural = "companies"
 
     def __str__(self):

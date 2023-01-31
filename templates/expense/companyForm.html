@@ -8,10 +8,6 @@
         <label for="exampleFormControlTextarea1" class="form-label">Firma İsmi</label>
         {{ form.title }}
       </div>
-      <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Slug</label>
-        {{ form.slug }}
-      </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" type="button" hx-get="{% url 'expense:add-expense' %}" hx-target="#addUpdateDataDialog">Vazgeç</button>

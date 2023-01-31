@@ -7,7 +7,7 @@ from django.http import FileResponse
 
 from django.utils import timezone
 
-from .models import Expense
+from .models import Expense, Company, Category, Unit
 from .forms import ExpenseForm, CompanyForm, ExcelForm
 
 from datetime import date, timedelta
@@ -71,10 +71,10 @@ def addExpense(request):
         if form.is_valid():
             expense = form.save(commit = False)
             expense.save()
+            
+            messages.success(request, "Gider Başarıyla Eklendi...")
 
-        messages.success(request, "Gider Başarıyla Eklendi...")
-
-        return HttpResponse(status=204)
+            return HttpResponse(status=204)
 
     
     context = {
@@ -94,7 +94,6 @@ def addExpenseBatch(request):
     if request.method == "POST":
         if form.is_valid():
             newfile = form.save(commit = False)
-            newfile.shop = request.user
             newfile.save()
 
             if request.FILES.getlist("file") == []:
@@ -114,13 +113,43 @@ def addExpenseBatch(request):
                         newfile.delete()
                         messages.info(request, "Şablon Hatalı! Ürün başlığı giriniz ve tekrar deneyiniz.")
                         return redirect("expenses")
-
+                    
+                    #####Select'lerde hücre boşsa default değeri bulup doldurmak#####
+                    try:
+                        company = get_object_or_404(Company, title = df["FİRMA"][i])
+                    except:
+                        if pd.isnull(df["FİRMA"][i]):
+                            defaultCompanyId = Expense._meta.get_field('company').get_default()
+                            defaultCompany = get_object_or_404(Company, id = defaultCompanyId)
+                            company = defaultCompany
+                        else:
+                            company = Company.objects.create(title = df["FİRMA"][i])
+                    try:
+                        category = get_object_or_404(Category, title = df["KATEGORİ"][i])
+                    except:
+                        if pd.isnull(df["KATEGORİ"][i]):
+                            defaultCategoryId = Expense._meta.get_field('category').get_default()
+                            defaultCategory = get_object_or_404(Category, id = defaultCategoryId)
+                            category = defaultCategory
+                        else:
+                            category = Category.objects.create(title = df["KATEGORİ"][i])
+                    try:
+                        unit = get_object_or_404(Unit, title = df["BİRİM"][i])
+                    except:
+                        if pd.isnull(df["BİRİM"][i]):
+                            defaultUnitId = Expense._meta.get_field('unit').get_default()
+                            defaultUnit= get_object_or_404(Unit, id = defaultUnitId)
+                            unit = defaultUnit
+                        else:
+                            unit = Unit.objects.create(title = df["BİRİM"][i])
+                    #######################################################################
+                    
                     newexpense = Expense.objects.create(
                         created_date = df["TARİH"][i],
-                        company = df["FİRMA"][i],
-                        category = df["KATEGORİ"][i],
+                        company = company,
+                        category = category,
                         title = df["ÜRÜN BAŞLIĞI"][i],
-                        unit = df["BİRİM"][i],
+                        unit = unit,
                         quantity = df["MİKTAR"][i],
                         price = df["BİRİM TUTAR"][i],
                         )

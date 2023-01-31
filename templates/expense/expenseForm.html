@@ -15,7 +15,7 @@
             <a class="addAttributeButton" hx-get="{% url 'expense:add-company' %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-plus"></i></a>
           {% endif %}
         </label>
-        <select class="form-select" aria-label="Default select example" name="company">
+        <select class="form-select companySelect" aria-label="Default select example" name="company">
           {% for company in form.company %}
             {{ company }}
           {% endfor %}
@@ -55,4 +55,3 @@
       <button class="btn btn-danger" type="submit">Kaydet</button>
     </div>
 </form>
-
