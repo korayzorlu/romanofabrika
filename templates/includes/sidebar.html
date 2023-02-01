@@ -21,7 +21,7 @@
                     Maxima
                 </div> -->
             </div>
-            <i class='bx bx-menu' id="btnmenu"></i>
+            <i class='fa-solid fa-bars' id="btnmenu"></i>
         </div>
         <ul class="nav_list" style="list-style-type: none; padding-left: 0px;">
             <!-- <li>
@@ -30,35 +30,35 @@
                 <span class="tooltipv2">Ara</span>
             </li> -->
             <li>
-                <a href="/dashboard" class="dashboard">
-                    <i class='bx bxs-grid' ></i>
+                <a href="{% url 'dashboard' %}" class="dashboard">
+                    <i class="fa-solid fa-grip"></i>
                     <span class="links_name">Kontrol Paneli</span>
                 </a>
                 <span class="tooltipv2">Kontrol Paneli</span>
             </li>
             <li>
                 <a href="">
-                    <i class='bx bx-cart-alt' ></i>
+                    <i class="fa-solid fa-cart-shopping"></i>
                     <span class="links_name">Siparişler</span>
                 </a>
                 <span class="tooltipv2">Siparişler</span>
             </li>
             <li>
-                <a href="/user/products" class="products">
-                    <i class='bx bx-purchase-tag' ></i>
+                <a href="{% url 'dashboard' %}" class="products">
+                    <i class="fa-solid fa-couch"></i>
                     <span class="links_name">Ürünler</span>
                 </a>
                 <span class="tooltipv2">Ürünler</span>
             </li>
             <li>
-                <a href="/materials" class="materials">
+                <a href="{% url 'materials' %}" class="materials">
                     <i class="fa-solid fa-layer-group"></i>
                     <span class="links_name">Malzemeler</span>
                 </a>
                 <span class="tooltipv2">Malzemeler</span>
             </li>
             <li>
-                <a href="/expenses" class="expenses">
+                <a href="{% url 'expenses' %}" class="expenses">
                     {% comment %} <div class="plus" style="position: absolute; margin-top: -25px;">
                         <i class='fas fa-crown' style="font-size: 12px; color: #Fae29c;"></i>
                     </div> {% endcomment %}
@@ -68,29 +68,29 @@
                 <span class="tooltipv2">Giderler</span>
             </li>
             <li>
-                <a href="">
-                    <i class='bx bx-money' ></i>
+                <a href="{% url 'dashboard' %}">
+                    <i class="fa-solid fa-coins"></i>
                     <span class="links_name">Finans</span>
                 </a>
                 <span class="tooltipv2">Finans</span>
             </li>
             <li>
-                <a href="">
-                    <i class='bx bx-chat' ></i>
+                <a href="{% url 'dashboard' %}">
+                    <i class="fa-solid fa-comments"></i>
                     <span class="links_name">Mesajlar</span>
                 </a>
                 <span class="tooltipv2">Mesajlar</span>
             </li>
             <li>
-                <a href="">
-                    <i class='bx bx-barcode' ></i>
-                    <span class="links_name">Ustalar</span>
+                <a href="{% url 'dashboard' %}">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="links_name">Personel</span>
                 </a>
                 <span class="tooltipv2">Ustalar</span>
             </li>
             <li>
-                <a href="/user/settings" class="settings">
-                    <i class='bx bx-cog' ></i>
+                <a href="{% url 'dashboard' %}" class="settings">
+                    <i class="fa-solid fa-gear"></i>
                     <span class="links_name">Ayarlar</span>
                 </a>
                 <span class="tooltipv2">Ayarlar</span>

@@ -189,23 +189,8 @@
     </div>
 </div>
 <div class="sales-graph">
-    <div class="line-graph box">
-        <div class="head">
-            <div class="title">Satış Grafiği</div>
-            <i class='bx bx-cog'></i>
-        </div>
-        <canvas id="line-chart"></canvas>
-        <div class="button">
-            <a href="">Detaylı Raporlar</a>
-        </div>
-    </div>
-    <div class="pie-graph box">
-        <div class="head">
-            <div class="title">Satış Dağılımı</div>
-            <i class='bx bx-cog'></i>
-        </div>
-        <canvas id="pie-chart"></canvas>
-    </div>
+    {% include "includes/graph/lineGraph.html" %}
+    {% include "includes/graph/pieGraph.html" %}
 </div>
 
 <script>

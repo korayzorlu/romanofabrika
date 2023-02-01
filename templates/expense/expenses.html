@@ -2,79 +2,69 @@
 
 {% block body %}
 {% load crispy_forms_tags %}
-<tbody ></tbody>
 <div class="globalBoxes">
-<div class="box">
-    <button class="btn btn-info" hx-get="{% url 'expense:add-expense' %}" hx-target="#addUpdateDataDialog" style="margin-bottom: 20px;">Gider Ekle</button>
-    <a class="btn btn-success" href="{% url 'expense:add-expense-batch' %}" style="margin-bottom: 20px;">Excel İle Ekle</a>
-    <a class="btn btn-success" href="{% url 'expense:download-expense-excel' %}" style="margin-bottom: 20px;">Excel Şablonunu İndir</a>
-    <table id="expenseTable" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>Tarih</th>
-                <th>Firma</th>
-                <th>Kategori</th>
-                <th>Ürün/Hizmet</th>
-                <th>Birim</th>
-                <th>Miktar</th>
-                <th>Birim Tutar</th>
-                <th>Toplam Tutar</th>
-                <th>Düzenle</th>
-                <th>Sil</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for expense in expenses %}
+    <div class="box">
+        <button class="btn btn-info" hx-get="{% url 'expense:add-expense' %}" hx-target="#addUpdateDataDialog" style="margin-bottom: 20px;">Gider Ekle</button>
+        <a class="btn btn-success" hx-get="{% url 'expense:add-expense-batch' %}" hx-target="#addUpdateDataDialog" style="margin-bottom: 20px;">Excel İle Ekle</a>
+        <a class="btn btn-success" href="{% url 'expense:download-expense-excel' %}" style="margin-bottom: 20px;">Excel Şablonunu İndir</a>
+        <table id="expenseTable" class="table table-striped" style="width:100%">
+            <thead>
                 <tr>
-                    <td>{{expense.created_date.day}}.{{expense.created_date.month}}.{{expense.created_date.year}}</td>
-                    <td>{{expense.company}}</td>
-                    <td>{{expense.category}}</td>
-                    <td>{{expense.title}}</td>
-                    <td>{{expense.unit}}</td>
-                    <td>{{expense.quantity}}</td>
-                    <td>₺ {{expense.price}}</td>
-                    <td>₺ {{expense.total}}</td>
-                    <td>
-                        <button class="btn btn-info" hx-get="{% url 'expense:update-expense' expense.id %}" hx-target="#addUpdateDataDialog">Düzenle</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger" hx-get="{% url 'expense:get-delete-expense' expense.id %}" hx-target="#addUpdateDataDialog">Sil</button>
-                    </td>
+                    <th>Tarih</th>
+                    <th>Firma</th>
+                    <th>Kategori</th>
+                    <th>Ürün/Hizmet</th>
+                    <th>Birim</th>
+                    <th>Miktar</th>
+                    <th>Birim Tutar</th>
+                    <th>Toplam Tutar</th>
+                    <th>Düzenle</th>
+                    <th>Sil</th>
                 </tr>
-            {% endfor %}
-            
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Tarih</th>
-                <th>Firma</th>
-                <th>Kategori</th>
-                <th>Ürün/Hizmet</th>
-                <th>Birim</th>
-                <th>Miktar</th>
-                <th>Birim Tutar</th>
-                <th>Toplam Tutar</th>
-                <th>Düzenle</th>
-                <th>Sil</th>
-            </tr>
-        </tfoot>
-    </table>
-</div>
-</div>
-
-<div class="sales-graph">
-    <div class="line-graph box">
-        <div class="head">
-            <div class="title">Grafik</div>
-            <i class='bx bx-cog'></i>
-        </div>
-        <canvas id="line-chart"></canvas>
-        <div class="button goDetailButton">
-            <a class="detayButton" href="">Detaylı Raporlar</a>
-        </div>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                    <tr>
+                        <td>{{expense.created_date.day}}.{{expense.created_date.month}}.{{expense.created_date.year}}</td>
+                        <td>{{expense.company}}</td>
+                        <td>{{expense.category}}</td>
+                        <td>{{expense.title}}</td>
+                        <td>{{expense.unit}}</td>
+                        <td>{{expense.quantity}}</td>
+                        <td>₺ {{expense.price}}</td>
+                        <td>₺ {{expense.total|floatformat:2}}</td>
+                        <td>
+                            <button class="btn btn-info" hx-get="{% url 'expense:update-expense' expense.id %}" hx-target="#addUpdateDataDialog">Düzenle</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" hx-get="{% url 'expense:get-delete-expense' expense.id %}" hx-target="#addUpdateDataDialog">Sil</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Tarih</th>
+                    <th>Firma</th>
+                    <th>Kategori</th>
+                    <th>Ürün/Hizmet</th>
+                    <th>Birim</th>
+                    <th>Miktar</th>
+                    <th>Birim Tutar</th>
+                    <th>Toplam Tutar</th>
+                    <th>Düzenle</th>
+                    <th>Sil</th>
+                </tr>
+            </tfoot>
+        </table>
     </div>
 </div>
 
+<div class="sales-graph">
+    {% include "includes/graph/lineGraph.html" %}
+    {% include "includes/graph/pieGraph.html" %}
+</div>
 
 <script>
     $(document).ready(function () {
@@ -120,6 +110,33 @@
             }
         }
     });
+
+    /*Pie Chart*/
+    const pieChart = document.getElementById('pie-chart').getContext('2d');
+    var dataLabels = [{% for item in pieData %} "{{ item.category }}", {% endfor %}];
+    const myPieChart = new Chart(pieChart, {
+        type: 'doughnut',
+        data: {
+            labels: dataLabels,
+            datasets: [{
+                label: '',
+                data: [{% for item in pieData %} {{ item.data }}, {% endfor %}],
+                backgroundColor: palette(['tol', 'qualitative', 'sequential'], dataLabels.length).map(function(hex) {
+                    return '#' + hex;
+                  }),
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 1.2,
+            legend: {
+                position: 'bottom',
+            }
+        }  
+    });
+
 </script>
 
 {% endblock body %}

@@ -20,8 +20,9 @@ def expenses(request):
     tag = "Giderler"
     
     expenses = Expense.objects.filter()
+    categories = Category.objects.filter()
     
-    #Line Graph
+    #####Line Graph#####
     days = []
 
     for i in range(31):
@@ -35,32 +36,52 @@ def expenses(request):
         dailyExpense = []
         for expense in expenses:
             if str(expense.created_date) == str(day):
-                print(day)
                 dailyExpense.append(float(expense.total))
             else:
                 dailyExpense.append(0)
         dataExpenses.append(sum(dailyExpense))
     
-    print(dataExpenses)
-    
-    print(days)
-
     lineData = []
 
     for i in range(31):
         lineData.append({
             "day" : days[i],
-            "data" : dataExpenses[i]
+            "data" : round(dataExpenses[i],2)
         })
-    print(lineData)
+    ########################
+    
+    #####Pie Graph#####
+    dataCategory = []
+    dataTotal = []
+    
+    for category in categories:
+        categoryExpense = []
+        for expense in expenses:
+            if str(expense.category) == str(category.title):
+                categoryExpense.append(float(expense.total))
+        dataCategory.append(category.title)
+        dataTotal.append(sum(categoryExpense))
+    
+    pieData = []
+    
+    for i in range(len(dataCategory)):
+        pieData.append({
+            "category" : dataCategory[i],
+            "data" : round(dataTotal[i],2)
+        })
+
+    ##########################
+    
     context = {
                 "tag" : tag,
                 "expenses" : expenses,
-                "lineData" : lineData
+                "lineData" : lineData,
+                "pieData" : pieData
             }
 
     return render(request, "expense/expenses.html", context)
 
+@login_required(login_url = "user:login")
 def addExpense(request):
     tag = "Gider Ekle"
     
@@ -84,6 +105,7 @@ def addExpense(request):
     
     return render(request, 'expense/expenseForm.html', context)
 
+@login_required(login_url = "user:login")
 def addExpenseBatch(request):
     tag = "Excel İle Gider Ekle"
 
@@ -98,21 +120,21 @@ def addExpenseBatch(request):
 
             if request.FILES.getlist("file") == []:
                 messages.info(request, "Dosya Bulunamadı!")
-                return redirect("product:addproductbatch")
+                return HttpResponse(status=204)
             try:
                 data = pd.read_excel(str(newfile.file.path))
                 df = pd.DataFrame(data)
             except ValueError:
                 newfile.delete()
                 messages.info(request, "Şablon Excel formatında olmalıdır!")
-                return redirect("expenses")
+                return HttpResponse(status=204)
 
             try:
                 for i in range(len(df["ÜRÜN BAŞLIĞI"])):
                     if pd.isnull(df["ÜRÜN BAŞLIĞI"][i]):
                         newfile.delete()
                         messages.info(request, "Şablon Hatalı! Ürün başlığı giriniz ve tekrar deneyiniz.")
-                        return redirect("expenses")
+                        return HttpResponse(status=204)
                     
                     #####Select'lerde hücre boşsa default değeri bulup doldurmak#####
                     try:
@@ -156,19 +178,19 @@ def addExpenseBatch(request):
             except KeyError:
                 newfile.delete()
                 messages.info(request, "Şablon Hatalı! Sütun başlıklarını kontrol ediniz ve tekrar deneyiniz.")
-                return redirect("expenses")
+                return HttpResponse(status=204)
 
             except ValueError as e:
                 print(e)
                 newfile.delete()
                 messages.info(request, "Şablon Hatalı! Sayı girilmesi gereken alanlara karakter girilmediğini veya boş bırakılmadığını kontrol ediniz ve tekrar deneyiniz.")
-                return redirect("expenses")
+                return HttpResponse(status=204)
 
             newfile.delete()
 
         messages.success(request, "Ürün Başarıyla Eklendi...")
 
-        return redirect("expenses")
+        return HttpResponse(status=204)
 
     context = { 
                 "tag" : tag,
@@ -178,6 +200,7 @@ def addExpenseBatch(request):
 
     return render(request, "expense/expenseBatchForm.html", context)
 
+@login_required(login_url = "user:login")
 def updateExpense(request, id):
     expenses = Expense.objects.filter()
     expense = get_object_or_404(Expense, id = id)
@@ -204,6 +227,7 @@ def updateExpense(request, id):
 
     return render(request, "expense/expenseForm.html", context)
 
+@login_required(login_url = "user:login")
 def getDeleteExpense(request, id):
     expense = get_object_or_404(Expense, id = id)
 
@@ -213,6 +237,7 @@ def getDeleteExpense(request, id):
     
     return render(request, "expense/deleteExpenseForm.html", context)
 
+@login_required(login_url = "user:login")
 def deleteExpense(request, id):
     expense = get_object_or_404(Expense, id = id)
     
@@ -222,6 +247,7 @@ def deleteExpense(request, id):
     
     return redirect("expenses")
 
+@login_required(login_url = "user:login")
 def addCompany(request):
     tag = "Firma Ekle"
     
@@ -245,6 +271,7 @@ def addCompany(request):
     
     return render(request, 'expense/companyForm.html', context)
 
+@login_required(login_url = "user:login")
 def downloadExpenseExcel(request):
     response = FileResponse(open('./excelfile/add-expense.xlsx', 'rb'))
     return response

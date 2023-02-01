@@ -34,3 +34,7 @@ class ExcelForm(forms.ModelForm):
     class Meta:
         model = Excel
         fields = ["file"]
+        
+        widgets = {
+            "file" : forms.FileInput(attrs = {"class" : "form-control", "accept" : ".xlsx", "style" : "background-color: #fff;"})
+        }

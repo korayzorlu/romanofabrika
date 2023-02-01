@@ -37,7 +37,7 @@ class Expense(models.Model):
     category = models.ForeignKey(Category, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Kategori")
     title = models.CharField(max_length=200, verbose_name = "Ürün/Hizmet")
     unit = models.ForeignKey(Unit, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Birim")
-    created_date = models.DateField(auto_now_add = False, default = timezone.now(), editable = True, verbose_name = "Tarih")
+    created_date = models.DateField(auto_now_add = False, default = timezone.now, editable = True, verbose_name = "Tarih")
     quantity = models.FloatField(verbose_name = "Miktar", default = 1)
     price = models.FloatField(verbose_name = "Birim Fiyat", default = 0.00)
     total = models.FloatField(null = True, blank = True)

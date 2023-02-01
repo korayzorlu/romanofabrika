@@ -21,6 +21,7 @@ htmx.on("htmx:afterSwap", (e) => {
 htmx.on("htmx:beforeSwap", (e) => {
     // Empty response targeting #dialog => hide the modal
     if (e.detail.target.id == "addUpdateDataDialog" && !e.detail.xhr.response) {
+      console.log(e.detail.xhr.status)
       addUpdateDataModal.hide()
       e.detail.shouldSwap = false
       window.location.reload()

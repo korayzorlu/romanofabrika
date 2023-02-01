@@ -1,17 +1,51 @@
 <form hx-post="{{ request.path }}" class="modal-content">
-    {% csrf_token %}
-    <div class="modal-header">
-      <h5 class="modal-title">Malzeme Ekle</h5>
+  {% csrf_token %}
+  <div class="modal-header">
+    <h5 class="modal-title">{{tag}}</h5>
+  </div>
+  <div class="modal-body">
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Kaynak</label>
+      <select class="form-select companySelect" aria-label="Default select example" name="source">
+        {% for source in form.source %}
+          {{ source }}
+        {% endfor %}
+      </select>
     </div>
-    <div class="modal-body">
-      {{ form.as_p }}
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Kategori</label>
+      <select class="form-select" aria-label="Default select example" name="category">
+        {% for category in form.category %}
+          {{ category }}
+        {% endfor %}
+      </select>
     </div>
-    <div class="modal-footer">
-      <button type="button" data-bs-dismiss="modal">Vazgeç</button>
-      <button type="submit">Kaydet</button>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">Ürün/Hizmet</label>
+      {{ form.title }}
     </div>
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Birim</label>
+      <select class="form-select" aria-label="Default select example" name="unit">
+        {% for unit in form.unit %}
+          {{ unit }}
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">Miktar</label>
+      {{ form.quantity }}
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">Birim Tutar</label>
+      {{ form.price }}
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Vazgeç</button>
+    <button class="btn btn-danger" type="submit">Kaydet</button>
+  </div>
 </form>
-
 
 
 

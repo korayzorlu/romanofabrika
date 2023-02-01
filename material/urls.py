@@ -10,4 +10,6 @@ urlpatterns = [
     #path('materials/', views.materials, name = "materials"),
     path('add-material/', views.addMaterial, name = "add-material"),
     path('update-material/<int:id>', views.updateMaterial, name = "update-material"),
+    path('get-delete-material/<int:id>', views.getDeleteMaterial, name = "get-delete-material"),
+    path('delete-material/<int:id>', views.deleteMaterial, name = "delete-material"),
 ]

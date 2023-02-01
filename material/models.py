@@ -14,8 +14,6 @@ class Source(models.Model):
         return self.title
 
 
-QUANTITY_TYPES = (("adet", "Adet"), ("kilogram", "Kg"), ("gram", "Gr"), ("litre", "Litre"), ("metre", "Metre"), ("metrekare", "m2"), ("desimetrekup", "dm3"))
-
 class Category(models.Model):
     title = models.CharField(max_length=200, verbose_name = "Kategori")
     
@@ -32,7 +30,7 @@ class Unit(models.Model):
         return self.title
 
 class Material(models.Model):
-    source = models.ForeignKey(Source, on_delete = models.CASCADE, verbose_name = "Kaynak")
+    source = models.ForeignKey(Source, on_delete = models.CASCADE, default = 2, verbose_name = "Kaynak")
     category = models.ForeignKey(Category, on_delete = models.CASCADE, default = 1, verbose_name = "Kategori")
     title = models.CharField(max_length=200, verbose_name = "Malzeme İsmi")
     unit = models.ForeignKey(Unit, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Birim")

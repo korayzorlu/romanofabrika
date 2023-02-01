@@ -8,6 +8,7 @@ from .models import Material
 from .forms import MaterialForm
 
 # Create your views here.
+
 #@user_passes_test(lambda u: u.is_superuser, login_url = "/admin")
 @login_required(login_url = "user:login")
 def materials(request):
@@ -22,7 +23,7 @@ def materials(request):
 
     return render(request, "material/materials.html", context)
 
-
+@login_required(login_url = "user:login")
 def addMaterial(request):
     tag = "Malzeme Ekle"
     
@@ -46,6 +47,7 @@ def addMaterial(request):
     
     return render(request, 'material/materialForm.html', context)
 
+@login_required(login_url = "user:login")
 def updateMaterial(request, id):
     materials = Material.objects.filter()
     material = get_object_or_404(Material, id = id)
@@ -70,3 +72,23 @@ def updateMaterial(request, id):
             }
 
     return render(request, "material/materiaLForm.html", context)
+
+@login_required(login_url = "user:login")
+def getDeleteMaterial(request, id):
+    material = get_object_or_404(Material, id = id)
+
+    context = {
+                "material" : material
+            }
+    
+    return render(request, "material/deleteMaterialForm.html", context)
+
+@login_required(login_url = "user:login")
+def deleteMaterial(request, id):
+    material = get_object_or_404(Material, id = id)
+    
+    material.delete()
+
+    messages.success(request, "Malzeme Silindi...")
+    
+    return redirect("materials")

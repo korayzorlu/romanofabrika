@@ -11,8 +11,10 @@
                 <th>Kategori</th>
                 <th>Malzeme İsmi</th>
                 <th>Birim</th>
+                <th>Miktar</th>
                 <th>Birim Fiyat</th>
                 <th>Düzenle</th>
+                <th>Sil</th>
             </tr>
         </thead>
         <tbody>
@@ -21,9 +23,13 @@
                     <td>{{material.category}}</td>
                     <td>{{material.title}}</td>
                     <td>{{material.unit}}</td>
-                    <td>{{material.price}}</td>
+                    <td>{{material.quantity}}</td>
+                    <td>₺ {{material.price}}</td>
                     <td>
                         <button class="btn btn-info" hx-get="{% url 'material:update-material' material.id %}" hx-target="#addUpdateDataDialog">Düzenle</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" hx-get="{% url 'material:get-delete-material' material.id %}" hx-target="#addUpdateDataDialog">Sil</button>
                     </td>
                 </tr>
             {% endfor %}
@@ -34,8 +40,10 @@
                 <th>Malzeme Tipi</th>
                 <th>Malzeme İsmi</th>
                 <th>Birim</th>
+                <th>Miktar</th>
                 <th>Birim Fiyat</th>
                 <th>düzenle</th>
+                <th>Sil</th>
             </tr>
         </tfoot>
     </table>
