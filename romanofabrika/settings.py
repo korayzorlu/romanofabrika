@@ -83,14 +83,20 @@ WSGI_APPLICATION = 'romanofabrika.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+engine = config('ENGINE')
+name = config('NAME')
+password = config('PASSWORD')
+host = config('HOST')
+port = config('PORT')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'romanofabrika',
+        'ENGINE': engine,
+        'NAME': name,
         'USER' : 'romano',
-        'PASSWORD' : '1201341',
-        'HOST' : 'localhost',
-        'PORT' : '',
+        'PASSWORD' : password,
+        'HOST' : host,
+        'PORT' : port,
     }
 }
 
