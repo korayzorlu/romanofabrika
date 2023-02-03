@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
-from decouple import config
+from decouple import config, Csv
 
 import psycopg2
 
@@ -30,7 +30,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = [config('ALLOWED_HOSTS')]
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast = Csv())
 
 
 # Application definition
@@ -86,6 +86,7 @@ WSGI_APPLICATION = 'romanofabrika.wsgi.application'
 engine = config('ENGINE')
 name = config('NAME')
 password = config('PASSWORD')
+user = config('USER')
 host = config('HOST')
 port = config('PORT')
 
