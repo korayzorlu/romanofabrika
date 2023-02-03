@@ -13,6 +13,7 @@ class Company(models.Model):
 
     class Meta:
         verbose_name_plural = "companies"
+        ordering = ['title']
 
     def __str__(self):
         return self.title
@@ -46,8 +47,12 @@ class Expense(models.Model):
         self.total = self.quantity * self.price
         return super(Expense, self).save()
     
+    class Meta:
+        ordering = ['-created_date']
+    
     def __str__(self):
         return self.title
+    
 
 class Excel(models.Model):
     file = models.FileField(blank =True, null = True, verbose_name = "Excel Dosyası")

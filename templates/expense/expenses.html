@@ -25,7 +25,7 @@
             <tbody>
                 {% for expense in expenses %}
                     <tr>
-                        <td>{{expense.created_date.day}}.{{expense.created_date.month}}.{{expense.created_date.year}}</td>
+                        <td data-order="1479686400">{{expense.created_date}}</td>
                         <td>{{expense.company}}</td>
                         <td>{{expense.category}}</td>
                         <td>{{expense.title}}</td>
@@ -68,7 +68,9 @@
 
 <script>
     $(document).ready(function () {
-        $('#expenseTable').DataTable();
+        $('#expenseTable').DataTable({
+            order: [[0, 'desc']],
+        });
     });
 
     /*Line Chart*/

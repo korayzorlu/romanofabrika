@@ -29,6 +29,6 @@ class ExpenseAdmin(admin.ModelAdmin):
     list_display_links = ["title"]
     search_fields = ["title"]
     list_filter = ["created_date"]
-    ordering = ["created_date"]
+    ordering = ["-created_date"]
     class Meta:
         model = Expense

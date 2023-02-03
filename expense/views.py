@@ -19,7 +19,7 @@ import pandas as pd
 def expenses(request):
     tag = "Giderler"
     
-    expenses = Expense.objects.filter()
+    expenses = Expense.objects.filter().order_by("-created_date")
     categories = Category.objects.filter()
     
     #####Line Graph#####
