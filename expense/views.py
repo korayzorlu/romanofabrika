@@ -133,7 +133,7 @@ def addExpenseBatch(request):
                 for i in range(len(df["ÜRÜN BAŞLIĞI"])):
                     if pd.isnull(df["ÜRÜN BAŞLIĞI"][i]):
                         newfile.delete()
-                        messages.info(request, "Şablon Hatalı! Ürün başlığı giriniz ve tekrar deneyiniz.")
+                        messages.info(request, "Bazı ürün/ürünlerin başlığı girilmemiş! Lütfen boş olan başlıkları doldurup tekrar deneyin...")
                         return HttpResponse(status=204)
                     
                     #####Select'lerde hücre boşsa default değeri bulup doldurmak#####
