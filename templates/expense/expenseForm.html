@@ -22,7 +22,12 @@
         </select>
       </div>
       <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Kategori</label>
+        <label for="exampleFormControlInput1" class="form-label">
+          Kategori
+          {% if expense == None %}<!--Buradaki if bloğunun amacı, firma ekle butonunu sadece gider ekleme modal'ında göstermek-->
+            <a class="addAttributeButton" hx-get="{% url 'expense:add-category' %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-plus"></i></a>
+          {% endif %}
+        </label>
         <select class="form-select" aria-label="Default select example" name="category">
           {% for category in form.category %}
             {{ category }}
@@ -34,7 +39,12 @@
         {{ form.title }}
       </div>
       <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Birim</label>
+        <label for="exampleFormControlInput1" class="form-label">
+          Birim
+          {% if expense == None %}<!--Buradaki if bloğunun amacı, firma ekle butonunu sadece gider ekleme modal'ında göstermek-->
+            <a class="addAttributeButton" hx-get="{% url 'expense:add-unit' %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-plus"></i></a>
+          {% endif %}
+        </label>
         <select class="form-select" aria-label="Default select example" name="unit">
           {% for unit in form.unit %}
             {{ unit }}

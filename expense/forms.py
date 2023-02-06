@@ -1,10 +1,28 @@
 from django import forms
 
-from .models import Expense, Company, Excel
+from .models import Expense, Company, Excel, Category, Unit
 
 class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
+        fields = ["title"]
+        
+        widgets = {
+            "title" : forms.Textarea(attrs = {"class" : "form-control", "rows" : "1", "style" : "background-color: #fff;"})
+        }
+        
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ["title"]
+        
+        widgets = {
+            "title" : forms.Textarea(attrs = {"class" : "form-control", "rows" : "1", "style" : "background-color: #fff;"})
+        }
+
+class UnitForm(forms.ModelForm):
+    class Meta:
+        model = Unit
         fields = ["title"]
         
         widgets = {

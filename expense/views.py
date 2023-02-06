@@ -8,7 +8,7 @@ from django.http import FileResponse
 from django.utils import timezone
 
 from .models import Expense, Company, Category, Unit
-from .forms import ExpenseForm, CompanyForm, ExcelForm
+from .forms import ExpenseForm, CompanyForm, ExcelForm, CategoryForm, UnitForm
 
 from datetime import date, timedelta
 import pandas as pd
@@ -104,6 +104,12 @@ def addExpense(request):
     }
     
     return render(request, 'expense/expenseForm.html', context)
+
+@login_required(login_url = "user:login")
+def downloadExpenseExcel(request):
+    response = FileResponse(open('./excelfile/add-expense.xlsx', 'rb'))
+    return response
+
 
 @login_required(login_url = "user:login")
 def addExpenseBatch(request):
@@ -272,6 +278,49 @@ def addCompany(request):
     return render(request, 'expense/companyForm.html', context)
 
 @login_required(login_url = "user:login")
-def downloadExpenseExcel(request):
-    response = FileResponse(open('./excelfile/add-expense.xlsx', 'rb'))
-    return response
+def addCategory(request):
+    tag = "Kategori Ekle"
+    
+    form = CategoryForm(request.POST or None, request.FILES or None)
+    
+    if request.method == "POST":
+
+        if form.is_valid():
+            category = form.save(commit = False)
+            category.save()
+
+        messages.success(request, "Kategori Başarıyla Eklendi...")
+
+        return HttpResponse(status=204)
+
+    
+    context = {
+                "tag" : tag,
+                "form" : form
+    }
+    
+    return render(request, 'expense/categoryForm.html', context)
+
+@login_required(login_url = "user:login")
+def addUnit(request):
+    tag = "Birim Ekle"
+    
+    form = UnitForm(request.POST or None, request.FILES or None)
+    
+    if request.method == "POST":
+
+        if form.is_valid():
+            unit = form.save(commit = False)
+            unit.save()
+
+        messages.success(request, "Birim Başarıyla Eklendi...")
+
+        return HttpResponse(status=204)
+
+    
+    context = {
+                "tag" : tag,
+                "form" : form
+    }
+    
+    return render(request, 'expense/unitForm.html', context)

@@ -13,5 +13,7 @@ urlpatterns = [
     path('get-delete-expense/<int:id>', views.getDeleteExpense, name = "get-delete-expense"),
     path('delete-expense/<int:id>', views.deleteExpense, name = "delete-expense"),
     path('add-company/', views.addCompany, name = "add-company"),
+    path('add-category/', views.addCategory, name = "add-category"),
+    path('add-unit/', views.addUnit, name = "add-unit"),
     path('download-expense-excel/', views.downloadExpenseExcel, name = "download-expense-excel"),
 ]
