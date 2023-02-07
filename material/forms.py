@@ -1,6 +1,33 @@
 from django import forms
 
-from .models import Material
+from .models import Material, Source, Category, Unit
+
+class SourceForm(forms.ModelForm):
+    class Meta:
+        model = Source
+        fields = ["title"]
+        
+        widgets = {
+            "title" : forms.Textarea(attrs = {"class" : "form-control", "rows" : "1", "style" : "background-color: #fff;"})
+        }
+        
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ["title"]
+        
+        widgets = {
+            "title" : forms.Textarea(attrs = {"class" : "form-control", "rows" : "1", "style" : "background-color: #fff;"})
+        }
+        
+class UnitForm(forms.ModelForm):
+    class Meta:
+        model = Unit
+        fields = ["title"]
+        
+        widgets = {
+            "title" : forms.Textarea(attrs = {"class" : "form-control", "rows" : "1", "style" : "background-color: #fff;"})
+        }
 
 class MaterialForm(forms.ModelForm):
     class Meta:

@@ -1,0 +1,16 @@
+<form hx-post="{{ request.path }}" class="modal-content">
+    {% csrf_token %}
+    <div class="modal-header">
+      <h5 class="modal-title">Kaynak Ekle</h5>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Kaynak İsmi</label>
+        {{ form.title }}
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" type="button" hx-get="{% url 'material:add-material' %}" hx-target="#addUpdateDataDialog">Vazgeç</button>
+      <button class="btn btn-danger" type="submit">Kaydet</button>
+    </div>
+</form>

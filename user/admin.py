@@ -3,17 +3,28 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
-from .models import Employee
+from .models import Employee, UserCategory, StaffCategory
 
 # Register your models here.
-"""
+
 @admin.register(Employee)
-class EmployeeAdmin(admin.ModelAdmin):
+class EmployeeUser(admin.ModelAdmin):
     list_display = ["image", "user"]
     search_fields = ["image", "user__username"]
     class Meta:
         model = Employee
-"""
+
+@admin.register(UserCategory)
+class UserCategoryAdmin(admin.ModelAdmin):
+    list_display = ["id", "title"]
+    class Meta:
+        model = UserCategory
+
+@admin.register(StaffCategory)
+class StaffCategoryAdmin(admin.ModelAdmin):
+    list_display = ["id", "title"]
+    class Meta:
+        model = StaffCategory       
 
 # Define an inline admin descriptor for Employee model
 # which acts a bit like a singleton

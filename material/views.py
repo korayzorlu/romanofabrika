@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
 
 from .models import Material
-from .forms import MaterialForm
+from .forms import MaterialForm, SourceForm, CategoryForm, UnitForm
 
 # Create your views here.
 
@@ -68,7 +68,8 @@ def updateMaterial(request, id):
     context = { 
                 "tag" : tag,
                 "form" : form,
-                "materials" : materials
+                "materials" : materials,
+                "material" : material
             }
 
     return render(request, "material/materiaLForm.html", context)
@@ -92,3 +93,72 @@ def deleteMaterial(request, id):
     messages.success(request, "Malzeme Silindi...")
     
     return redirect("materials")
+
+@login_required(login_url = "user:login")
+def addSource(request):
+    tag = "Kaynak Ekle"
+    
+    form = SourceForm(request.POST or None, request.FILES or None)
+    
+    if request.method == "POST":
+
+        if form.is_valid():
+            source = form.save(commit = False)
+            source.save()
+
+        messages.success(request, "Kaynak Başarıyla Eklendi...")
+
+        return HttpResponse(status=204)
+
+    context = {
+                "tag" : tag,
+                "form" : form
+    }
+    
+    return render(request, 'material/sourceForm.html', context)
+
+@login_required(login_url = "user:login")
+def addCategory(request):
+    tag = "Kategori Ekle"
+    
+    form = CategoryForm(request.POST or None, request.FILES or None)
+    
+    if request.method == "POST":
+
+        if form.is_valid():
+            category = form.save(commit = False)
+            category.save()
+
+        messages.success(request, "Kategori Başarıyla Eklendi...")
+
+        return HttpResponse(status=204)
+
+    context = {
+                "tag" : tag,
+                "form" : form
+    }
+    
+    return render(request, 'material/categoryForm.html', context)
+
+@login_required(login_url = "user:login")
+def addUnit(request):
+    tag = "Birim Ekle"
+    
+    form = UnitForm(request.POST or None, request.FILES or None)
+    
+    if request.method == "POST":
+
+        if form.is_valid():
+            unit = form.save(commit = False)
+            unit.save()
+
+        messages.success(request, "Birim Başarıyla Eklendi...")
+
+        return HttpResponse(status=204)
+
+    context = {
+                "tag" : tag,
+                "form" : form
+    }
+    
+    return render(request, 'material/unitForm.html', context)
