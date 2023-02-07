@@ -29,6 +29,17 @@
     </div>
     <div class="box">
         <div class="left-side">
+            <div class="box-topic">Son 30 Günlük Gider</div>
+            <div class="number">₺ {{ expenseTotal30 }}</div>
+            <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Geçen aydan daha yüksek</span>
+            </div>
+        </div>
+        <i class="bx bxs-cart-add cart two"></i>
+    </div>
+    <div class="box">
+        <div class="left-side">
             <div class="box-topic">Sipariş Durumu</div>
             <div class="orderStatus">
                 <div class="orderStatusTitle">Bekleyen Siparişler </div>
@@ -46,34 +57,6 @@
                 <div class="orderStatusTitle">Bekleyen İadeler </div>
                 <div class="orderStatusBox">
                     <div class="orderStatusValue">2</div>
-                </div>
-            </div>
-            <!-- <div class="indicator">
-                <i class="bx bx-up-arrow-alt"></i>
-                <span class="text">Dünden daha yüksek</span>
-            </div> -->
-        </div>
-        <!-- <i class="bx bxs-cart cart three"></i> -->
-    </div>
-    <div class="box">
-        <div class="left-side">
-            <div class="box-topic">Ürün Durumu</div>
-            <div class="productStatus">
-                <div class="productStatusTitle">Satıştaki Ürünler </div>
-                <div class="productStatusBox">
-                    <div class="productStatusValue">{{ products.count }}</div>
-                </div>
-            </div>
-            <div class="productStatus">
-                <div class="productStatusTitle">Tükenen Ürünler </div>
-                <div class="productStatusBox">
-                    <div class="productStatusValue">0</div>
-                </div>
-            </div>
-            <div class="productStatus">
-                <div class="productStatusTitle">Pasif Ürünler </div>
-                <div class="productStatusBox">
-                    <div class="productStatusValue">2</div>
                 </div>
             </div>
             <!-- <div class="indicator">

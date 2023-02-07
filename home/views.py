@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import user_passes_test
 
 from datetime import date, timedelta
 
+from expense.models import Expense
+
 # Create your views here.
 
 #@user_passes_test(lambda u: u.is_superuser, login_url = "/admin")
@@ -15,7 +17,13 @@ def index(request):
 @login_required(login_url = "user:login")
 def dashboard(request):
     tag = "Kontrol Paneli"
+    
+    expenses = Expense.objects.filter().order_by("-created_date")
+    expensesList = []
+    for i in range(31):
+        expensesList.append(float(expenses[i].total))
 
+    expenseTotal30 = sum(expensesList)
 
     #Line Graph
     days = []
@@ -48,7 +56,8 @@ def dashboard(request):
     context = {
                 "tag" : tag,
                 "lineData" : lineData,
-                "pieData" : pieData
+                "pieData" : pieData,
+                "expenseTotal30" : expenseTotal30
             }
 
     return render(request, "dashboard/dashboard.html", context)
