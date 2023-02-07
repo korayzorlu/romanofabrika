@@ -27,7 +27,5 @@ class StaffCategory(models.Model):
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    user_category = models.ForeignKey(UserCategory, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Kullanıcı Kategorisi")
-    staff_category = models.ForeignKey(StaffCategory, blank = True, null = True, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Personel Kategorisi")
     image = models.ImageField(blank = True, null = True, verbose_name = "Profil Resmi", upload_to = user_directory_path)
     phone_number = models.CharField(max_length = 200, blank = True, null = True, verbose_name = "Tel No")
