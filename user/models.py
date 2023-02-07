@@ -7,23 +7,7 @@ def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/beat/author/<filename>
     return 'profiles/{0}/{1}'.format(instance.user, filename)
 
-class UserCategory(models.Model):
-    title = models.CharField(max_length=200, verbose_name = "Kullanıcı Kategorisi")
-    
-    class Meta:   
-        verbose_name_plural = "user categories"
 
-    def __str__(self):
-        return self.title
-    
-class StaffCategory(models.Model):
-    title = models.CharField(max_length=200, verbose_name = "Personel Kategorisi")
-    
-    class Meta:   
-        verbose_name_plural = "staff categories"
-
-    def __str__(self):
-        return self.title
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
