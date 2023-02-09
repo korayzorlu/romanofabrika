@@ -2,6 +2,8 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 
+from django.utils import timezone
+
 from datetime import date, timedelta
 
 from expense.models import Expense
@@ -19,29 +21,36 @@ def dashboard(request):
     tag = "Kontrol Paneli"
     
     expenses = Expense.objects.filter().order_by("-created_date")
-    expensesList = []
-    for i in range(31):
-        expensesList.append(float(expenses[i].total))
-
-    expenseTotal30 = sum(expensesList)
-
-    #Line Graph
+    
+    #####Line Graph#####
     days = []
 
     for i in range(31):
-        days.append((date.today()-timedelta(days=i)).isoformat())
+        days.append((timezone.now().date()-timedelta(days=i)).isoformat())
 
     days.reverse()
     
-    sales = [1,3,4,3,6,5,8,4,14,12,8,9,6,16,9,10,8,7,8,8,9,12,11,13,13,12,7,17,18,19,19]
-
+    dataExpenses = []
+    
+    for day in days:
+        dailyExpense = []
+        for expense in expenses:
+            if str(expense.created_date) == str(day):
+                dailyExpense.append(float(expense.total))
+            else:
+                dailyExpense.append(0)
+        dataExpenses.append(sum(dailyExpense))
+    
     lineData = []
 
     for i in range(31):
         lineData.append({
             "day" : days[i],
-            "sale" : sales[i]
+            "data" : round(dataExpenses[i],2)
         })
+        
+    expenseTotal30 = round(sum(dataExpenses),2)
+    ########################
     
     #Pie Graph
     pieData = [
