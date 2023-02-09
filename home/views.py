@@ -3,8 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 
 from django.utils import timezone
+from django.utils.formats import date_format
+from django.utils import translation
 
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
+import calendar
 
 from expense.models import Expense
 
@@ -21,6 +24,8 @@ def dashboard(request):
     tag = "Kontrol Paneli"
     
     expenses = Expense.objects.filter().order_by("-created_date")
+    
+    translation.activate('tr')
     
     #####Line Graph#####
     days = []
@@ -45,11 +50,32 @@ def dashboard(request):
 
     for i in range(31):
         lineData.append({
-            "day" : days[i],
+            "day" : datetime.strptime(days[i], "%Y-%m-%d").date(),
             "data" : round(dataExpenses[i],2)
         })
-        
-    expenseTotal30 = round(sum(dataExpenses),2)
+    ########################
+    
+    ######Monthly Total######
+    #expenseTotal30 = round(sum(dataExpenses),2)
+    expenseListCurrentMonth = []
+    
+    currentMonth = datetime.today().month
+    currentMonthName = date_format(datetime.today(), "F")
+    
+    for i in range(len(lineData)):
+        dataMonth = lineData[i]["day"].month
+        if dataMonth == currentMonth:
+            expenseListCurrentMonth.append(lineData[i]["data"])
+    
+    expensesCurrentMonthTotal = sum(expenseListCurrentMonth)
+    
+    lastMonthStart= "2023-" + str(currentMonth - 1) + "-01"
+    lastMonthEnd = "2023-" + str(currentMonth - 1) + "-" + str(calendar.monthrange(currentMonth - 1, 1)[1])
+    expensesLastMont = Expense.objects.filter(created_date__range = (lastMonthStart, lastMonthEnd)).order_by("-created_date")
+    expensesLastMonthList = []
+    for exp in expensesLastMont:
+        expensesLastMonthList.append(exp.total)
+    expensesLastMonthTotal = sum(expensesLastMonthList)
     ########################
     
     #Pie Graph
@@ -66,7 +92,9 @@ def dashboard(request):
                 "tag" : tag,
                 "lineData" : lineData,
                 "pieData" : pieData,
-                "expenseTotal30" : expenseTotal30
+                "expensesCurrentMonthTotal" : expensesCurrentMonthTotal,
+                "currentMonthName" : currentMonthName,
+                "expensesLastMonthTotal" : expensesLastMonthTotal
             }
 
     return render(request, "dashboard/dashboard.html", context)

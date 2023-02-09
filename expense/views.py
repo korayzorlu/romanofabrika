@@ -48,6 +48,7 @@ def expenses(request):
             "day" : days[i],
             "data" : round(dataExpenses[i],2)
         })
+    
     ########################
     
     #####Pie Graph#####
