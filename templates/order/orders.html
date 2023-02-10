@@ -1,0 +1,134 @@
+{% extends 'layout/dashboardLayout.html' %}
+
+{% block body %}
+{% load crispy_forms_tags %}
+<div class="globalBoxes">
+    <div class="box">
+        <button class="btn btn-info" hx-get="" hx-target="#addUpdateDataDialog" style="margin-bottom: 20px;">Sipariş Ekle</button>
+        <a class="btn btn-warning" href="{% url 'order:update-orders' %}" style="margin-bottom: 20px;">Güncelle</a>
+        <table id="expenseTable" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Sipariş Tarihi</th>
+                    <th>Adı Soyadı</th>
+                    <th>Ürün Görseli</th>
+                    <th>Ürün Başlığı</th>
+                    <th>Sipariş Durumu</th>
+                    <th>Düzenle</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td data-order="1479686400">{{order.SiparisTarihi.date}}</td>
+                        <td>{{order.AdiSoyadi}}</td>
+                        <td><img src = "{{order.Urunler.WebSiparisUrun.0.ResimYolu}}" style="max-width: 100px;"></td>
+                        <td>{{order.Urunler.WebSiparisUrun.0.UrunAdi}}</td>
+                        <td>
+                            <button class="btn btn-warning">
+                                <i class="fa-solid fa-paint-roller"></i>
+                                Boyada
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-info" hx-get="" hx-target="#addUpdateDataDialog">Düzenle</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Sipariş Tarihi</th>
+                    <th>Adı Soyadı</th>
+                    <th>Ürün Görseli</th>
+                    <th>Ürün Başlığı</th>
+                    <th>Sipariş Durmu</th>
+                    <th>Düzenle</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<div class="sales-graph">
+    {% include "includes/graph/lineGraph.html" %}
+    {% include "includes/graph/pieGraph.html" %}
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#expenseTable').DataTable({
+            order: [[0, 'desc']]
+        });
+    });
+
+    /*Line Chart*/
+    const lineChart = document.getElementById('line-chart').getContext('2d');
+    const myLineChart = new Chart(lineChart, {
+        type: 'line',
+        data: {
+            labels: [{% for item in lineData %} "{{ item.day }}", {% endfor %}],
+            datasets: [{
+                label: 'Günlük Gider',
+                data: [{% for item in lineData %} {{ item.data }}, {% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 56, 0, 0.2)',
+                ],
+                borderColor: [
+                    '#ff3800',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+                xAxes: [{
+                gridLines: {
+                    color: "rgba(0, 0, 0, 0)",
+                }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0.05)",
+                    }   
+                }]
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+    /*Pie Chart*/
+    const pieChart = document.getElementById('pie-chart').getContext('2d');
+    var dataLabels = [{% for item in pieData %} "{{ item.category }}", {% endfor %}];
+    const myPieChart = new Chart(pieChart, {
+        type: 'doughnut',
+        data: {
+            labels: dataLabels,
+            datasets: [{
+                label: '',
+                data: [{% for item in pieData %} {{ item.data }}, {% endfor %}],
+                backgroundColor: palette(['tol', 'qualitative', 'sequential'], dataLabels.length).map(function(hex) {
+                    return '#' + hex;
+                  }),
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 1.2,
+            legend: {
+                position: 'bottom',
+            }
+        }  
+    });
+
+</script>
+
+{% endblock body %}

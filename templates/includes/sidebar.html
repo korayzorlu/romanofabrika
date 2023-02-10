@@ -1,5 +1,7 @@
 {% if request.path == "/dashboard/" %}
     <style>.sidebarv2 ul li a.dashboard{color: #11101d;background: #ff6961;}</style>
+{% elif request.path == "/orders/" %}
+    <style>.sidebarv2 ul li a.orders{color: #11101d;background: #ff6961;}</style>
 {% elif request.path == "/user/products/" or request.path == "/user/addproduct/" %}
     <style>.sidebarv2 ul li a.products{color: #11101d;background: #ff6961;}</style>
 {% elif request.path == "/materials/" %}
@@ -37,7 +39,7 @@
                 <span class="tooltipv2">Kontrol Paneli</span>
             </li>
             <li>
-                <a href="">
+                <a href="{% url 'orders' %}" class="orders">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span class="links_name">Siparişler</span>
                 </a>
