@@ -9,6 +9,7 @@
         <table id="expenseTable" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
+                    <th>Sipariş ID</th>
                     <th>Sipariş Tarihi</th>
                     <th>Adı Soyadı</th>
                     <th>Ürün Görseli</th>
@@ -20,6 +21,7 @@
             <tbody>
                 {% for order in orders %}
                     <tr>
+                        <td>{{order.ID}}</td>
                         <td data-order="1479686400">{{order.SiparisTarihi.date}}</td>
                         <td>{{order.AdiSoyadi}}</td>
                         <td><img src = "{{order.Urunler.WebSiparisUrun.0.ResimYolu}}" style="max-width: 100px;"></td>
@@ -39,6 +41,7 @@
             </tbody>
             <tfoot>
                 <tr>
+                    <th>Sipariş ID</th>
                     <th>Sipariş Tarihi</th>
                     <th>Adı Soyadı</th>
                     <th>Ürün Görseli</th>

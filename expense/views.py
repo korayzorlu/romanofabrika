@@ -22,6 +22,11 @@ def expenses(request):
     expenses = Expense.objects.filter().order_by("-created_date")
     categories = Category.objects.filter()
     
+    testtest = get_object_or_404(Expense, id = 89)
+    testtest.title = "asdtesttest123"
+    testtest.save()
+    print(timezone.now().time())
+    
     #####Line Graph#####
     days = []
 
