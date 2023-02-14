@@ -18,7 +18,7 @@ class Order(models.Model):
     order_date = models.DateField(auto_now_add = False, default = timezone.now, editable = True, verbose_name = "Sipariş Tarihi")
     customer_name = models.CharField(max_length=200, verbose_name = "Müşteri Adı")
     products = models.JSONField(verbose_name = "Ürünler")
-    #order_status = models.ForeignKey(Status, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Sipariş Durumu")
+    order_status = models.ForeignKey(Status, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Sipariş Durumu")
 
     def __str__(self):
         return self.title
