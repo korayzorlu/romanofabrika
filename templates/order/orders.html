@@ -12,25 +12,30 @@
                     <th>Sipariş ID</th>
                     <th>Sipariş Tarihi</th>
                     <th>Adı Soyadı</th>
-                    <th>Ürün Görseli</th>
-                    <th>Ürün Başlığı</th>
-                    <th>Sipariş Durumu</th>
+                    <th>Ürün</th>
                     <th>Düzenle</th>
                 </tr>
             </thead>
             <tbody>
                 {% for order in orders %}
-                    <tr>
+                    <tr style="vertical-align: middle;">
                         <td>{{order.order_id}}</td>
                         <td data-order="1479686400">{{order.order_date}}</td>
                         <td>{{order.customer_name}}</td>
-                        <td><img src = "{{order.products.0.productImg}}" style="max-width: 100px;"></td>
-                        <td>{{order.products.0.productName}}</td>
                         <td>
-                            <button class="btn btn-warning">
-                                <i class="fa-solid fa-paint-roller"></i>
-                                {{order.order_status}}
-                            </button>
+                            <ul style="list-style-type: none; margin: 0; padding: 0;">
+                                {% for product in order.products %} 
+                                    <li style="display: flex; align-items: center;">
+                                        <img src = "{{product.productImg}}" style="max-width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span>{{product.productName}}</span>
+                                        <span style="margin-left: auto;">{{product.productQuantity|floatformat:"0"}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button class="btn btn-warning">
+                                                <i class="fa-solid fa-paint-roller"></i>
+                                                {{order.order_status}}
+                                            </button>
+                                    </li>
+                                {% endfor %}
+                            </ul>
                         </td>
                         <td>
                             <button class="btn btn-info" hx-get="" hx-target="#addUpdateDataDialog">Düzenle</button>
@@ -44,9 +49,7 @@
                     <th>Sipariş ID</th>
                     <th>Sipariş Tarihi</th>
                     <th>Adı Soyadı</th>
-                    <th>Ürün Görseli</th>
-                    <th>Ürün Başlığı</th>
-                    <th>Sipariş Durmu</th>
+                    <th>Ürün</th>
                     <th>Düzenle</th>
                 </tr>
             </tfoot>

@@ -21,6 +21,8 @@ from datetime import date, timedelta, datetime
 def orders(request):
     tag = "Siparişler"
     
+    translation.activate('tr')
+    
     orders = Order.objects.filter()
     
     context = {
@@ -33,9 +35,6 @@ def orders(request):
 @login_required(login_url = "user:login")
 def updateOrders(request):
     tag = "Siparişler"
-    
-    translation.activate('tr')
-    
     client = Client("https://www.romanodizayn.com/Servis/SiparisServis.svc?wsdl",location="https://www.romanodizayn.com/Servis/SiparisServis.svc")
     
     siparisEntegrasyon = {"AlanDeger" : "", "Deger" : "", "EntegrasyonKodu" : "", "EntegrasyonParamsAktif" : True, "TabloAlan" : "", "Tanim" : ""}

@@ -10,6 +10,7 @@ from datetime import date, timedelta, datetime
 import calendar
 
 from expense.models import Expense
+from order.models import Order
 
 # Create your views here.
 
@@ -24,6 +25,7 @@ def dashboard(request):
     tag = "Kontrol Paneli"
     
     expenses = Expense.objects.filter().order_by("-created_date")
+    orders = Order.objects.filter().order_by("-order_date")
     
     translation.activate('tr')
     
@@ -36,15 +38,20 @@ def dashboard(request):
     days.reverse()
     
     dataExpenses = []
+    dataOrders = []
     
     for day in days:
         dailyExpense = []
+        dailyOrder = []
         for expense in expenses:
             if str(expense.created_date) == str(day):
                 dailyExpense.append(float(expense.total))
             else:
                 dailyExpense.append(0)
         dataExpenses.append(sum(dailyExpense))
+        #for order in orders:
+            #if str(order.order_date) == str(day):
+                #dailyOrder.append(float(order))
     
     lineData = []
 
@@ -58,6 +65,7 @@ def dashboard(request):
     ######Monthly Total######
     #expenseTotal30 = round(sum(dataExpenses),2)
     expenseListCurrentMonth = []
+    orderListCurrentMonth = []
     
     currentMonth = datetime.today().month
     currentMonthName = date_format(datetime.today(), "F")
@@ -94,7 +102,8 @@ def dashboard(request):
                 "pieData" : pieData,
                 "expensesCurrentMonthTotal" : expensesCurrentMonthTotal,
                 "currentMonthName" : currentMonthName,
-                "expensesLastMonthTotal" : expensesLastMonthTotal
+                "expensesLastMonthTotal" : expensesLastMonthTotal,
+                "orders" : orders
             }
 
     return render(request, "dashboard/dashboard.html", context)
