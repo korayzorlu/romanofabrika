@@ -21,15 +21,15 @@
             <tbody>
                 {% for order in orders %}
                     <tr>
-                        <td>{{order.ID}}</td>
-                        <td data-order="1479686400">{{order.SiparisTarihi.date}}</td>
-                        <td>{{order.AdiSoyadi}}</td>
-                        <td><img src = "{{order.Urunler.WebSiparisUrun.0.ResimYolu}}" style="max-width: 100px;"></td>
-                        <td>{{order.Urunler.WebSiparisUrun.0.UrunAdi}}</td>
+                        <td>{{order.order_id}}</td>
+                        <td data-order="1479686400">{{order.order_date}}</td>
+                        <td>{{order.customer_name}}</td>
+                        <td><img src = "{{order.products.0.productImg}}" style="max-width: 100px;"></td>
+                        <td>{{order.products.0.productName}}</td>
                         <td>
                             <button class="btn btn-warning">
                                 <i class="fa-solid fa-paint-roller"></i>
-                                Boyada
+                                {{order.order_status}}
                             </button>
                         </td>
                         <td>

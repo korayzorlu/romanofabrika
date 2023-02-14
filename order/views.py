@@ -2,7 +2,11 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 
+from django.contrib import messages
+
 from django.utils import translation
+
+from .models import Order
 
 import json
 from suds.client import Client
@@ -17,10 +21,11 @@ from datetime import date, timedelta, datetime
 def orders(request):
     tag = "Siparişler"
     
-    
+    orders = Order.objects.filter()
     
     context = {
-                "tag" : tag
+                "tag" : tag,
+                "orders" : orders
             }
 
     return render(request, "order/orders.html", context)
@@ -73,16 +78,26 @@ def updateOrders(request):
     
     newdd = recursive_dict(dd)
     
-    orders = newdd["WebSiparis"]
+    ordersData = newdd["WebSiparis"]
+    print(ordersData[0]["SiparisTarihi"].date)
     
-    today = datetime.today()
+    for order in ordersData:
+        if not Order.objects.filter(order_id = order["ID"]).exists():
+            orderProducts = []
+            for orderProduct in order["Urunler"]["WebSiparisUrun"]:
+                orderProducts.append({"productName" : str(orderProduct["UrunAdi"]),
+                                      "productImg" : str(orderProduct["ResimYolu"]),
+                                      "productID" : int(orderProduct["UrunKartiID"]),
+                                      "productPrice" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2),
+                                      "productQuantity" : float(orderProduct["Adet"]),
+                                      "productTotal" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2) * float(orderProduct["Adet"])
+                                      })
+            newOrder = Order(order_id = order["ID"],
+                             order_date = order["SiparisTarihi"].date(),
+                             customer_name = order["AdiSoyadi"],
+                             products = orderProducts)
+            newOrder.save()
     
-    print(newdd["WebSiparis"][0]["Urunler"]["WebSiparisUrun"])
+    messages.success(request, "Siparişler Güncellendi")
     
-    context = {
-                "tag" : tag,
-                "orders" : orders,
-                "today" : today
-            }
-
-    return render(request, "order/orders.html", context)
+    return redirect("orders")
