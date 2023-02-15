@@ -31,23 +31,23 @@
                                         <span>{{product.productName}}</span>
                                         <span style="margin-left: auto; font-weight: 600;">{{product.productQuantity|floatformat:"0"}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                             {% if product.productStatus == "Bekliyor" %}
-                                                <button class="btn btn-warning" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-paint-roller"></i>&nbsp;{{product.productStatus}}</button>
+                                                <button class="btn btn-warning" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-clock"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Üretim Bekliyor" %}
-                                                <button class="btn btn-warning" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                                <button class="btn btn-warning" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-clock"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Üretimde" %}
-                                                <button class="btn btn-secondary" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                                <button class="btn btn-secondary" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-industry"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Üretimi Tamamlandı" %}
                                                 <button class="btn btn-info" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Boyahanede" %}
-                                                <button class="btn btn-primary" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                                <button class="btn btn-primary" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-paint-roller"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Montajda" %}
-                                                <button class="btn btn-light" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                                <button class="btn btn-light" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Nakliyeye Gönderildi" %}
-                                                <button class="btn btn-danger" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                                <button class="btn btn-danger" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-truck"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Nakliye Teslim Aldı" %}
-                                                <button class="btn btn-danger" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                                <button class="btn btn-danger" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-truck"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Taşıma Durumunda" %}
-                                                <button class="btn btn-danger" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                                <button class="btn btn-danger" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-truck"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Müşteriye Teslim Edildi" %}
                                                 <button class="btn btn-success" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
                                             {% endif %}
