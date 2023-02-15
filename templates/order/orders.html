@@ -6,14 +6,15 @@
     <div class="box">
         <button class="btn btn-info" hx-get="" hx-target="#addUpdateDataDialog" style="margin-bottom: 20px;">Sipariş Ekle</button>
         <a class="btn btn-warning" href="{% url 'order:update-orders' %}" style="margin-bottom: 20px;">Güncelle</a>
-        <table id="expenseTable" class="table table-striped" style="width:100%">
+        <table id="orderTable" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
                     <th>Sipariş ID</th>
                     <th>Sipariş Tarihi</th>
                     <th>Adı Soyadı</th>
                     <th>Ürün</th>
-                    <th>Düzenle</th>
+                    <th>Sipariş Tutarı</th>
+                    <th>Detay</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,20 +26,38 @@
                         <td>
                             <ul style="list-style-type: none; margin: 0; padding: 0;">
                                 {% for product in order.products %} 
-                                    <li style="display: flex; align-items: center;">
+                                    <li style="display: flex; align-items: center; padding: 5px 0;">
                                         <img src = "{{product.productImg}}" style="max-width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span>{{product.productName}}</span>
-                                        <span style="margin-left: auto;">{{product.productQuantity|floatformat:"0"}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <button class="btn btn-warning">
-                                                <i class="fa-solid fa-paint-roller"></i>
-                                                {{order.order_status}}
-                                            </button>
+                                        <span>{{product.productName}} {{forloop.counter0}}</span>
+                                        <span style="margin-left: auto; font-weight: 600;">{{product.productQuantity|floatformat:"0"}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            {% if product.productStatus == "Bekliyor" %}
+                                                <button class="btn btn-warning" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-paint-roller"></i>&nbsp;{{product.productStatus}}</button>
+                                            {% elif product.productStatus == "Üretim Bekliyor" %}
+                                                <button class="btn btn-warning" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                            {% elif product.productStatus == "Üretimde" %}
+                                                <button class="btn btn-secondary" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                            {% elif product.productStatus == "Üretimi Tamamlandı" %}
+                                                <button class="btn btn-info" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                            {% elif product.productStatus == "Boyahanede" %}
+                                                <button class="btn btn-primary" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                            {% elif product.productStatus == "Montajda" %}
+                                                <button class="btn btn-light" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                            {% elif product.productStatus == "Nakliyeye Gönderildi" %}
+                                                <button class="btn btn-danger" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                            {% elif product.productStatus == "Nakliye Teslim Aldı" %}
+                                                <button class="btn btn-danger" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                            {% elif product.productStatus == "Taşıma Durumunda" %}
+                                                <button class="btn btn-danger" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                            {% elif product.productStatus == "Müşteriye Teslim Edildi" %}
+                                                <button class="btn btn-success" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                            {% endif %}
                                     </li>
                                 {% endfor %}
                             </ul>
                         </td>
+                        <td>₺ {{order.total}}</td>
                         <td>
-                            <button class="btn btn-info" hx-get="" hx-target="#addUpdateDataDialog">Düzenle</button>
+                            <button class="btn btn-info" hx-get="" hx-target="#addUpdateDataDialog">Detay</button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -50,7 +69,8 @@
                     <th>Sipariş Tarihi</th>
                     <th>Adı Soyadı</th>
                     <th>Ürün</th>
-                    <th>Düzenle</th>
+                    <th>Sipariş Tutarı</th>
+                    <th>Detay</th>
                 </tr>
             </tfoot>
         </table>
@@ -64,7 +84,7 @@
 
 <script>
     $(document).ready(function () {
-        $('#expenseTable').DataTable({
+        $('#orderTable').DataTable({
             order: [[0, 'desc']]
         });
     });

@@ -9,4 +9,5 @@ app_name = "order"
 urlpatterns = [
     #path('orders/', views.orders, name = "orders"),
     path('update-orders/', views.updateOrders, name = "update-orders"),
+    path('update-status/<int:id>/<int:counter>', views.updateStatus, name = "update-status"),
 ]

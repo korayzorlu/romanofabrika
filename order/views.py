@@ -6,7 +6,8 @@ from django.contrib import messages
 
 from django.utils import translation
 
-from .models import Order
+from .models import Order, Status
+from .forms import OrderForm
 
 import json
 from suds.client import Client
@@ -24,6 +25,7 @@ def orders(request):
     translation.activate('tr')
     
     orders = Order.objects.filter()
+    #print(orders[0].products[0]["productName"])
     
     context = {
                 "tag" : tag,
@@ -82,11 +84,13 @@ def updateOrders(request):
     
     for order in ordersData:
         if not Order.objects.filter(order_id = order["ID"]).exists():
+            theStatus = get_object_or_404(Status, id = 1)
             orderProducts = []
             for orderProduct in order["Urunler"]["WebSiparisUrun"]:
                 orderProducts.append({"productName" : str(orderProduct["UrunAdi"]),
                                       "productImg" : str(orderProduct["ResimYolu"]),
                                       "productID" : int(orderProduct["UrunKartiID"]),
+                                      "productStatus" : theStatus.title,
                                       "productPrice" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2),
                                       "productQuantity" : float(orderProduct["Adet"]),
                                       "productTotal" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2) * float(orderProduct["Adet"])
@@ -94,9 +98,58 @@ def updateOrders(request):
             newOrder = Order(order_id = order["ID"],
                              order_date = order["SiparisTarihi"].date(),
                              customer_name = order["AdiSoyadi"],
-                             products = orderProducts)
+                             products = orderProducts,
+                             total = round(order["SiparisToplamTutari"],2))
             newOrder.save()
+        if Order.objects.filter(order_id = order["ID"]).exists():
+            theOrder = get_object_or_404(Order, order_id = order["ID"])
+            theStatus = get_object_or_404(Status, id = 10)
+            orderProducts = []
+            for orderProduct in order["Urunler"]["WebSiparisUrun"]:
+                orderProducts.append({"productName" : str(orderProduct["UrunAdi"]),
+                                      "productImg" : str(orderProduct["ResimYolu"]),
+                                      "productID" : int(orderProduct["UrunKartiID"]),
+                                      "productStatus" : theStatus.title,
+                                      "productPrice" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2),
+                                      "productQuantity" : float(orderProduct["Adet"]),
+                                      "productTotal" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2) * float(orderProduct["Adet"])
+                                      })
+            theOrder.products = orderProducts
+            theOrder.total = round(order["SiparisToplamTutari"],2)
+            theOrder.save()
+            
     
     messages.success(request, "Siparişler Güncellendi")
     
     return redirect("orders")
+
+@login_required(login_url = "user:login")
+def updateStatus(request, id, counter):
+    orders = Order.objects.filter()
+    order = get_object_or_404(Order, id = id)
+    
+    statuses = Status.objects.filter()
+    
+    form = OrderForm(request.POST or None, request.FILES or None, instance = order)
+    
+    tag = order.order_id
+
+    if request.method == "POST":
+        if form.is_valid():
+            order.products[counter]["productStatus"] = form.cleaned_data["order_status"].title
+            order.save()
+            
+        messages.success(request, "Değişiklikler Kaydedildi...")
+
+        return HttpResponse(status=204)
+
+    context = { 
+                "tag" : tag,
+                "form" : form,
+                "orders" : orders,
+                "order" : order,
+                "counter" : counter,
+                "statuses" : statuses
+            }
+
+    return render(request, "order/statusForm.html", context)

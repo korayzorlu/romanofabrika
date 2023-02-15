@@ -221,6 +221,8 @@ footer .bottom-details .bottom-text a{margin-right: 10px;}
 .home-section .home-content .sales-graph .head i{cursor: pointer;}
 .home-section .home-content .sales-graph .button{width: 100%;display: flex;justify-content: flex-end;}
 .home-section .home-content .sales-graph .button a{font-size: 15px;font-weight: 400;color: #fff;background: #11101d;padding: 4px 12px;border-radius: 4px;text-decoration: none;transition: all 0.3s ease;}
+/*Order Table*/
+.home-section .home-content #orderTable ul li button{width: 25%; display: flex; justify-content: space-between;}
 
 /****************************************************************************************/
 

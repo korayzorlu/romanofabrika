@@ -19,6 +19,7 @@ class Order(models.Model):
     customer_name = models.CharField(max_length=200, verbose_name = "Müşteri Adı")
     products = models.JSONField(verbose_name = "Ürünler")
     order_status = models.ForeignKey(Status, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Sipariş Durumu")
+    total = models.FloatField(verbose_name = "Sipariş Tutarı", default = 0.00)
 
     def __str__(self):
-        return self.title
+        return self.customer_name

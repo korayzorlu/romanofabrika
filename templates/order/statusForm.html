@@ -1,0 +1,20 @@
+<form hx-post="{{ request.path }}" class="modal-content">
+    {% csrf_token %}
+    <div class="modal-header">
+      <h5 class="modal-title">Durum Güncelle</h5>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Durum</label>
+        <select class="form-select" aria-label="Default select example" name="order_status">
+            {% for status in form.order_status %}
+              {{ status }}
+            {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Vazgeç</button>
+      <button class="btn btn-danger" type="submit">Kaydet</button>
+    </div>
+</form>
