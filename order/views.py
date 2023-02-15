@@ -103,6 +103,7 @@ def updateOrders(request):
             newOrder.save()
             
         #ihtiyaç halinde toplu güncelleme yapılmak istenirse bu alanı kullan
+        """
         if Order.objects.filter(order_id = order["ID"]).exists():
             theOrder = get_object_or_404(Order, order_id = order["ID"])
             theStatus = get_object_or_404(Status, id = 11)
@@ -119,7 +120,7 @@ def updateOrders(request):
             theOrder.products = orderProducts
             theOrder.total = round(order["SiparisToplamTutari"],2)
             theOrder.save()
-            
+        """
     
     messages.success(request, "Siparişler Güncellendi")
     
