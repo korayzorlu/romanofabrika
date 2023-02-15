@@ -22,7 +22,7 @@
                     <tr style="vertical-align: middle;">
                         <td>{{order.order_id}}</td>
                         <td data-order="1479686400">{{order.order_date}}</td>
-                        <td>{{order.customer_name}}</td>
+                        <td >{{order.customer_name}}</td>
                         <td>
                             <ul style="list-style-type: none; margin: 0; padding: 0;">
                                 {% for product in order.products %} 
@@ -85,9 +85,33 @@
 <script>
     $(document).ready(function () {
         $('#orderTable').DataTable({
-            order: [[0, 'desc']]
+            order: [[0, 'desc']],
+            initComplete: function () {
+                this.api()
+                    .columns().every(function () {
+                        var column = this;
+                        var select = $('<select><option value=""></option></select>')
+                            .appendTo($(column.header()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+     
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+     
+                        column
+                            .data()
+                            .unique()
+                            .sort()
+                            .each(function (d, j) {
+                                select.append('<option value="' + d + '">' + d + '</option>');
+                            });
+                    });
+            },
         });
+
     });
+
+
 
     /*Line Chart*/
     const lineChart = document.getElementById('line-chart').getContext('2d');
