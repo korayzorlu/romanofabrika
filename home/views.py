@@ -75,7 +75,7 @@ def dashboard(request):
         if dataMonth == currentMonth:
             expenseListCurrentMonth.append(lineData[i]["data"])
     
-    expensesCurrentMonthTotal = sum(expenseListCurrentMonth)
+    expensesCurrentMonthTotal = round(sum(expenseListCurrentMonth),2)
     
     lastMonthStart= "2023-" + str(currentMonth - 1) + "-01"
     lastMonthEnd = "2023-" + str(currentMonth - 1) + "-" + str(calendar.monthrange(currentMonth - 1, 1)[1])

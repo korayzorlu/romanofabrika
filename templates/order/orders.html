@@ -4,7 +4,7 @@
 {% load crispy_forms_tags %}
 <div class="globalBoxes">
     <div class="box">
-        <button class="btn btn-info" hx-get="" hx-target="#addUpdateDataDialog" style="margin-bottom: 20px;">Sipariş Ekle</button>
+        <button class="btn btn-info" style="margin-bottom: 20px;">Sipariş Ekle</button>
         <a class="btn btn-warning" href="{% url 'order:update-orders' %}" style="margin-bottom: 20px;">Güncelle</a>
         <table id="orderTable" class="table table-striped" style="width:100%">
             <thead>
@@ -38,7 +38,7 @@
                                                 <button class="btn btn-secondary" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-industry"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Üretimi Tamamlandı" %}
                                                 <button class="btn btn-info" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
-                                            {% elif product.productStatus == "Boyahanede" %}
+                                            {% elif product.productStatus == "Boyada" %}
                                                 <button class="btn btn-primary" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-paint-roller"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Montajda" %}
                                                 <button class="btn btn-light" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;{{product.productStatus}}</button>
@@ -57,7 +57,7 @@
                         </td>
                         <td>₺ {{order.total}}</td>
                         <td>
-                            <button class="btn btn-info" hx-get="" hx-target="#addUpdateDataDialog">Detay</button>
+                            <button class="btn btn-info">Detay</button>
                         </td>
                     </tr>
                 {% endfor %}
