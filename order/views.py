@@ -101,9 +101,11 @@ def updateOrders(request):
                              products = orderProducts,
                              total = round(order["SiparisToplamTutari"],2))
             newOrder.save()
+            
+        #ihtiyaç halinde toplu güncelleme yapılmak istenirse bu alanı kullan
         if Order.objects.filter(order_id = order["ID"]).exists():
             theOrder = get_object_or_404(Order, order_id = order["ID"])
-            theStatus = get_object_or_404(Status, id = 10)
+            theStatus = get_object_or_404(Status, id = 11)
             orderProducts = []
             for orderProduct in order["Urunler"]["WebSiparisUrun"]:
                 orderProducts.append({"productName" : str(orderProduct["UrunAdi"]),
