@@ -18,11 +18,16 @@
     </div>
     <div class="box">
         <div class="left-side">
-            <div class="box-topic">Haftalık Ciro</div>
-            <div class="number">₺97586.87</div>
+            <div class="box-topic">{{ currentMonthName }} Ayı Toplam Ciro</div>
+            <div class="number">₺ {{ ordersCurrentMonthTotal }}</div>
             <div class="indicator">
-                <i class="bx bx-up-arrow-alt"></i>
-                <span class="text">Geçen haftadan daha yüksek</span>
+                {% if ordersCurrentMonthTotal > ordersLastMonthTotal %}
+                    <i class="bx bx-up-arrow-alt"></i>
+                    <span class="text">Geçen aydan daha yüksek</span>
+                {% else %}
+                    <i class="bx bx-down-arrow-alt"></i>
+                    <span class="text">Geçen aydan daha düşük (Ocak: {{ ordersLastMonthTotal }})</span>
+                {% endif %}
             </div>
         </div>
         <i class="bx bxs-cart-add cart two"></i>
@@ -134,9 +139,9 @@
             <li>
                 <a href="">
                     <img src="/static/images/00007333.jpg" alt="">
-                    <span class="product-name">Gucci Women's Bag</span>
+                    <span class="product-name">{{ mostSelledProduct }}</span>
                 </a>
-                <span class="price">₺14.66</span>
+                <span class="price">₺3842,68</span>
             </li>
             <li>
                 <a href="">

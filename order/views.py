@@ -50,7 +50,7 @@ def updateOrders(request):
                    "SiparisID" : -1,
                    "SiparisKaynagi" : "TicimaxWeb",
                    "SiparisKodu" : "",
-                   "SiparisTarihiBas" : datetime(2022, 11, 1),
+                   "SiparisTarihiBas" : datetime(2022, 10, 1),
                    #"SiparisTarihiSon" : datetime(2023, 2, 9),
                    "StrSiparisDurumu" : "",
                    "TedarikciID" : -1,
@@ -80,27 +80,33 @@ def updateOrders(request):
     newdd = recursive_dict(dd)
     
     ordersData = newdd["WebSiparis"]
-    print(ordersData[0]["SiparisTarihi"].date)
+    print(ordersData[0]["SiparisTarihi"].month)
     
     for order in ordersData:
         if not Order.objects.filter(order_id = order["ID"]).exists():
             theStatus = get_object_or_404(Status, id = 1)
             orderProducts = []
-            for orderProduct in order["Urunler"]["WebSiparisUrun"]:
-                orderProducts.append({"productName" : str(orderProduct["UrunAdi"]),
-                                      "productImg" : str(orderProduct["ResimYolu"]),
-                                      "productID" : int(orderProduct["UrunKartiID"]),
-                                      "productStatus" : theStatus.title,
-                                      "productPrice" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2),
-                                      "productQuantity" : float(orderProduct["Adet"]),
-                                      "productTotal" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2) * float(orderProduct["Adet"])
-                                      })
-            newOrder = Order(order_id = order["ID"],
-                             order_date = order["SiparisTarihi"].date(),
-                             customer_name = order["AdiSoyadi"],
-                             products = orderProducts,
-                             total = round(order["SiparisToplamTutari"],2))
-            newOrder.save()
+           
+            try:
+                for orderProduct in order["Urunler"]["WebSiparisUrun"]:
+                    orderProducts.append({"productName" : str(orderProduct["UrunAdi"]),
+                                        "productImg" : str(orderProduct["ResimYolu"]),
+                                        "productID" : int(orderProduct["UrunKartiID"]),
+                                        "productStatus" : theStatus.title,
+                                        "productPrice" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2),
+                                        "productQuantity" : float(orderProduct["Adet"]),
+                                        "productTotal" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2) * float(orderProduct["Adet"])
+                                        })
+                newOrder = Order(order_id = order["ID"],
+                                order_date = order["SiparisTarihi"].date(),
+                                customer_name = order["AdiSoyadi"],
+                                products = orderProducts,
+                                total = round(order["SiparisToplamTutari"],2))
+                newOrder.save()
+            except:
+                print("-----------")
+                print("ID: " + str(order["ID"]) + " - siparişte ürün yok")
+                print("-----------")
             
         #ihtiyaç halinde toplu güncelleme yapılmak istenirse bu alanı kullan
         """
@@ -121,7 +127,15 @@ def updateOrders(request):
             theOrder.total = round(order["SiparisToplamTutari"],2)
             theOrder.save()
         """
-    
+        #ilgili aydaki tüm siparişlerdeki ürün durumlarını teslim edildi yapar
+        
+        if Order.objects.filter(order_id = order["ID"]).exists():
+            theOrder = get_object_or_404(Order, order_id = order["ID"])
+            if theOrder.order_date.month == 10:
+                for i in range(len(theOrder.products)):
+                    theOrder.products[i]["productStatus"] = "Müşteriye Teslim Edildi"
+            theOrder.save()
+            
     messages.success(request, "Siparişler Güncellendi")
     
     return redirect("orders")
