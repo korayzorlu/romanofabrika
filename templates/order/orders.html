@@ -27,7 +27,7 @@
                             <ul style="list-style-type: none; margin: 0; padding: 0;">
                                 {% for product in order.products %} 
                                     <li style="display: flex; align-items: center; padding: 5px 0;">
-                                        <img src = "{{product.productImg}}" style="max-width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a hx-get="{% url 'order:show-image' order.id forloop.counter0%}" hx-target="#showImageDialog"><img src = "{{product.productImg}}" style="max-width: 100px; cursor: pointer;"></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span>{{product.productName}}</span>
                                         <span style="margin-left: auto; font-weight: 600;">{{product.productQuantity|floatformat:"0"}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                             {% if product.productStatus == "Bekliyor" %}

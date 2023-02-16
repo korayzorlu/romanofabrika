@@ -25,7 +25,6 @@ def orders(request):
     translation.activate('tr')
     
     orders = Order.objects.filter()
-    #print(orders[0].products[0]["productName"])
     
     context = {
                 "tag" : tag,
@@ -50,7 +49,7 @@ def updateOrders(request):
                    "SiparisID" : -1,
                    "SiparisKaynagi" : "TicimaxWeb",
                    "SiparisKodu" : "",
-                   "SiparisTarihiBas" : datetime(2022, 10, 1),
+                   "SiparisTarihiBas" : datetime(2022, 9, 1),
                    #"SiparisTarihiSon" : datetime(2023, 2, 9),
                    "StrSiparisDurumu" : "",
                    "TedarikciID" : -1,
@@ -131,7 +130,7 @@ def updateOrders(request):
         
         if Order.objects.filter(order_id = order["ID"]).exists():
             theOrder = get_object_or_404(Order, order_id = order["ID"])
-            if theOrder.order_date.month == 10:
+            if theOrder.order_date.month == 9:
                 for i in range(len(theOrder.products)):
                     theOrder.products[i]["productStatus"] = "Müşteriye Teslim Edildi"
             theOrder.save()
@@ -170,3 +169,16 @@ def updateStatus(request, id, counter):
             }
 
     return render(request, "order/statusForm.html", context)
+
+@login_required(login_url = "user:login")
+def showImage(request, id, counter):
+    
+    order = get_object_or_404(Order, id = id)
+    
+    src = order.products[counter]["productImg"]
+    
+    context = {
+                "src" : src
+            }
+
+    return render(request, "order/imageModal.html", context)

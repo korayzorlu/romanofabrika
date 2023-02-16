@@ -90,29 +90,89 @@ def dashboard(request):
     ordersLastMonthList = []
     for exp in expensesLastMont:
         expensesLastMonthList.append(exp.total)
-    expensesLastMonthTotal = sum(expensesLastMonthList)
+    expensesLastMonthTotal = round(sum(expensesLastMonthList),2)
     for ord in ordersLastMonth:
         ordersLastMonthList.append(ord.total)
-    ordersLastMonthTotal = sum(ordersLastMonthList)
+    ordersLastMonthTotal = round(sum(ordersLastMonthList),2)
     ########################
     
     #####En Çok Satan Ürün#####
     ordersProductsList = []
+    ordersProductsStatusList = [] #ürün durumlarının sayısını da burada alabiliriz
     for order in orders:
         for product in order.products:
             ordersProductsList.append(product["productName"])
-            
+            ordersProductsStatusList.append(product["productStatus"])
+    
+    bekleyenCount = ordersProductsStatusList.count("Bekliyor")
+    
     def most_frequent(List):
+        #1
         counter = 0
-        num = List[0]
+        num1 = List[0]
         
         for i in List:
             curr_frequency = List.count(i)
             if(curr_frequency> counter):
                 counter = curr_frequency
-                num = i
-    
-        return num
+                num1 = i
+
+        #2
+        List = list(filter((num1).__ne__, List))
+        counter = 0
+        num2 = List[0]
+        
+        for i in List:
+            curr_frequency = List.count(i)
+            if(curr_frequency> counter):
+                counter = curr_frequency
+                num2 = i
+                
+        #3
+        List = list(filter((num2).__ne__, List))
+        counter = 0
+        num3 = List[0]
+        
+        for i in List:
+            curr_frequency = List.count(i)
+            if(curr_frequency> counter):
+                counter = curr_frequency
+                num3 = i
+                
+        #4
+        List = list(filter((num3).__ne__, List))
+        counter = 0
+        num4 = List[0]
+        
+        for i in List:
+            curr_frequency = List.count(i)
+            if(curr_frequency> counter):
+                counter = curr_frequency
+                num4 = i
+                
+        #5
+        List = list(filter((num4).__ne__, List))
+        counter = 0
+        num5 = List[0]
+        
+        for i in List:
+            curr_frequency = List.count(i)
+            if(curr_frequency> counter):
+                counter = curr_frequency
+                num5 = i
+                
+        #6
+        List = list(filter((num5).__ne__, List))
+        counter = 0
+        num6 = List[0]
+        
+        for i in List:
+            curr_frequency = List.count(i)
+            if(curr_frequency> counter):
+                counter = curr_frequency
+                num6 = i
+        
+        return num1, num2, num3, num4, num5, num6
     
     mostSelledProduct = most_frequent(ordersProductsList)
     ########################
@@ -137,7 +197,8 @@ def dashboard(request):
                 "orders" : orders,
                 "ordersCurrentMonthTotal" : ordersCurrentMonthTotal,
                 "ordersLastMonthTotal" : ordersLastMonthTotal,
-                "mostSelledProduct" : mostSelledProduct
+                "mostSelledProduct" : mostSelledProduct,
+                "bekleyenCount" : bekleyenCount
             }
 
     return render(request, "dashboard/dashboard.html", context)

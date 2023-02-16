@@ -26,7 +26,7 @@
                     <span class="text">Geçen aydan daha yüksek</span>
                 {% else %}
                     <i class="bx bx-down-arrow-alt"></i>
-                    <span class="text">Geçen aydan daha düşük (Ocak: {{ ordersLastMonthTotal }})</span>
+                    <span class="text">Geçen aydan daha düşük ({{ ordersLastMonthTotal }})</span>
                 {% endif %}
             </div>
         </div>
@@ -52,9 +52,9 @@
         <div class="left-side">
             <div class="box-topic">Sipariş Durumu</div>
             <div class="orderStatus">
-                <div class="orderStatusTitle">Bekleyen Siparişler </div>
+                <div class="orderStatusTitle">Bekleyen Ürünler </div>
                 <div class="orderStatusBox">
-                    <div class="orderStatusValue">14</div>
+                    <div class="orderStatusValue">{{ bekleyenCount }}</div>
                 </div>
             </div>
             <div class="orderStatus">
@@ -130,7 +130,7 @@
             </ul>
         </div>
         <div class="button">
-            <a href="">Tümünü Gör</a>
+            <a href="/orders">Tümünü Gör</a>
         </div>
     </div>
     <div class="top-sales box">
@@ -139,42 +139,42 @@
             <li>
                 <a href="">
                     <img src="/static/images/00007333.jpg" alt="">
-                    <span class="product-name">{{ mostSelledProduct }}</span>
+                    <span class="product-name">{{ mostSelledProduct.0 }}</span>
                 </a>
                 <span class="price">₺3842,68</span>
             </li>
             <li>
                 <a href="">
                     <img src="/static/images/00007333.jpg" alt="">
-                    <span class="product-name">Gucci Women's Bag</span>
+                    <span class="product-name">{{ mostSelledProduct.1 }}</span>
                 </a>
                 <span class="price">₺14.66</span>
             </li>
             <li>
                 <a href="">
                     <img src="/static/images/00007333.jpg" alt="">
-                    <span class="product-name">Gucci Women's Bag</span>
+                    <span class="product-name">{{ mostSelledProduct.2 }}</span>
                 </a>
                 <span class="price">₺14.66</span>
             </li>
             <li>
                 <a href="">
                     <img src="/static/images/00007333.jpg" alt="">
-                    <span class="product-name">Gucci Women's Bag</span>
+                    <span class="product-name">{{ mostSelledProduct.3 }}</span>
                 </a>
                 <span class="price">₺14.66</span>
             </li>
             <li>
                 <a href="">
                     <img src="/static/images/00007333.jpg" alt="">
-                    <span class="product-name">Gucci Women's Bag</span>
+                    <span class="product-name">{{ mostSelledProduct.4 }}</span>
                 </a>
                 <span class="price">₺14.66</span>
             </li>
             <li>
                 <a href="">
                     <img src="/static/images/00007333.jpg" alt="">
-                    <span class="product-name">Gucci Women's Bag</span>
+                    <span class="product-name">{{ mostSelledProduct.5 }}</span>
                 </a>
                 <span class="price">₺14.66</span>
             </li>
@@ -195,7 +195,7 @@ const myLineChart = new Chart(lineChart, {
         labels: [{% for item in lineData %} "{{ item.day }}", {% endfor %}],
         datasets: [{
             label: 'Ciro',
-            data: [{% for item in lineData %} {{ item.data }}, {% endfor %}],
+            data: [{% for item in lineData %} {{ item.orderData }}, {% endfor %}],
             backgroundColor: [
                 'rgba(255, 56, 0, 0.2)',
             ],

@@ -10,12 +10,16 @@ $(document).ready(function() {
 ///////////////////////////////////HTMX////////////////////////////////
 //htmx dialog gösterme
 const addUpdateDataModal = new bootstrap.Modal(document.getElementById("addUpdateDataModal"))
+const showImageModal = new bootstrap.Modal(document.getElementById("showImageModal"))
 htmx.on("htmx:afterSwap", (e) => {
   // Response targeting #dialog => show the modal
   if (e.detail.target.id == "addUpdateDataDialog") {
     addUpdateDataModal.show()
-  }
-})
+  };
+  if(e.detail.target.id == "showImageDialog"){
+    showImageModal.show()
+  };
+});
 
 //htmx dialog gizleme
 htmx.on("htmx:beforeSwap", (e) => {
@@ -25,13 +29,20 @@ htmx.on("htmx:beforeSwap", (e) => {
       addUpdateDataModal.hide()
       e.detail.shouldSwap = false
       window.location.reload()
-    }
-  })
+    };
+    if (e.detail.target.id == "showImageDialog" && !e.detail.xhr.response) {
+      console.log(e.detail.xhr.status)
+      showImageModal.hide()
+      e.detail.shouldSwap = false
+      window.location.reload()
+    };
+  });
 
 //htmx iptalden sonra içeriği temizleme
 htmx.on("hidden.bs.modal", () => {
     document.getElementById("addUpdateDataDialog").innerHTML = "";
-  })
+    document.getElementById("showImageDialog").innerHTML = "";
+  });
 ///////////////////////////////////HTMX-END////////////////////////////////
 
 let btnMenu = $("#btnmenu");
