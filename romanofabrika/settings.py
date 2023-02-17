@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "order",
     "material",
     "expense",
+    "product"
 ]
 
 MIDDLEWARE = [
@@ -139,7 +140,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    
+    config('ADMIN_STATIC_DIR'),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
