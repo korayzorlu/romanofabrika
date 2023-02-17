@@ -140,7 +140,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    config('ADMIN_STATIC_DIR'),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
@@ -154,3 +153,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #USE_THOUSAND_SEPARATOR = True
+
