@@ -79,7 +79,9 @@ def updateOrders(request):
     newdd = recursive_dict(dd)
     
     ordersData = newdd["WebSiparis"]
-    print(ordersData[0]["SiparisTarihi"].month)
+    print(ordersData[0]["TeslimatAdresi"])
+    print(ordersData[0]["TeslimatAdresi"]["Il"])
+    print(ordersData[0]["TeslimatAdresi"]["Ilce"])
     
     for order in ordersData:
         if not Order.objects.filter(order_id = order["ID"]).exists():
@@ -100,6 +102,7 @@ def updateOrders(request):
                                 order_date = order["SiparisTarihi"].date(),
                                 customer_name = order["AdiSoyadi"],
                                 products = orderProducts,
+                                cargo_address = order["TeslimatAdresi"],
                                 total = round(order["SiparisToplamTutari"],2))
                 newOrder.save()
             except:
@@ -127,14 +130,20 @@ def updateOrders(request):
             theOrder.save()
         """
         #ilgili aydaki tüm siparişlerdeki ürün durumlarını teslim edildi yapar
-        
+        """
         if Order.objects.filter(order_id = order["ID"]).exists():
             theOrder = get_object_or_404(Order, order_id = order["ID"])
             if theOrder.order_date.month == 9:
                 for i in range(len(theOrder.products)):
                     theOrder.products[i]["productStatus"] = "Müşteriye Teslim Edildi"
             theOrder.save()
-            
+        """
+        #ilgili siparişlerin adreslerini günceller
+        if Order.objects.filter(order_id = order["ID"]).exists():
+            theOrder = get_object_or_404(Order, order_id = order["ID"])
+            theOrder.cargo_address = order["TeslimatAdresi"]
+            theOrder.save()
+        
     messages.success(request, "Siparişler Güncellendi")
     
     return redirect("orders")

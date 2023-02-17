@@ -101,7 +101,7 @@ def dashboard(request):
     ordersProductsStatusList = [] #ürün durumlarının sayısını da burada alabiliriz
     for order in orders:
         for product in order.products:
-            ordersProductsList.append(product["productName"])
+            ordersProductsList.append({"name" : product["productName"], "img" : product["productImg"], "price" : product["productPrice"]})
             ordersProductsStatusList.append(product["productStatus"])
     
     bekleyenCount = ordersProductsStatusList.count("Bekliyor")

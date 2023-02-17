@@ -111,13 +111,13 @@
                 <li><a href="">{{orders.5.customer_name}}</a></li>
             </ul>
             <ul class="details">
-                <li class="topic">Satış</li>
-                <li><a href="">Teslim Edildi</a></li>
-                <li><a href="">İade</a></li>
-                <li><a href="">Teslim Edildi</a></li>
-                <li><a href="">Beklemede</a></li>
-                <li><a href="">Teslim Edildi</a></li>
-                <li><a href="">Teslim Edildi</a></li>
+                <li class="topic">Teslimat</li>
+                <li><a href="">{{orders.0.cargo_address.Il}}</a></li>
+                <li><a href="">{{orders.1.cargo_address.Il}}</a></li>
+                <li><a href="">{{orders.2.cargo_address.Il}}</a></li>
+                <li><a href="">{{orders.3.cargo_address.Il}}</a></li>
+                <li><a href="">{{orders.4.cargo_address.Il}}</a></li>
+                <li><a href="">{{orders.5.cargo_address.Il}}</a></li>
             </ul>
             <ul class="details">
                 <li class="topic">Toplam</li>
@@ -138,45 +138,45 @@
         <ul>
             <li>
                 <a href="">
-                    <img src="/static/images/00007333.jpg" alt="">
-                    <span class="product-name">{{ mostSelledProduct.0 }}</span>
+                    <img src="{{ mostSelledProduct.0.img }}" alt="">
+                    <span class="product-name">{{ mostSelledProduct.0.name }}</span>
                 </a>
-                <span class="price">₺3842,68</span>
+                <span class="price">₺ {{ mostSelledProduct.0.price}}</span>
             </li>
             <li>
                 <a href="">
-                    <img src="/static/images/00007333.jpg" alt="">
-                    <span class="product-name">{{ mostSelledProduct.1 }}</span>
+                    <img src="{{ mostSelledProduct.1.img }}" alt="">
+                    <span class="product-name">{{ mostSelledProduct.1.name }}</span>
                 </a>
-                <span class="price">₺14.66</span>
+                <span class="price">₺ {{ mostSelledProduct.1.price}}</span>
             </li>
             <li>
                 <a href="">
-                    <img src="/static/images/00007333.jpg" alt="">
-                    <span class="product-name">{{ mostSelledProduct.2 }}</span>
+                    <img src="{{ mostSelledProduct.2.img }}" alt="">
+                    <span class="product-name">{{ mostSelledProduct.2.name }}</span>
                 </a>
-                <span class="price">₺14.66</span>
+                <span class="price">₺ {{ mostSelledProduct.2.price}}</span>
             </li>
             <li>
                 <a href="">
-                    <img src="/static/images/00007333.jpg" alt="">
-                    <span class="product-name">{{ mostSelledProduct.3 }}</span>
+                    <img src="{{ mostSelledProduct.3.img }}" alt="">
+                    <span class="product-name">{{ mostSelledProduct.3.name }}</span>
                 </a>
-                <span class="price">₺14.66</span>
+                <span class="price">₺ {{ mostSelledProduct.3.price}}</span>
             </li>
             <li>
                 <a href="">
-                    <img src="/static/images/00007333.jpg" alt="">
-                    <span class="product-name">{{ mostSelledProduct.4 }}</span>
+                    <img src="{{ mostSelledProduct.4.img }}" alt="">
+                    <span class="product-name">{{ mostSelledProduct.4.name }}</span>
                 </a>
-                <span class="price">₺14.66</span>
+                <span class="price">₺ {{ mostSelledProduct.4.price}}</span>
             </li>
             <li>
                 <a href="">
-                    <img src="/static/images/00007333.jpg" alt="">
-                    <span class="product-name">{{ mostSelledProduct.5 }}</span>
+                    <img src="{{ mostSelledProduct.5.img }}" alt="">
+                    <span class="product-name">{{ mostSelledProduct.5.name }}</span>
                 </a>
-                <span class="price">₺14.66</span>
+                <span class="price">₺ {{ mostSelledProduct.5.price}}</span>
             </li>
         </ul>
     </div>
