@@ -37,7 +37,7 @@ def dashboard(request):
         days.append((timezone.now().date()-timedelta(days=i)).isoformat())
 
     days.reverse()
-    
+    print(days)
     dataExpenses = []
     dataOrders = []
     
@@ -64,7 +64,7 @@ def dashboard(request):
             "orderData" : round(dataOrders[i],2)
         })
     ########################
-    
+    print(lineData)
     ######Monthly Total######
     #expenseTotal30 = round(sum(dataExpenses),2)
     expenseListCurrentMonth = []
@@ -173,8 +173,10 @@ def dashboard(request):
                 num6 = i
         
         return num1, num2, num3, num4, num5, num6
-    
-    mostSelledProduct = most_frequent(ordersProductsList)
+    if len(ordersProductsList) > 0:
+        mostSelledProduct = most_frequent(ordersProductsList)
+    else:
+        mostSelledProduct = []
     ########################
     
     #Pie Graph

@@ -70,6 +70,9 @@
     $(document).ready(function () {
         $('#expenseTable').DataTable({
             order: [[0, 'desc']],
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.2/i18n/tr.json'
+            }
         });
     });
 
