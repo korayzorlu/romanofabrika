@@ -52,21 +52,21 @@
         <div class="left-side">
             <div class="box-topic">Sipariş Durumu</div>
             <div class="orderStatus">
-                <div class="orderStatusTitle">Bekleyen Ürünler </div>
+                <div class="orderStatusTitle">Bekleyen Ürünler</div>
                 <div class="orderStatusBox">
                     <div class="orderStatusValue">{{ bekleyenCount }}</div>
                 </div>
             </div>
             <div class="orderStatus">
-                <div class="orderStatusTitle">Geciken Siparişler </div>
+                <div class="orderStatusTitle">Üretimdeki Ürünler</div>
                 <div class="orderStatusBox">
-                    <div class="orderStatusValue">0</div>
+                    <div class="orderStatusValue">{{ uretimCount }}</div>
                 </div>
             </div>
             <div class="orderStatus">
-                <div class="orderStatusTitle">Bekleyen İadeler </div>
+                <div class="orderStatusTitle">Montajdaki Ürünler</div>
                 <div class="orderStatusBox">
-                    <div class="orderStatusValue">2</div>
+                    <div class="orderStatusValue">{{ montajCount }}</div>
                 </div>
             </div>
             <!-- <div class="indicator">

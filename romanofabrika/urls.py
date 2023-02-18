@@ -24,6 +24,7 @@ from home.views import index, dashboard
 from material.views import materials
 from expense.views import expenses
 from order.views import orders
+from product.views import products
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +37,8 @@ urlpatterns = [
     path('expenses/', expenses, name="expenses"),
     path('orders/', include("order.urls")),
     path('orders/', orders, name="orders"),
+    path('products/', include("product.urls")),
+    path('products/', products, name="products"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

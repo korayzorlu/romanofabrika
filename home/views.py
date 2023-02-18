@@ -105,6 +105,8 @@ def dashboard(request):
             ordersProductsStatusList.append(product["productStatus"])
     
     bekleyenCount = ordersProductsStatusList.count("Bekliyor")
+    uretimCount = ordersProductsStatusList.count("Üretimde")
+    montajCount = ordersProductsStatusList.count("Montajda")
     
     def most_frequent(List):
         #1
@@ -200,7 +202,9 @@ def dashboard(request):
                 "ordersCurrentMonthTotal" : ordersCurrentMonthTotal,
                 "ordersLastMonthTotal" : ordersLastMonthTotal,
                 "mostSelledProduct" : mostSelledProduct,
-                "bekleyenCount" : bekleyenCount
+                "bekleyenCount" : bekleyenCount,
+                "uretimCount" : uretimCount,
+                "montajCount" : montajCount
             }
 
     return render(request, "dashboard/dashboard.html", context)
