@@ -37,7 +37,7 @@ def dashboard(request):
         days.append((timezone.now().date()-timedelta(days=i)).isoformat())
 
     days.reverse()
-    print(days)
+ 
     dataExpenses = []
     dataOrders = []
     
@@ -64,7 +64,7 @@ def dashboard(request):
             "orderData" : round(dataOrders[i],2)
         })
     ########################
-    print(lineData)
+
     ######Monthly Total######
     #expenseTotal30 = round(sum(dataExpenses),2)
     expenseListCurrentMonth = []
