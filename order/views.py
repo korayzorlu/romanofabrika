@@ -82,7 +82,8 @@ def updateOrders(request):
     print(ordersData[0]["TeslimatAdresi"])
     print(ordersData[0]["TeslimatAdresi"]["Il"])
     print(ordersData[0]["TeslimatAdresi"]["Ilce"])
-    
+    print(ordersData[0])
+   
     for order in ordersData:
         if not Order.objects.filter(order_id = order["ID"]).exists():
             theStatus = get_object_or_404(Status, id = 1)
