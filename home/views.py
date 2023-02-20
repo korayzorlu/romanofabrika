@@ -13,6 +13,8 @@ import calendar
 from expense.models import Expense
 from order.models import Order
 
+import requests
+
 # Create your views here.
 
 #@user_passes_test(lambda u: u.is_superuser, login_url = "/admin")
@@ -190,6 +192,10 @@ def dashboard(request):
         {"shop" : "Çiçeksepeti", "sale" : 5},
         {"shop" : "Amazon", "sale" : 9}
     ]
+
+    headers = {"Authorization": "Bearer <>"}
+    dd = requests.get("https://api.ziraatbank.com.tr/portal/atms", headers = headers)
+    print(dd)
 
     context = {
                 "tag" : tag,

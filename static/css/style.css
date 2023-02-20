@@ -184,7 +184,7 @@ footer .bottom-details .bottom-text a{margin-right: 10px;}
 .home-section .home-content .overview-boxes .indicator i.down{background: #e87d88;}
 .home-section .home-content .overview-boxes .indicator .text{font-size: 12px;}
 /*Summary Boxes*/
-.home-section .home-content .overview-boxes .box .cart{font-size: 32px;font-weight: 500;height: 50px;width: 50px;background: #cce5ff;color: #66b0ff;line-height: 50px;text-align: center;border-radius: 12px;}
+.home-section .home-content .overview-boxes .box .cart{font-size: 24px;height: 50px;width: 50px;background: #eed1d6;/*color: #66b0ff;*/color: #d1485f;line-height: 50px;text-align: center;border-radius: 12px;}
 .home-section .home-content .overview-boxes .box .cart.two{background: #c0f2d8;color: #2bd47d;}
 .home-section .home-content .overview-boxes .box .cart.three{background: #ffe8b3;color: #ffc233;}
 .home-section .home-content .overview-boxes .box .cart.four{background: #f7d4d7;color: #e05260;}
