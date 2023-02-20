@@ -193,9 +193,9 @@ def dashboard(request):
         {"shop" : "Amazon", "sale" : 9}
     ]
 
-    headers = {"Authorization": "Bearer <>"}
-    dd = requests.get("https://api.ziraatbank.com.tr/portal/atms", headers = headers)
-    print(dd)
+    #headers = {"Authorization": "Bearer <>"}
+    #dd = requests.get("https://api.ziraatbank.com.tr/portal/atms", headers = headers)
+    #print(dd)
 
     context = {
                 "tag" : tag,
