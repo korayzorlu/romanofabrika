@@ -4,8 +4,9 @@
 {% load crispy_forms_tags %}
 <div class="globalBoxes">
     <div class="box">
-        <button class="btn btn-info" style="margin-bottom: 20px;">Sipariş Ekle</button>
+        <button class="btn btn-info" onclick="window.print()" style="margin-bottom: 20px;">Sipariş Ekle</button>
         <a class="btn btn-warning" href="{% url 'order:update-orders' %}" style="margin-bottom: 20px;">Güncelle</a>
+        <a class="btn btn-danger" href="{% url 'order:print-orders' %}" style="margin-bottom: 20px;">Üretim Tablosu</a>
         <table id="orderTable" class="table table-striped" style="width:100%">
             <thead>
                 <tr>

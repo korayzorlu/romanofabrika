@@ -1,0 +1,184 @@
+{% extends 'layout/dashboardLayout.html' %}
+
+{% block body %}
+{% load crispy_forms_tags %}
+<div class="globalBoxes">
+    <div class="box">
+        <a class="btn btn-warning" href="{% url 'orders' %}" style="margin-bottom: 20px;">Siparişlere Dön</a>
+        <table id="orderTable" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Sipariş ID</th>
+                    <th>Sipariş Tarihi</th>
+                    <th>Adı Soyadı</th>
+                    <th>Şehir</th>
+                    <th>Görsel</th>
+                    <th>Ürün İsmi</th>
+                    <th>Adet</th>
+                    <th>Üretim</th>
+                    <th>Zımpara</th>
+                    <th>Boya</th>
+                    <th>Montaj</th>
+                    <th>Paketleme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    {% for product in order.products %}
+                        <tr style="vertical-align: middle;">
+                            
+                            <td>{{order.order_id}}</td>
+                            <td data-order="1479686400">{{order.order_date}}</td>
+                            <td >{{order.customer_name}}</td>
+                            <td >{{order.cargo_address.Ilce}}/{{order.cargo_address.Il}}</td>
+                            <td><img src = "{{product.productImg}}" style="max-width: 120px; cursor: pointer;"></td>
+                            <td><span>{{product.productSKU}}</span></td>
+                            <td><span style="margin-left: auto; font-weight: 600;">{{product.productQuantity|floatformat:"0"}}</span></td>
+                            <td><div style="width: 100px; height: 100px; border:1px solid #000; text-align: center;"></div></td>
+                            <td><div style="width: 100px; height: 100px; border:1px solid #000; text-align: center;"></div></td>
+                            <td><div style="width: 100px; height: 100px; border:1px solid #000; text-align: center;"></div></td>
+                            <td><div style="width: 100px; height: 100px; border:1px solid #000; text-align: center;"></div></td>
+                            <td><div style="width: 100px; height: 100px; border:1px solid #000; text-align: center;"></div></td>
+                        </tr>
+                    {% endfor %}
+                    
+                {% endfor %}
+                
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Sipariş ID</th>
+                    <th>Sipariş Tarihi</th>
+                    <th>Adı Soyadı</th>
+                    <th>Şehir</th>
+                    <th>Görsel</th>
+                    <th>Ürün İsmi</th>
+                    <th>Adet</th>
+                    <th>Üretim</th>
+                    <th>Zımpara</th>
+                    <th>Boya</th>
+                    <th>Montaj</th>
+                    <th>Paketleme</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<div class="sales-graph">
+    {% include "includes/graph/lineGraph.html" %}
+    {% include "includes/graph/pieGraph.html" %}
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#orderTable').DataTable({
+            order: [[0, 'desc']],
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.2/i18n/tr.json'
+            },
+            dom: 'Bfrtip',
+            buttons: [
+            {
+                extend: 'print',
+                autoPrint: true,
+                text: 'Yazdır',
+                customize: function(win) {
+                    $(win.document.body)
+                      .css('font-size', '14pt');
+            
+                    $(win.document.body).find('table')
+                      .addClass('compact')
+                      .css('font-size', 'inherit');
+                  },
+                exportOptions: {
+                    columns: ':visible',
+                    stripHtml: false
+                  /*rows: function ( idx, data, node ) {
+                        var dt = new $.fn.dataTable.Api('#example' );
+                        var selected = dt.rows( { selected: true } ).indexes().toArray();
+                    
+                        if( selected.length === 0 || $.inArray(idx, selected) !== -1)
+                        return true;
+                
+
+                        return false;
+                    }*/
+              }
+            }
+        ],
+        select: true
+        });
+    });
+
+
+
+    /*Line Chart*/
+    const lineChart = document.getElementById('line-chart').getContext('2d');
+    const myLineChart = new Chart(lineChart, {
+        type: 'line',
+        data: {
+            labels: [{% for item in lineData %} "{{ item.day }}", {% endfor %}],
+            datasets: [{
+                label: 'Günlük Gider',
+                data: [{% for item in lineData %} {{ item.data }}, {% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 56, 0, 0.2)',
+                ],
+                borderColor: [
+                    '#ff3800',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+                xAxes: [{
+                gridLines: {
+                    color: "rgba(0, 0, 0, 0)",
+                }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0.05)",
+                    }   
+                }]
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+    /*Pie Chart*/
+    const pieChart = document.getElementById('pie-chart').getContext('2d');
+    var dataLabels = [{% for item in pieData %} "{{ item.category }}", {% endfor %}];
+    const myPieChart = new Chart(pieChart, {
+        type: 'doughnut',
+        data: {
+            labels: dataLabels,
+            datasets: [{
+                label: '',
+                data: [{% for item in pieData %} {{ item.data }}, {% endfor %}],
+                backgroundColor: palette(['tol', 'qualitative', 'sequential'], dataLabels.length).map(function(hex) {
+                    return '#' + hex;
+                  }),
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 1.2,
+            legend: {
+                position: 'bottom',
+            }
+        }  
+    });
+
+</script>
+
+{% endblock body %}

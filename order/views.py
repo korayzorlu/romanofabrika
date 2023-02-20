@@ -96,7 +96,8 @@ def updateOrders(request):
                                         "productStatus" : theStatus.title,
                                         "productPrice" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2),
                                         "productQuantity" : float(orderProduct["Adet"]),
-                                        "productTotal" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2) * float(orderProduct["Adet"])
+                                        "productTotal" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2) * float(orderProduct["Adet"]),
+                                        "productSKU" : float(orderProduct["StokKodu"])
                                         })
                 newOrder = Order(order_id = order["ID"],
                                 order_date = order["SiparisTarihi"].date(),
@@ -138,12 +139,22 @@ def updateOrders(request):
                     theOrder.products[i]["productStatus"] = "Müşteriye Teslim Edildi"
             theOrder.save()
         """
+        #ilgili siparişlerdeki ürünlerin stok kodları
+        
+        if Order.objects.filter(order_id = order["ID"]).exists():
+            theOrder = get_object_or_404(Order, order_id = order["ID"])
+                
+            for i in range(len(order["Urunler"]["WebSiparisUrun"])):
+                theOrder.products[i]["productSKU"] = order["Urunler"]["WebSiparisUrun"][i]["StokKodu"]
+            theOrder.save()
+        
         #ilgili siparişlerin adreslerini günceller
+        """
         if Order.objects.filter(order_id = order["ID"]).exists():
             theOrder = get_object_or_404(Order, order_id = order["ID"])
             theOrder.cargo_address = order["TeslimatAdresi"]
             theOrder.save()
-        
+        """
     messages.success(request, "Siparişler Güncellendi")
     
     return redirect("orders")
@@ -191,3 +202,18 @@ def showImage(request, id, counter):
             }
 
     return render(request, "order/imageModal.html", context)
+
+@login_required(login_url = "user:login")
+def printOrders(request):
+    tag = "Üretim Tablosu"
+    
+    translation.activate('tr')
+    
+    orders = Order.objects.filter()
+    
+    context = {
+                "tag" : tag,
+                "orders" : orders
+            }
+
+    return render(request, "order/printOrders.html", context)
