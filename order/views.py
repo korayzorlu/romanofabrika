@@ -98,7 +98,7 @@ def updateOrders(request):
                                         "productPrice" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2),
                                         "productQuantity" : float(orderProduct["Adet"]),
                                         "productTotal" : round(float(orderProduct["Tutar"]) + float(orderProduct["KdvTutari"]), 2) * float(orderProduct["Adet"]),
-                                        "productSKU" : float(orderProduct["StokKodu"])
+                                        "productSKU" : orderProduct["StokKodu"]
                                         })
                 newOrder = Order(order_id = order["ID"],
                                 order_date = order["SiparisTarihi"].date(),
