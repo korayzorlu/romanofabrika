@@ -5,7 +5,7 @@
 <div class="globalBoxes">
     <div class="box">
         <a class="btn btn-warning" href="{% url 'orders' %}" style="margin-bottom: 20px;">Siparişlere Dön</a>
-        <table id="orderTable" class="table table-striped" style="width:100%">
+        <table id="orderStatusTable" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
                     <th>Sipariş ID</th>
@@ -34,11 +34,45 @@
                             <td><img src = "{{product.productImg}}" style="max-width: 120px; cursor: pointer;"></td>
                             <td><span>{{product.productSKU}}</span></td>
                             <td><span style="margin-left: auto; font-weight: 600;">{{product.productQuantity|floatformat:"0"}}</span></td>
-                            <td><div style="width: 60px; height: 60px; border:1px solid #000; text-align: center;"></div></td>
-                            <td><div style="width: 60px; height: 60px; border:1px solid #000; text-align: center;"></div></td>
-                            <td><div style="width: 60px; height: 60px; border:1px solid #000; text-align: center;"></div></td>
-                            <td><div style="width: 60px; height: 60px; border:1px solid #000; text-align: center;"></div></td>
-                            <td><div style="width: 60px; height: 60px; border:1px solid #000; text-align: center;"></div></td>
+                            {% if product.productStatus == "Bekliyor" or product.productStatus == "Üretim Bekliyor" or product.productStatus == "Üretimde" %}
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+
+
+                            {% elif product.productStatus == "Üretimi Tamamlandı" %}
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+                            {% elif product.productStatus == "Boyada" %}
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+                            {% elif product.productStatus == "Montajda" %}
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+                            {% elif product.productStatus == "Paketlemede" %}
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"></div></td>
+                            {% elif product.productStatus == "Paketlendi" or product.productStatus == "Nakliyeye Gönderildi" or product.productStatus == "Nakliye Teslim Aldı" or product.productStatus == "Taşıma Durumunda" or product.productStatus == "Müşteriye Teslim Edildi"%}
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                                <td><div style="width: 60px; height: 60px; border:1px solid #000; border-radius:50%; text-align: center; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-check" style="font-size:80px;"></i></div></td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                     
@@ -72,7 +106,7 @@
 
 <script>
     $(document).ready(function () {
-        $('#orderTable').DataTable({
+        $('#orderStatusTable').DataTable({
             order: [[0, 'desc']],
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.13.2/i18n/tr.json'
