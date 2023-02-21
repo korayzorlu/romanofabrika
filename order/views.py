@@ -47,7 +47,7 @@ def updateOrders(request):
                    "OdemeTipi" : -1,
                    "SiparisDurumu" : -1,
                    "SiparisID" : -1,
-                   "SiparisKaynagi" : "TicimaxWeb",
+                   "SiparisKaynagi" : "",
                    "SiparisKodu" : "",
                    "SiparisTarihiBas" : datetime(2022, 9, 1),
                    #"SiparisTarihiSon" : datetime(2023, 2, 9),

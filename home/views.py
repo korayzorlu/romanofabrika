@@ -26,6 +26,7 @@ def index(request):
 @login_required(login_url = "user:login")
 def dashboard(request):
     tag = "Kontrol Paneli"
+    lineGraphTag = "Satış Grafiği (30 Gün)"
     
     expenses = Expense.objects.filter().order_by("-created_date")
     orders = Order.objects.filter().order_by("-order_date")
@@ -199,6 +200,7 @@ def dashboard(request):
 
     context = {
                 "tag" : tag,
+                "lineGraphTag": lineGraphTag,
                 "lineData" : lineData,
                 "pieData" : pieData,
                 "expensesCurrentMonthTotal" : expensesCurrentMonthTotal,

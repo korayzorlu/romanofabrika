@@ -20,6 +20,19 @@ def products(request):
     tag = "Ürünler"
     lineGraphTag = "Ürün Grafiği (Son 30 Gün)"
     
+    translation.activate('tr')
+    
+    context = {
+                "tag" : tag,
+                "lineGraphTag" : lineGraphTag
+            }
+
+    return render(request, "product/products.html", context)
+
+@login_required(login_url = "user:login")
+def updateProducts(request):
+    tag = "Ürünler"
+    
     client = Client("https://www.romanodizayn.com/Servis/UrunServis.svc?wsdl",location="https://www.romanodizayn.com/Servis/UrunServis.svc")
     
     urunFiltre = {"Aktif" : -1,
@@ -57,14 +70,14 @@ def products(request):
     
     newdd = recursive_dict(dd)
     
-    products = newdd["UrunKarti"]
+    productsData = newdd["UrunKarti"]
     
-    print(newdd["UrunKarti"][0]["Varyasyonlar"])
+
     
     context = {
-                "tag" : tag,
-                "lineGraphTag" : lineGraphTag,
-                "products" : products
+                "tag" : tag
             }
 
-    return render(request, "product/products.html", context)
+    messages.success(request, "Ürünler Güncellendi")
+    
+    return redirect("products")
