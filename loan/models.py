@@ -9,6 +9,7 @@ class Bank(models.Model):
 
     class Meta:
         verbose_name_plural = "banks"
+        ordering = ['title']
 
     def __str__(self):
         return self.title
@@ -31,3 +32,27 @@ class LoanStatus(models.Model):
     def __str__(self):
         return self.title
 
+class Loan(models.Model):
+    title = models.CharField(max_length=200, verbose_name = "Kredi İsmi")
+    bank = models.ForeignKey(Bank, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Banka")
+    amount = models.FloatField(verbose_name = "Kredi Tutarı", default = 0.00)
+    cost = models.FloatField(verbose_name = "Masraf", default = 0.00)
+    transmitted_amount = models.FloatField(null = True, blank = True, verbose_name = "Hesaba Aktarılan Tutar")
+    interest = models.FloatField(verbose_name = "Faiz", default = 0.00)
+    total_debt = models.FloatField(null = True, blank = True, verbose_name = "Toplam Borç")
+    installment_count = models.IntegerField(verbose_name = "Taksit Sayısı", default = 1)
+    installments = models.JSONField(verbose_name = "Taksitler")
+    status = models.ForeignKey(LoanStatus, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Kredi Durumu")
+    start_date = models.DateField(auto_now_add = False, default = timezone.now, editable = True, verbose_name = "Tarih")
+    
+    def save(self, ** kwargs):
+        self.transmitted_amount = self.amount - self.cost
+        self.total_debt = self.amount * self.interest
+        return super(Loan, self).save()
+    
+    class Meta:
+        ordering = ['-start_date']
+    
+    def __str__(self):
+        return self.title
+    
