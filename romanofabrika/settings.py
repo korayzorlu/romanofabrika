@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     "order",
     "material",
     "expense",
-    "product"
+    "product",
+    "loan"
 ]
 
 MIDDLEWARE = [
