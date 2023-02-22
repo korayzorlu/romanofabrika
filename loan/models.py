@@ -47,7 +47,7 @@ class Loan(models.Model):
     
     def save(self, ** kwargs):
         self.transmitted_amount = self.amount - self.cost
-        self.total_debt = self.amount * self.interest
+        self.total_debt = self.amount * (((self.interest * 1.2) * ((1 + (self.interest * 1.2)) ** self.installment_count) ) / (((1 + (self.interest * 1.2)) ** self.installment_count) - 1))
         return super(Loan, self).save()
     
     class Meta:
