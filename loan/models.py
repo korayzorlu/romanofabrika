@@ -52,7 +52,7 @@ class Loan(models.Model):
     installment_count = models.IntegerField(verbose_name = "Taksit Sayısı", default = 1)
     installments = models.JSONField(verbose_name = "Taksitler")
     status = models.ForeignKey(LoanStatus, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Kredi Durumu")
-    #option = models.ForeignKey(LoanOption, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Hesaplama/Giriş")
+    option = models.ForeignKey(LoanOption, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Hesaplama/Giriş")
     start_date = models.DateField(auto_now_add = False, default = timezone.now, editable = True, verbose_name = "Tarih")
     
     def save(self, ** kwargs):
