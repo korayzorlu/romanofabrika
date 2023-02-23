@@ -25,6 +25,8 @@ from material.views import materials
 from expense.views import expenses
 from order.views import orders
 from product.views import products
+from finance.views import finances
+from loan.views import loans
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,6 +41,10 @@ urlpatterns = [
     path('orders/', orders, name="orders"),
     path('products/', include("product.urls")),
     path('products/', products, name="products"),
+    path('finances/', include("finance.urls")),
+    path('finances/', finances, name="finances"),
+    path('loans/', include("loan.urls")),
+    path('loans/', loans, name="loans"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

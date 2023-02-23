@@ -1,0 +1,28 @@
+{% extends 'layout/dashboardLayout.html' %}
+
+{% block body %}
+
+
+
+<div class="overview-boxes">
+    <a class="box link-box" href="{% url 'loans' %}">
+        <div class="left-side">
+            <div class="box-topic">Krediler</div>
+        </div>
+    </a>
+    <a class="box link-box" href="{% url 'dashboard' %}">
+        <div class="left-side">
+            <div class="box-topic">Çekler</div>
+        </div>
+    </a>
+    <a class="box link-box" href="{% url 'dashboard' %}">
+        <div class="left-side">
+            <div class="box-topic">Maaşlar</div>
+        </div>
+    </a>
+    
+</div>
+
+
+
+{% endblock body %}

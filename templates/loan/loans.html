@@ -1,0 +1,140 @@
+{% extends 'layout/dashboardLayout.html' %}
+
+{% block body %}
+{% load crispy_forms_tags %}
+<div class="globalBoxes">
+    <div class="box">
+        <button class="btn btn-info" hx-get="{% url 'expense:add-expense' %}" hx-target="#addUpdateDataDialog" style="margin-bottom: 20px;">Kredi Ekle</button>
+        <table id="expenseTable" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Banka</th>
+                    <th>Kredi İsmi</th>
+                    <th>Kredi Tutarı</th>
+                    <th>Başlangıç Tarihi</th>
+                    <th>Ödeme Günü</th>
+                    <th>Taksitler</th>
+                    <th>Taksit Tutarı</th>
+                    <th>Gelecek Taksit Tarihi</th>
+                    <th>Düzenle</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                    <tr>
+                        <td data-order="1479686400">{{expense.created_date}}</td>
+                        <td>{{expense.company}}</td>
+                        <td>{{expense.category}}</td>
+                        <td>{{expense.title}}</td>
+                        <td>{{expense.unit}}</td>
+                        <td>{{expense.quantity}}</td>
+                        <td>₺ {{expense.price}}</td>
+                        <td>₺ {{expense.total|floatformat:2}}</td>
+                        <td>
+                            <button class="btn btn-info" hx-get="{% url 'expense:update-expense' expense.id %}" hx-target="#addUpdateDataDialog">Düzenle</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Banka</th>
+                    <th>Kredi İsmi</th>
+                    <th>Kredi Tutarı</th>
+                    <th>Başlangıç Tarihi</th>
+                    <th>Ödeme Günü</th>
+                    <th>Taksitler</th>
+                    <th>Taksit Tutarı</th>
+                    <th>Gelecek Taksit Tarihi</th>
+                    <th>Düzenle</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<div class="sales-graph">
+    {% include "includes/graph/lineGraph.html" %}
+    {% include "includes/graph/pieGraph.html" %}
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#expenseTable').DataTable({
+            order: [[0, 'desc']],
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.2/i18n/tr.json'
+            }
+        });
+    });
+
+    /*Line Chart*/
+    const lineChart = document.getElementById('line-chart').getContext('2d');
+    const myLineChart = new Chart(lineChart, {
+        type: 'line',
+        data: {
+            labels: [{% for item in lineData %} "{{ item.day }}", {% endfor %}],
+            datasets: [{
+                label: 'Günlük Gider',
+                data: [{% for item in lineData %} {{ item.data }}, {% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 56, 0, 0.2)',
+                ],
+                borderColor: [
+                    '#ff3800',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+                xAxes: [{
+                gridLines: {
+                    color: "rgba(0, 0, 0, 0)",
+                }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0.05)",
+                    }   
+                }]
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+    /*Pie Chart*/
+    const pieChart = document.getElementById('pie-chart').getContext('2d');
+    var dataLabels = [{% for item in pieData %} "{{ item.category }}", {% endfor %}];
+    const myPieChart = new Chart(pieChart, {
+        type: 'doughnut',
+        data: {
+            labels: dataLabels,
+            datasets: [{
+                label: '',
+                data: [{% for item in pieData %} {{ item.data }}, {% endfor %}],
+                backgroundColor: palette(['tol', 'qualitative', 'sequential'], dataLabels.length).map(function(hex) {
+                    return '#' + hex;
+                  }),
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 1.2,
+            legend: {
+                position: 'bottom',
+            }
+        }  
+    });
+
+</script>
+
+{% endblock body %}

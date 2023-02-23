@@ -44,6 +44,7 @@ class LoanOption(models.Model):
 class Loan(models.Model):
     title = models.CharField(max_length=200, verbose_name = "Kredi İsmi")
     bank = models.ForeignKey(Bank, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Banka")
+    option = models.ForeignKey(LoanOption, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Hesaplama/Giriş")
     amount = models.FloatField(verbose_name = "Kredi Tutarı", default = 0.00)
     cost = models.FloatField(verbose_name = "Masraf", default = 0.00)
     transmitted_amount = models.FloatField(null = True, blank = True, verbose_name = "Hesaba Aktarılan Tutar")
@@ -52,12 +53,15 @@ class Loan(models.Model):
     installment_count = models.IntegerField(verbose_name = "Taksit Sayısı", default = 1)
     installments = models.JSONField(verbose_name = "Taksitler")
     status = models.ForeignKey(LoanStatus, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Kredi Durumu")
-    option = models.ForeignKey(LoanOption, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Hesaplama/Giriş")
     start_date = models.DateField(auto_now_add = False, default = timezone.now, editable = True, verbose_name = "Tarih")
     
     def save(self, ** kwargs):
-        self.transmitted_amount = self.amount - self.cost
-        self.total_debt = ((self.amount * ((((self.interest / 100) * 1.15 * 1.05) * ((1 + ((self.interest / 100) * 1.15 * 1.05)) ** self.installment_count) ) / (((1 + ((self.interest / 100) * 1.15 * 1.05)) ** self.installment_count) - 1))) * self.installment_count) + (self.amount / 100)
+        if self.option.id == 1:
+            self.transmitted_amount = self.transmitted_amount
+            self.total_debt = self.total_debt
+        else:
+            self.transmitted_amount = self.amount - self.cost
+            self.total_debt = ((self.amount * ((((self.interest / 100) * 1.15 * 1.05) * ((1 + ((self.interest / 100) * 1.15 * 1.05)) ** self.installment_count) ) / (((1 + ((self.interest / 100) * 1.15 * 1.05)) ** self.installment_count) - 1))) * self.installment_count) + (self.amount / 100)
         return super(Loan, self).save()
     
     class Meta:

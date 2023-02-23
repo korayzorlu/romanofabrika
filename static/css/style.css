@@ -174,8 +174,10 @@ footer .bottom-details .bottom-text a{margin-right: 10px;}
 /***************************************************DASHBOARD********************************************************/
 .home-section .home-content .globalBoxes{display: flex;justify-content: space-between;padding: 0 20px;flex-wrap: wrap; margin-bottom: 20px;}
 .home-section .home-content .globalBoxes .box{width: 100%;align-items: center;justify-content: center;padding: 15px;background: #fff;border-radius: 12px;box-shadow: 0 5px 10px rgba(0, 0, 0, .1);}
-.home-section .home-content .overview-boxes{display: flex;justify-content: space-between;padding: 0 20px;flex-wrap: wrap;}
-.home-section .home-content .overview-boxes .box{display: flex;width: calc(100% / 4 - 15px);align-items: center;justify-content: center;padding: 15px 0;background: #fff;border-radius: 12px;box-shadow: 0 5px 10px rgba(0, 0, 0, .1);}
+.home-section .home-content .overview-boxes{display: flex;justify-content: space-between;padding: 0 20px;/*flex-wrap: wrap;*/ gap: 20px;}
+.home-section .home-content .overview-boxes .box{display: flex;/*width: calc(100% / 4 - 15px);*/width: 100%; align-items: center;justify-content: center;padding: 15px 0;background: #fff;border-radius: 12px;box-shadow: 0 5px 10px rgba(0, 0, 0, .1);}
+.home-section .home-content .overview-boxes .box.link-box{color: #000;}
+.home-section .home-content .overview-boxes .box.link-box:hover{background: #fdf9f9; color: #ff6961;}
 .home-section .home-content .overview-boxes .box .left-side{text-align: center;}
 .home-section .home-content .overview-boxes .box-topic{font-size: 20px;font-weight: 500;}
 .home-section .home-content .overview-boxes .number{font-size: 35px;font-weight: 500;margin-top: -5px;display: inline-block;}
@@ -391,6 +393,7 @@ footer .bottom-details .bottom-text a{margin-right: 10px;}
     /* .home-section nav.active{width: 100%;left: 0;} */
     /******************************************************/
     /***************************DASHBOARD***************************/
+    .home-section .home-content .overview-boxes{flex-wrap: wrap; gap: 0;}
     .home-section .home-content .overview-boxes .box{width: 100%}
     .home-section nav .buttonMobileMenu .dashboard,
     .home-section nav .profile-details .user-name,
