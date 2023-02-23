@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Bank, InstallmentStatus, LoanStatus, Loan
+from .models import Bank, InstallmentStatus, LoanStatus, Loan, LoanOption
 
 @admin.register(Bank)
 class BankAdmin(admin.ModelAdmin):
@@ -21,6 +21,12 @@ class LoanStatusAdmin(admin.ModelAdmin):
     list_display = ["id", "title"]
     class Meta:
         model = LoanStatus
+        
+@admin.register(LoanOption)
+class LoanOptionAdmin(admin.ModelAdmin):
+    list_display = ["id", "title"]
+    class Meta:
+        model = LoanOption
         
 @admin.register(Loan)
 class LoanAdmin(admin.ModelAdmin):
