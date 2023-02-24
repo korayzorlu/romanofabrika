@@ -51,7 +51,7 @@ def addLoan(request):
             
             
             
-            messages.success(request, "Gider Başarıyla Eklendi...")
+            messages.success(request, "Kredi Başarıyla Eklendi...")
 
             return HttpResponse(status=204)
 
