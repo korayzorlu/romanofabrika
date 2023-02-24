@@ -42,8 +42,9 @@ class LoanOption(models.Model):
         return self.title
 
 class Loan(models.Model):
-    title = models.CharField(max_length=200, verbose_name = "Kredi İsmi")
+    status = models.ForeignKey(LoanStatus, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Kredi Durumu")
     bank = models.ForeignKey(Bank, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Banka")
+    title = models.CharField(max_length=200, verbose_name = "Kredi İsmi")
     option = models.ForeignKey(LoanOption, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Hesaplama/Giriş")
     amount = models.FloatField(verbose_name = "Kredi Tutarı", default = 0.00)
     cost = models.FloatField(verbose_name = "Masraf", default = 0.00)
@@ -51,9 +52,8 @@ class Loan(models.Model):
     interest = models.FloatField(verbose_name = "Faiz", default = 0.00)
     total_debt = models.FloatField(null = True, blank = True, verbose_name = "Toplam Borç")
     installment_count = models.IntegerField(verbose_name = "Taksit Sayısı", default = 1)
-    installments = models.JSONField(verbose_name = "Taksitler")
-    status = models.ForeignKey(LoanStatus, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Kredi Durumu")
-    start_date = models.DateField(auto_now_add = False, default = timezone.now, editable = True, verbose_name = "Tarih")
+    installments = models.JSONField(null = True, blank = True,verbose_name = "Taksitler")
+    start_date = models.DateField(auto_now_add = False, default = timezone.now, editable = True, verbose_name = "Kredi Başlangıç Tarihi")
     
     def save(self, ** kwargs):
         if self.option.id == 1:

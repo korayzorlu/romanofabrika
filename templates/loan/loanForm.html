@@ -1,0 +1,85 @@
+<form hx-post="{{ request.path }}" class="modal-content">
+    {% csrf_token %}
+    <div class="modal-header">
+      <h5 class="modal-title">{{tag}}</h5>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="mb-3 col">
+          <label for="exampleFormControlInput1" class="form-label">
+              Kredi Durumu
+          </label>
+          <select class="form-select companySelect" aria-label="Default select example" name="status">
+              {% for status in form.status %}
+                  {{ status }}
+              {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3 col">
+          <label for="exampleFormControlInput1" class="form-label">
+              Banka
+          </label>
+          <select class="form-select companySelect" aria-label="Default select example" name="bank">
+              {% for bank in form.bank %}
+                  {{ bank }}
+              {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3 col-6">
+          <label for="exampleFormControlTextarea1" class="form-label">Kredi İsmi</label>
+          {{ form.title }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="mb-3 col">
+          <label for="exampleFormControlInput1" class="form-label">
+              Hesaplama Seçeneği
+          </label>
+          <select class="form-select companySelect" aria-label="Default select example" name="option">
+              {% for option in form.option %}
+                  {{ option }}
+              {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3 col">
+          <label for="exampleFormControlTextarea1" class="form-label">Kredi Tutarı</label>
+          {{ form.amount }}
+        </div>
+        <div class="mb-3 col">
+          <label for="exampleFormControlTextarea1" class="form-label">Masraf</label>
+          {{ form.cost }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="mb-3 col">
+          <label for="exampleFormControlTextarea1" class="form-label">Hesaba Geçen Tutar</label>
+          {{ form.transmitted_amount }}
+        </div>
+        <div class="mb-3 col">
+          <label for="exampleFormControlTextarea1" class="form-label">Faiz</label>
+          {{ form.interest }}
+        </div>
+        <div class="mb-3 col">
+          <label for="exampleFormControlTextarea1" class="form-label">Toplam Geri Ödeme</label>
+          {{ form.total_debt }}
+        </div>
+      </div>
+      
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Taksit Sayısı</label>
+        {{ form.installment_count }}
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Kredi Başlangıç Tarihi</label>
+        {{ form.start_date }}
+      </div>
+      <div class="mb-3 col-6">
+        <label for="exampleFormControlTextarea1" class="form-label">Kredi İsmi</label>
+        {{ form.installments }}
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Vazgeç</button>
+      <button class="btn btn-danger" type="submit">Kaydet</button>
+    </div>
+</form>

@@ -7,4 +7,5 @@ from django.contrib.auth import views as auth_views
 app_name = "loan"
 
 urlpatterns = [
+    path('add-loan/', views.addLoan, name = "add-loan"),
 ]
