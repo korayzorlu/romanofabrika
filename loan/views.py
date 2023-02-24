@@ -6,13 +6,16 @@ from django.contrib import messages
 
 from .forms import LoanForm
 
+from datetime import datetime
+import calendar
+import json
+from dateutil.relativedelta import relativedelta
+
 # Create your views here.
 
 @login_required(login_url = "user:login")
 def loans(request):
     tag = "Krediler"
-
-  
     
     context = {
                 "tag" : tag
@@ -27,10 +30,26 @@ def addLoan(request):
     form = LoanForm(request.POST or None, request.FILES or None)
     
     if request.method == "POST":
-        print(form.errors.values())
         if form.is_valid():
             loan = form.save(commit = False)
             loan.save()
+            
+            installments = []
+            start_date = loan.start_date
+            print(start_date + relativedelta(months=1))
+            start_date = start_date + relativedelta(months=loan.installment_deferral)
+            for count in range(loan.installment_count):
+                installments.append({"Taksit Tarihi" : str(start_date),
+                                     "Taksit No" : count + 1,
+                                     "Taksit Tutarı" : round(loan.amount / (loan.installment_count - loan.installment_deferral),2),
+                                     "Taksit Durumu" : ""})
+                start_date = start_date + relativedelta(months=1)
+                
+            loan.installments = installments
+            loan.save()
+            print(loan.installments)
+            
+            
             
             messages.success(request, "Gider Başarıyla Eklendi...")
 

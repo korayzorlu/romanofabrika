@@ -5,7 +5,7 @@ from .models import Loan
 class LoanForm(forms.ModelForm):
     class Meta:
         model = Loan
-        fields = ["status", "bank", "title", "option", "amount", "cost", "transmitted_amount", "interest", "total_debt", "installment_count", "start_date", "installments"]
+        fields = ["status", "bank", "title", "option", "amount", "cost", "transmitted_amount", "interest", "total_debt", "installment_count", "installment_deferral", "start_date", "installments"]
         
         widgets = {
             "status" : forms.Select(attrs = {"class" : "form-control", "style" : "background-color: #fff;"}),
@@ -18,6 +18,7 @@ class LoanForm(forms.ModelForm):
             "interest" : forms.NumberInput(attrs = {"class" : "form-control", "style" : "background-color: #fff;"}),
             "total_debt" : forms.NumberInput(attrs = {"class" : "form-control", "style" : "background-color: #fff;"}),
             "installment_count" : forms.NumberInput(attrs = {"class" : "form-control", "style" : "background-color: #fff;"}),
+            "installment_deferral" : forms.NumberInput(attrs = {"class" : "form-control", "style" : "background-color: #fff;"}),
             "start_date" : forms.DateInput(attrs = {"class" : "form-control", "style" : "background-color: #fff;"})
         }
     

@@ -41,6 +41,7 @@ class LoanOption(models.Model):
     def __str__(self):
         return self.title
 
+
 class Loan(models.Model):
     status = models.ForeignKey(LoanStatus, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Kredi Durumu")
     bank = models.ForeignKey(Bank, on_delete = models.SET_DEFAULT, default = 1, verbose_name = "Banka")
@@ -52,6 +53,7 @@ class Loan(models.Model):
     interest = models.FloatField(verbose_name = "Faiz", default = 0.00)
     total_debt = models.FloatField(null = True, blank = True, verbose_name = "Toplam Borç")
     installment_count = models.IntegerField(verbose_name = "Taksit Sayısı", default = 1)
+    installment_deferral = models.IntegerField(verbose_name = "Taksit Erteleme", default = 0)
     installments = models.JSONField(null = True, blank = True,verbose_name = "Taksitler")
     start_date = models.DateField(auto_now_add = False, default = timezone.now, editable = True, verbose_name = "Kredi Başlangıç Tarihi")
     
@@ -61,7 +63,7 @@ class Loan(models.Model):
             self.total_debt = self.total_debt
         else:
             self.transmitted_amount = self.amount - self.cost
-            self.total_debt = ((self.amount * ((((self.interest / 100) * 1.15 * 1.05) * ((1 + ((self.interest / 100) * 1.15 * 1.05)) ** self.installment_count) ) / (((1 + ((self.interest / 100) * 1.15 * 1.05)) ** self.installment_count) - 1))) * self.installment_count) + (self.amount / 100)
+            self.total_debt = round(((self.amount * ((((self.interest / 100) * 1.15 * 1.05) * ((1 + ((self.interest / 100) * 1.15 * 1.05)) ** self.installment_count) ) / (((1 + ((self.interest / 100) * 1.15 * 1.05)) ** self.installment_count) - 1))) * self.installment_count) + (self.amount / 100), 2)
         return super(Loan, self).save()
     
     class Meta:
