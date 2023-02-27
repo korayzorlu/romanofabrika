@@ -30,7 +30,7 @@
                         <td data-order="1479686400">{{loan.next_installment}}</td>
                         
                         <td>
-                            <button class="btn btn-info" hx-get="" hx-target="#addUpdateDataDialog">Düzenle</button>
+                            <button class="btn btn-info" hx-get="{% url 'loan:update-loan' loan.id %}" hx-target="#addUpdateDataDialog">Düzenle</button>
                         </td>
                     </tr>
                 {% endfor %}

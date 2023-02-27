@@ -1,0 +1,22 @@
+<form hx-post="{{ request.path }}" class="modal-content">
+    {% csrf_token %}
+    <div class="modal-header">
+      <h5 class="modal-title">Taksitleri Güncelle</h5>
+    </div>
+    <div class="modal-body">
+      {% for installment in loan.installments %}
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">{{installment.installmentNo}}. Taksit ({{installment.installmentDate}})</label>
+            <select class="form-select" aria-label="Default select example" name="installment_status">
+                {% for status in form.installment_status %}
+                    {{ status }}
+                {% endfor %}
+            </select>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" hx-get="{% url 'loan:update-loan' loan.id %}" hx-target="#addUpdateDataDialog">Vazgeç</button>
+      <button class="btn btn-danger" type="submit">Kaydet</button>
+    </div>
+</form>

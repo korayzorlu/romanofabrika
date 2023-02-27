@@ -77,6 +77,9 @@
         <label for="exampleFormControlTextarea1" class="form-label">Kredi Başlangıç Tarihi</label>
         {{ form.start_date }}
       </div>
+      {% if loan.id %}
+      <button class="btn btn-light" hx-get="{% url 'loan:update-installment-status' loan.id %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;Taksitler</button>
+      {% endif %}
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Vazgeç</button>

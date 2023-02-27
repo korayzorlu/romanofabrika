@@ -57,6 +57,7 @@ class Loan(models.Model):
     installments = models.JSONField(null = True, blank = True,verbose_name = "Taksitler")
     start_date = models.DateField(auto_now_add = False, default = timezone.now, editable = True, verbose_name = "Kredi Başlangıç Tarihi")
     next_installment = models.DateField(null = True, blank = True,verbose_name = "Taksitler")
+    installment_status = models.ForeignKey(InstallmentStatus, on_delete = models.SET_DEFAULT, default = 3, verbose_name = "Taksit Durumu")
     
     def save(self, ** kwargs):
         if self.option.id == 1:
