@@ -53,6 +53,8 @@
                                                 <button class="btn btn-danger" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-truck"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Müşteriye Teslim Edildi" %}
                                                 <button class="btn btn-success" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-check"></i>&nbsp;{{product.productStatus}}</button>
+                                            {% elif product.productStatus == "İptal Edildi" %}
+                                                <button class="btn btn-danger" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-ban"></i>&nbsp;{{product.productStatus}}</button>
                                             {% endif %}
                                     </li>
                                 {% endfor %}

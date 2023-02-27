@@ -56,6 +56,7 @@ class Loan(models.Model):
     installment_deferral = models.IntegerField(verbose_name = "Taksit Erteleme", default = 0)
     installments = models.JSONField(null = True, blank = True,verbose_name = "Taksitler")
     start_date = models.DateField(auto_now_add = False, default = timezone.now, editable = True, verbose_name = "Kredi Başlangıç Tarihi")
+    next_installment = models.DateField(null = True, blank = True,verbose_name = "Taksitler")
     
     def save(self, ** kwargs):
         if self.option.id == 1:

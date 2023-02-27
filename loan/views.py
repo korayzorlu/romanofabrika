@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import user_passes_test
 
 from django.contrib import messages
 
+from django.utils import translation
+
 from .forms import LoanForm
 
 from datetime import datetime
@@ -11,14 +13,34 @@ import calendar
 import json
 from dateutil.relativedelta import relativedelta
 
+from .models import Loan
+
 # Create your views here.
 
 @login_required(login_url = "user:login")
 def loans(request):
     tag = "Krediler"
     
+    translation.activate('tr')
+    
+    loans = Loan.objects.filter()
+    
+    for loan in loans:
+        for installment in loan.installments:
+            if datetime.strptime(installment["installmentDate"], "%Y-%m-%d").date() > datetime.now().date():
+                print("Gelecek Taksit: " + str(installment["installmentDate"]))
+                loan.next_installment = datetime.strptime(installment["installmentDate"], "%Y-%m-%d").date()
+                loan.save()
+                break
+    
+    nowDate = datetime.now().date()
+
+        
+    
     context = {
-                "tag" : tag
+                "tag" : tag,
+                "loans" : loans,
+                "nowDate" : nowDate
             }
 
     return render(request, "loan/loans.html", context)
@@ -39,15 +61,16 @@ def addLoan(request):
             print(start_date + relativedelta(months=1))
             start_date = start_date + relativedelta(months=loan.installment_deferral)
             for count in range(loan.installment_count):
-                installments.append({"Taksit Tarihi" : str(start_date),
-                                     "Taksit No" : count + 1,
-                                     "Taksit Tutarı" : round(loan.amount / (loan.installment_count - loan.installment_deferral),2),
-                                     "Taksit Durumu" : ""})
+                installments.append({"installmentDate" : str(start_date),
+                                     "installmentNo" : count + 1,
+                                     "installmentAmount" : round(loan.total_debt / (loan.installment_count - loan.installment_deferral),2),
+                                     "installmentStatus" : ""})
                 start_date = start_date + relativedelta(months=1)
                 
             loan.installments = installments
             loan.save()
             print(loan.installments)
+            print(loan.total_debt-loan.amount)
             
             
             
@@ -62,3 +85,4 @@ def addLoan(request):
     }
     
     return render(request, 'loan/loanForm.html', context)
+

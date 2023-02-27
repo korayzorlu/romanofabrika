@@ -12,7 +12,6 @@
                     <th>Kredi İsmi</th>
                     <th>Kredi Tutarı</th>
                     <th>Başlangıç Tarihi</th>
-                    <th>Ödeme Günü</th>
                     <th>Taksitler</th>
                     <th>Taksit Tutarı</th>
                     <th>Gelecek Taksit Tarihi</th>
@@ -20,18 +19,18 @@
                 </tr>
             </thead>
             <tbody>
-                {% for expense in expenses %}
+                {% for loan in loans %}
                     <tr>
-                        <td data-order="1479686400">{{expense.created_date}}</td>
-                        <td>{{expense.company}}</td>
-                        <td>{{expense.category}}</td>
-                        <td>{{expense.title}}</td>
-                        <td>{{expense.unit}}</td>
-                        <td>{{expense.quantity}}</td>
-                        <td>₺ {{expense.price}}</td>
-                        <td>₺ {{expense.total|floatformat:2}}</td>
+                        <td>{{loan.bank}}</td>
+                        <td>{{loan.title}}</td>
+                        <td>₺ {{loan.amount}}</td>
+                        <td>{{loan.start_date}}</td>
+                        <td>{{loan.installment_count}}</td>
+                        <td>₺ {{loan.installments.0.installmentAmount}}</td>
+                        <td data-order="1479686400">{{loan.next_installment}}</td>
+                        
                         <td>
-                            <button class="btn btn-info" hx-get="{% url 'expense:update-expense' expense.id %}" hx-target="#addUpdateDataDialog">Düzenle</button>
+                            <button class="btn btn-info" hx-get="" hx-target="#addUpdateDataDialog">Düzenle</button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -43,7 +42,6 @@
                     <th>Kredi İsmi</th>
                     <th>Kredi Tutarı</th>
                     <th>Başlangıç Tarihi</th>
-                    <th>Ödeme Günü</th>
                     <th>Taksitler</th>
                     <th>Taksit Tutarı</th>
                     <th>Gelecek Taksit Tarihi</th>
@@ -62,7 +60,7 @@
 <script>
     $(document).ready(function () {
         $('#expenseTable').DataTable({
-            order: [[0, 'desc']],
+            order: [[0, 'asc']],
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.13.2/i18n/tr.json'
             }
