@@ -8,10 +8,9 @@
       {% for installment in loan.installments %}
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">{{installment.installmentNo}}. Taksit ({{installment.installmentDate}}) - <strong>{{installment.installmentStatus}}</strong></label>
-            {{form.installment_status|attr:"class:hellow"}}
             <select class="form-select" aria-label="Default select example" name="installment_status">
-                {% for status in form.installment_status %}
-                 {{status}}
+                {% for status in form.installment_status%}
+                  {{status}}
                 {% endfor %}
             </select>
         </div>
@@ -22,3 +21,4 @@
       <button class="btn btn-danger" type="submit">Kaydet</button>
     </div>
 </form>
+

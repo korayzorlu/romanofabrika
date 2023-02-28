@@ -32,7 +32,8 @@ class InstallmentStatusForm(forms.ModelForm):
         fields = ["installment_status"]
         
         widgets = {
-            "installment_status" : forms.Select(attrs = {"class" : "form-select", "style" : "background-color: #fff;"})
+             "installment_status" : forms.Select(attrs = {"class" : "form-control", "style" : "background-color: #fff;"})
         }
+        
 
 
