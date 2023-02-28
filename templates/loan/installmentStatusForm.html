@@ -6,7 +6,7 @@
     <div class="modal-body">
       {% for installment in loan.installments %}
         <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">{{installment.installmentNo}}. Taksit ({{installment.installmentDate}})</label>
+            <label for="exampleFormControlInput1" class="form-label">{{installment.installmentNo}}. Taksit ({{installment.installmentDate}}) - <strong>{{installment.installmentStatus}}</strong></label>
             <select class="form-select" aria-label="Default select example" name="installment_status">
                 {% for status in form.installment_status %}
                     {{ status }}

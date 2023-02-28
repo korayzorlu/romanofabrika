@@ -6,11 +6,13 @@ from django.contrib import messages
 
 from django.utils import translation
 
-from .forms import LoanForm
+from .forms import LoanForm, InstallmentStatusForm
+
 from datetime import datetime
 import calendar
 import json
 from dateutil.relativedelta import relativedelta
+import ast
 
 from .models import Loan, InstallmentStatus
 
@@ -131,15 +133,16 @@ def updateInstallmentStatus(request, id):
     
     installmentStatuses = InstallmentStatus.objects.filter()
     
-    form = LoanForm(request.POST or None, request.FILES or None, instance = loan)
+    form = InstallmentStatusForm(request.POST or None, request.FILES or None, instance = loan)
     
     tag = loan.title
 
     if request.method == "POST":
-        print(form)
         if form.is_valid():
+            formDataList = form.data.getlist("installment_status")
             for i in range(loan.installment_count):
-                loan.installments[i+1]["installmentStatus"] = form.cleaned_data["installmentStatus"][i+1]
+                theStatus = get_object_or_404(InstallmentStatus, id = int(formDataList[i]))
+                loan.installments[i]["installmentStatus"] = theStatus.title
             loan.save()
             
         messages.success(request, "Değişiklikler Kaydedildi...")

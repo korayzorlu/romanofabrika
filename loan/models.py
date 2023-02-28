@@ -58,6 +58,7 @@ class Loan(models.Model):
     start_date = models.DateField(auto_now_add = False, default = timezone.now, editable = True, verbose_name = "Kredi Başlangıç Tarihi")
     next_installment = models.DateField(null = True, blank = True,verbose_name = "Taksitler")
     installment_status = models.ForeignKey(InstallmentStatus, on_delete = models.SET_DEFAULT, default = 3, verbose_name = "Taksit Durumu")
+    completed_installment = models.IntegerField(verbose_name = "Tamamlanan Taksitler", default = 0)
     
     def save(self, ** kwargs):
         if self.option.id == 1:

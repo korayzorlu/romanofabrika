@@ -27,5 +27,13 @@ class LoanForm(forms.ModelForm):
     #     super(ExpenseForm, self).__init__(*args, **kwargs)
     #     self.fields['company'].empty_label = "Firma Seçiniz"
     
+class InstallmentStatusForm(forms.ModelForm):
+    class Meta:
+        model = Loan #burada Loan modelini seçmemeizin sebebi order'da olduğu gibi.
+        fields = ["installment_status"]
+        
+        widgets = {
+            "installment_status" : forms.Select(attrs = {"class" : "form-control", "style" : "background-color: #fff;"})
+        }
 
 
