@@ -27,12 +27,17 @@ def loans(request):
     loans = Loan.objects.filter()
     
     for loan in loans:
+        installmentStatuses = []
         for installment in loan.installments:
             if datetime.strptime(installment["installmentDate"], "%Y-%m-%d").date() > datetime.now().date():
                 #print("Gelecek Taksit: " + str(installment["installmentDate"]))
                 loan.next_installment = datetime.strptime(installment["installmentDate"], "%Y-%m-%d").date()
                 loan.save()
                 break
+        for installment in loan.installments:
+            installmentStatuses.append(installment["installmentStatus"])
+        loan.completed_installment = installmentStatuses.count("Ödendi")
+        loan.save()
     
     nowDate = datetime.now().date()
 
@@ -70,8 +75,6 @@ def addLoan(request):
                 
             loan.installments = installments
             loan.save()
-            print(loan.installments)
-            print(loan.total_debt-loan.amount)
             
             
             
@@ -138,7 +141,9 @@ def updateInstallmentStatus(request, id):
     tag = loan.title
 
     if request.method == "POST":
+        print(form.data)
         if form.is_valid():
+            print(form.data)
             formDataList = form.data.getlist("installment_status")
             for i in range(loan.installment_count):
                 theStatus = get_object_or_404(InstallmentStatus, id = int(formDataList[i]))
@@ -157,3 +162,23 @@ def updateInstallmentStatus(request, id):
             }
 
     return render(request, "loan/installmentStatusForm.html", context)
+
+@login_required(login_url = "user:login")
+def getDeleteLoan(request, id):
+    loan = get_object_or_404(Loan, id = id)
+
+    context = {
+                "loan" : loan
+            }
+    
+    return render(request, "loan/deleteLoanForm.html", context)
+
+@login_required(login_url = "user:login")
+def deleteLoan(request, id):
+    loan = get_object_or_404(Loan, id = id)
+    
+    loan.delete()
+
+    messages.success(request, "Kredi Silindi...")
+    
+    return redirect("loans")

@@ -10,4 +10,6 @@ urlpatterns = [
     path('add-loan/', views.addLoan, name = "add-loan"),
     path('update-loan/<int:id>', views.updateLoan, name = "update-loan"),
     path('update-installment-status/<int:id>', views.updateInstallmentStatus, name = "update-installment-status"),
+    path('get-delete-loan/<int:id>', views.getDeleteLoan, name = "get-delete-loan"),
+    path('delete-loan/<int:id>', views.deleteLoan, name = "delete-loan"),
 ]

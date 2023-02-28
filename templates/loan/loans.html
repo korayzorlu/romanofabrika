@@ -16,6 +16,7 @@
                     <th>Taksit Tutarı</th>
                     <th>Gelecek Taksit Tarihi</th>
                     <th>Düzenle</th>
+                    <th>Sil</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,12 +26,14 @@
                         <td>{{loan.title}}</td>
                         <td>₺ {{loan.amount}}</td>
                         <td>{{loan.start_date}}</td>
-                        <td>{{loan.installment_count}}</td>
+                        <td>{{loan.completed_installment}}/{{loan.installment_count}}</td>
                         <td>₺ {{loan.installments.0.installmentAmount}}</td>
                         <td data-order="1479686400">{{loan.next_installment}}</td>
-                        
                         <td>
                             <button class="btn btn-info" hx-get="{% url 'loan:update-loan' loan.id %}" hx-target="#addUpdateDataDialog">Düzenle</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" hx-get="{% url 'loan:get-delete-loan' loan.id %}" hx-target="#addUpdateDataDialog">Sil</button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -46,6 +49,7 @@
                     <th>Taksit Tutarı</th>
                     <th>Gelecek Taksit Tarihi</th>
                     <th>Düzenle</th>
+                    <th>Sil</th>
                 </tr>
             </tfoot>
         </table>

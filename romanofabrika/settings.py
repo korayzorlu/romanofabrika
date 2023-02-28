@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     "material",
     "expense",
     "product",
-    "loan"
+    "loan",
+    "widget_tweaks"
 ]
 
 MIDDLEWARE = [
