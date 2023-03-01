@@ -8,6 +8,8 @@
     <style>.sidebarv2 ul li a.materials{color: #11101d;background: #ff6961;}</style>
 {% elif request.path == "/expenses/" %}
     <style>.sidebarv2 ul li a.expenses{color: #11101d;background: #ff6961;}</style>
+{% elif request.path == "/finances/" or request.path == "/loans/" %}
+    <style>.sidebarv2 ul li a.finances{color: #11101d;background: #ff6961;}</style>
 {% elif request.path == "/user/categories/" %}
     <style>.sidebarv2 ul li a.categories{color: #11101d;background: #ff6961;}</style>
 {% elif request.path == "/user/settings/" or request.path == "/user/settings/account/" or request.path == "/user/settings/marketplace/" or request.path == "/user/settings/shop/" %}
@@ -70,7 +72,7 @@
                 <span class="tooltipv2">Giderler</span>
             </li>
             <li>
-                <a href="{% url 'finances' %}">
+                <a href="{% url 'finances' %}" class="finances">
                     <i class="fa-solid fa-coins"></i>
                     <span class="links_name">Finans</span>
                 </a>

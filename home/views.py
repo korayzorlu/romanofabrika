@@ -113,77 +113,27 @@ def dashboard(request):
     uretimCount = ordersProductsStatusList.count("Üretimde")
     montajCount = ordersProductsStatusList.count("Montajda")
     
-    def most_frequent(List):
-        #1
-        counter = 0
-        num1 = List[0]
-        
-        for i in List:
-            curr_frequency = List.count(i)
-            if(curr_frequency> counter):
-                counter = curr_frequency
-                num1 = i
+    productCounts = {}
 
-        #2
-        List = list(filter((num1).__ne__, List))
-        counter = 0
-        num2 = List[0]
-        
-        for i in List:
-            curr_frequency = List.count(i)
-            if(curr_frequency> counter):
-                counter = curr_frequency
-                num2 = i
-                
-        #3
-        List = list(filter((num2).__ne__, List))
-        counter = 0
-        num3 = List[0]
-        
-        for i in List:
-            curr_frequency = List.count(i)
-            if(curr_frequency> counter):
-                counter = curr_frequency
-                num3 = i
-                
-        #4
-        List = list(filter((num3).__ne__, List))
-        counter = 0
-        num4 = List[0]
-        
-        for i in List:
-            curr_frequency = List.count(i)
-            if(curr_frequency> counter):
-                counter = curr_frequency
-                num4 = i
-                
-        #5
-        List = list(filter((num4).__ne__, List))
-        counter = 0
-        num5 = List[0]
-        
-        for i in List:
-            curr_frequency = List.count(i)
-            if(curr_frequency> counter):
-                counter = curr_frequency
-                num5 = i
-                
-        #6
-        List = list(filter((num5).__ne__, List))
-        counter = 0
-        num6 = List[0]
-        
-        for i in List:
-            curr_frequency = List.count(i)
-            if(curr_frequency> counter):
-                counter = curr_frequency
-                num6 = i
-        
-        return num1, num2, num3, num4, num5, num6
+    # tüm name değerlerinin sayısını hesapla
+    for item in ordersProductsList:
+        name = item["name"]
+        if name in productCounts:
+            productCounts[name] += 1
+        else:
+            productCounts[name] = 1
+
+    # en çok tekrarlanan ilk 6 name değerini bul
+    mostSelledProducts = []
     if len(ordersProductsList) > 0:
-        mostSelledProduct = most_frequent(ordersProductsList)
-    else:
-        mostSelledProduct = []
+        for i in range(6):
+            most_common_name = max(productCounts, key=productCounts.get)
+            mostSelledProducts.append({"name" : most_common_name, "count" : productCounts[most_common_name]})
+            del productCounts[most_common_name]
+
+    print(mostSelledProducts)
+
+    
     ########################
     
     #Pie Graph
@@ -211,7 +161,7 @@ def dashboard(request):
                 "orders" : orders,
                 "ordersCurrentMonthTotal" : ordersCurrentMonthTotal,
                 "ordersLastMonthTotal" : ordersLastMonthTotal,
-                "mostSelledProduct" : mostSelledProduct,
+                "mostSelledProducts" : mostSelledProducts,
                 "bekleyenCount" : bekleyenCount,
                 "uretimCount" : uretimCount,
                 "montajCount" : montajCount,
