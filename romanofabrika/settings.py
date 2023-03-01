@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     "expense",
     "product",
     "loan",
-    "widget_tweaks"
+    "widget_tweaks",
+    "ckeditor"
 ]
 
 MIDDLEWARE = [

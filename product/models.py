@@ -1,5 +1,7 @@
 from django.db import models
 
+from ckeditor.fields import RichTextField
+
 # Create your models here.
 
 from mptt.models import MPTTModel, TreeForeignKey
@@ -21,3 +23,17 @@ class Category(MPTTModel):
             k = k.parent
 
         return ' > '.join(full_path[::-1])
+
+class Product(models.Model):
+    product_id = models.IntegerField(verbose_name = "Ürün ID", default = 1)
+    title = models.CharField(max_length=200, verbose_name = "Ürün Başlığı")
+    category = models.ForeignKey(Category, on_delete = models.CASCADE, verbose_name = "Kategori")
+    descripiton = RichTextField(blank = True, verbose_name = "Ürün Açıklaması")
+    images = models.JSONField(null = True, blank = True,verbose_name = "Resimler")
+    special_3 = models.CharField(null = True, blank = True, max_length=200, verbose_name = "Özel Alan 3")
+    special_4 = models.CharField(null = True, blank = True, max_length=200, verbose_name = "Özel Alan 4")
+    special_5 = models.CharField(null = True, blank = True, max_length=200, verbose_name = "Özel Alan 5")
+    variations = models.JSONField(null = True, blank = True,verbose_name = "Resimler")
+    
+    def __str__(self):
+        return self.title

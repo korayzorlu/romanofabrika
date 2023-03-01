@@ -23,8 +23,46 @@ def products(request):
     
     translation.activate('tr')
     
-    categories = Category.objects.filter()
-    print(categories)
+    client = Client("https://www.romanodizayn.com/Servis/UrunServis.svc?wsdl",location="https://www.romanodizayn.com/Servis/UrunServis.svc")
+    
+    urunFiltre = {"Aktif" : -1,
+                  "Firsat" : -1,
+                  "Indirimli" : -1,
+                  "Vitrin" : -1,
+                  "KategoriID" : 0,
+                  "MarkaID" : 0,
+                  "UrunKartiID" : 0,
+                  "ToplamStokAdediBas" : 0,
+                  "ToplamStokAdediSon" : 1000,
+                  "TedarikciID" : 0}
+    urunSayfalama = {"BaslangicIndex" : 0,
+                     "KayitSayisi" : 5,
+                     "SiralamaDegeri" : "YayinTarihi",
+                     "SiralamaYonu" : "desc"}
+    
+    dd=client.service.SelectUrun("057N2SQ8WPUV1Y0QPD49RK3BBYPB3K", urunFiltre, urunSayfalama)
+    
+    def recursive_dict(d):
+        out = {}
+        for k, v in asdict(d).items():
+            if hasattr(v, '__keylist__'):
+                out[k] = recursive_dict(v)
+            elif isinstance(v, list):
+                out[k] = []
+                for item in v:
+                    if hasattr(item, '__keylist__'):
+                        out[k].append(recursive_dict(item))
+                    else:
+                        out[k].append(item)
+            else:
+                out[k] = v
+        return out
+    
+    newdd = recursive_dict(dd)
+    
+    productsData = newdd["UrunKarti"]
+    
+    print(round(productsData[0]["Varyasyonlar"]["Varyasyon"][0]["SatisFiyati"]))
     
     context = {
                 "tag" : tag
