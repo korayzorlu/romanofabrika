@@ -86,7 +86,7 @@ def dashboard(request):
     ordersCurrentMonthTotal = round(sum(orderListCurrentMonth),2)
     
     lastMonthStart= "2023-" + str(currentMonth - 1) + "-01"
-    lastMonthEnd = "2023-" + str(currentMonth - 1) + "-" + str(calendar.monthrange(currentMonth - 1, 1)[1])
+    lastMonthEnd = "2023-" + str(currentMonth - 1) + "-" + str(calendar.monthrange(2023, currentMonth - 1)[1])
     expensesLastMont = Expense.objects.filter(created_date__range = (lastMonthStart, lastMonthEnd)).order_by("-created_date")
     ordersLastMonth = Order.objects.filter(order_date__range = (lastMonthStart, lastMonthEnd)).order_by("-order_date")
     expensesLastMonthList = []
