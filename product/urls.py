@@ -8,4 +8,5 @@ app_name = "product"
 
 urlpatterns = [
     #path('products/', views.products, name = "products"),
+    path('update-categories/', views.updateCategories, name = "update-categories"),
 ]
