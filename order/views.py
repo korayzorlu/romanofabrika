@@ -49,7 +49,7 @@ def updateOrders(request):
                    "SiparisID" : -1,
                    "SiparisKaynagi" : "",
                    "SiparisKodu" : "",
-                   "SiparisTarihiBas" : datetime(2022, 1, 1),
+                   "SiparisTarihiBas" : datetime(2022, 8, 1),
                    #"SiparisTarihiSon" : datetime(2023, 2, 9),
                    "StrSiparisDurumu" : "",
                    "TedarikciID" : -1,
