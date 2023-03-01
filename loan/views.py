@@ -29,14 +29,18 @@ def loans(request):
     for loan in loans:
         installmentStatuses = []
         for installment in loan.installments:
-            if datetime.strptime(installment["installmentDate"], "%Y-%m-%d").date() > datetime.now().date():
-                #print("Gelecek Taksit: " + str(installment["installmentDate"]))
-                loan.next_installment = datetime.strptime(installment["installmentDate"], "%Y-%m-%d").date()
-                loan.save()
-                break
-        for installment in loan.installments:
             installmentStatuses.append(installment["installmentStatus"])
         loan.completed_installment = installmentStatuses.count("Ödendi")
+            
+        for installment in loan.installments:
+            if datetime.strptime(installment["installmentDate"], "%Y-%m-%d").date() > datetime.now().date():
+                #print("Gelecek Taksit: " + str(installment["installmentDate"]))
+                if installment["installmentStatus"] == "Ödenmedi":
+                    loan.next_installment = datetime.strptime(installment["installmentDate"], "%Y-%m-%d").date()
+                    loan.save()
+                    break
+        
+        
         loan.save()
     
     nowDate = datetime.now().date()

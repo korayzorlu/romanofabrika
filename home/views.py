@@ -12,6 +12,7 @@ import calendar
 
 from expense.models import Expense
 from order.models import Order
+from loan.models import Loan
 
 import requests
 
@@ -30,6 +31,7 @@ def dashboard(request):
     
     expenses = Expense.objects.filter().order_by("-created_date")
     orders = Order.objects.filter().order_by("-order_date")
+    loans = Loan.objects.filter().order_by("next_installment")
     
     translation.activate('tr')
     
@@ -212,7 +214,8 @@ def dashboard(request):
                 "mostSelledProduct" : mostSelledProduct,
                 "bekleyenCount" : bekleyenCount,
                 "uretimCount" : uretimCount,
-                "montajCount" : montajCount
+                "montajCount" : montajCount,
+                "loans" : loans
             }
 
     return render(request, "dashboard/dashboard.html", context)

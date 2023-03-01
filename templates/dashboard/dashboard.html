@@ -40,11 +40,10 @@
     <div class="box">
         <div class="left-side">
             <div class="box-topic">Yaklaşan Ödemeler</div>
-            <div class="number">₺0.00</div>
-            <div class="indicator">
-                <i class="bx bx-up-arrow-alt"></i>
-                <span class="text">Geçen aydan daha yüksek</span>
-            </div>
+            <div class="rowBlock">{{loans.0.bank}} {{loans.0.title}} {{loans.0.completed_installment|add:1}}. Taksit - <span>{{loans.0.next_installment}}</span></div>
+            <div class="rowBlock">{{loans.1.bank}} {{loans.1.title}} {{loans.1.completed_installment|add:1}}. Taksit - <span>{{loans.1.next_installment}}</span></div>
+            <div class="rowBlock">{{loans.2.bank}} {{loans.2.title}} {{loans.2.completed_installment|add:1}}. Taksit - <span>{{loans.2.next_installment}}</span></div>
+            <div class="rowBlock"><a class="seeAllButton" href="{% url 'loans' %}">Tümünü Gör</a></div>
         </div>
         <i class="fa-solid fa-money-check-dollar cart"></i>
     </div>
