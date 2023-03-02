@@ -49,7 +49,7 @@ def updateProducts(request):
                   "ToplamStokAdediSon" : 1000,
                   "TedarikciID" : 0}
     urunSayfalama = {"BaslangicIndex" : 0,
-                     "KayitSayisi" : 5,
+                     "KayitSayisi" : 10000,
                      "SiralamaDegeri" : "YayinTarihi",
                      "SiralamaYonu" : "desc"}
     
@@ -85,15 +85,17 @@ def updateProducts(request):
                     productVariations.append({"variationID" : productVariation["ID"],
                                               "variationBarcode" : productVariation["Barkod"],
                                               "variationSKU" : productVariation["StokKodu"],
+                                              "variationQuantity" : float(productVariation["StokAdedi"]),
                                               "variationSalePrice" : float(productVariation["SatisFiyati"]),
                                               "variationDiscountPrice" : float(productVariation["IndirimliFiyati"]),
                                               "variationCartPrice" : 0.00})
-                newProduct = Product(product_id = product["ID"],
+                newProduct = Product(product_status = product["Aktif"],
+                                     product_id = product["ID"],
                                      title = product["UrunAdi"],
                                      category = theCategory,
-                                     categories = product["Kategoriler"],
+                                     categories = product["Kategoriler"]["int"],
                                      description = product["Aciklama"],
-                                     images = product["Resimler"],
+                                     images = product["Resimler"]["string"],
                                      special_3 = product["OzelAlan3"],
                                      special_4 = product["OzelAlan4"],
                                      special_5 = product["OzelAlan5"],
@@ -101,15 +103,53 @@ def updateProducts(request):
                 newProduct.save()
                 theProduct = get_object_or_404(Product, product_id = product["ID"])
                 for i in range(len(theProduct.variations)):
-                    if theProduct.special_3 == "%30":
+                    if theProduct.special_3 == "%30" or theProduct.special_3 == "30%":
                         theProduct.variations[i]["variationCartPrice"] = theProduct.variations[i]["variationDiscountPrice"] * 0.7
-                    if theProduct.special_4 == "%40":
+                    if theProduct.special_4 == "%40" or theProduct.special_4 == "40%":
                         theProduct.variations[i]["variationCartPrice"] = theProduct.variations[i]["variationDiscountPrice"] * 0.6
-                    if theProduct.special_5 == "%50":
+                    if theProduct.special_5 == "%50" or theProduct.special_5 == "50%":
                         theProduct.variations[i]["variationCartPrice"] = theProduct.variations[i]["variationDiscountPrice"] * 0.5
                 theProduct.save()
             except Exception as e:
-                print(e)    
+                print(e)
+                
+        if Product.objects.filter(product_id = product["ID"]).exists():
+            theCategory = get_object_or_404(Category, category_id = product["AnaKategoriID"])
+            theProduct = get_object_or_404(Product, product_id = product["ID"])
+            productVariations = []
+            
+            try:
+                for productVariation in product["Varyasyonlar"]["Varyasyon"]:
+                    productVariations.append({"variationID" : productVariation["ID"],
+                                              "variationBarcode" : productVariation["Barkod"],
+                                              "variationSKU" : productVariation["StokKodu"],
+                                              "variationQuantity" : float(productVariation["StokAdedi"]),
+                                              "variationSalePrice" : float(productVariation["SatisFiyati"]),
+                                              "variationDiscountPrice" : float(productVariation["IndirimliFiyati"]),
+                                              "variationCartPrice" : 0.00})
+                theProduct.product_status = product["Aktif"]
+                theProduct.product_id = product["ID"]
+                theProduct.title = product["UrunAdi"]
+                theProduct.category = theCategory
+                theProduct.categories = product["Kategoriler"]["int"]
+                theProduct.description = product["Aciklama"]
+                theProduct.images = product["Resimler"]["string"]
+                theProduct.special_3 = product["OzelAlan3"]
+                theProduct.special_4 = product["OzelAlan4"]
+                theProduct.special_5 = product["OzelAlan5"]
+                theProduct.variations = productVariations
+                theProduct.save()
+                theProduct = get_object_or_404(Product, product_id = product["ID"])
+                for i in range(len(theProduct.variations)):
+                    if theProduct.special_3 == "%30" or theProduct.special_3 == "30%":
+                        theProduct.variations[i]["variationCartPrice"] = theProduct.variations[i]["variationDiscountPrice"] * 0.7
+                    if theProduct.special_4 == "%40" or theProduct.special_4 == "40%":
+                        theProduct.variations[i]["variationCartPrice"] = theProduct.variations[i]["variationDiscountPrice"] * 0.6
+                    if theProduct.special_5 == "%50" or theProduct.special_5 == "50%":
+                        theProduct.variations[i]["variationCartPrice"] = theProduct.variations[i]["variationDiscountPrice"] * 0.5
+                theProduct.save()
+            except Exception as e:
+                print(e)
                 
     messages.success(request, "Ürünler Güncellendi")
     
@@ -167,3 +207,16 @@ def updateCategories(request):
     messages.success(request, "Kategoriler Güncellendi")
     
     return redirect("products")
+
+@login_required(login_url = "user:login")
+def showImage(request, id):
+    
+    product = get_object_or_404(Product, id = id)
+    
+    src = product.images[0]
+    
+    context = {
+                "src" : src
+            }
+
+    return render(request, "product/imageModal.html", context)
