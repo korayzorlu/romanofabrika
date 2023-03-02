@@ -49,7 +49,7 @@ def updateProducts(request):
                   "ToplamStokAdediSon" : 1000,
                   "TedarikciID" : 0}
     urunSayfalama = {"BaslangicIndex" : 0,
-                     "KayitSayisi" : 100,
+                     "KayitSayisi" : 5,
                      "SiralamaDegeri" : "YayinTarihi",
                      "SiralamaYonu" : "desc"}
     
@@ -77,7 +77,7 @@ def updateProducts(request):
     
     for product in productsData:
         if not Product.objects.filter(product_id = product["ID"]).exists():
-            theCategory = get_object_or_404(Category, id = product["AnaKategoriID"])
+            theCategory = get_object_or_404(Category, category_id = product["AnaKategoriID"])
             productVariations = []
             
             try:
@@ -86,7 +86,7 @@ def updateProducts(request):
                                               "variationBarcode" : productVariation["Barkod"],
                                               "variationSKU" : productVariation["StokKodu"],
                                               "variationSalePrice" : float(productVariation["SatisFiyati"]),
-                                              "variationDiscountPrice" : float(productVariation["İndirimliFiyati"]),
+                                              "variationDiscountPrice" : float(productVariation["IndirimliFiyati"]),
                                               "variationCartPrice" : 0.00})
                 newProduct = Product(product_id = product["ID"],
                                      title = product["UrunAdi"],
@@ -99,7 +99,7 @@ def updateProducts(request):
                                      special_5 = product["OzelAlan5"],
                                      variations = productVariations)
                 newProduct.save()
-                theProduct = get_object_or_404(Product, id = product["ID"])
+                theProduct = get_object_or_404(Product, product_id = product["ID"])
                 for i in range(len(theProduct.variations)):
                     if theProduct.special_3 == "%30":
                         theProduct.variations[i]["variationCartPrice"] = theProduct.variations[i]["variationDiscountPrice"] * 0.7

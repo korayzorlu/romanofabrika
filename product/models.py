@@ -29,7 +29,7 @@ class Product(models.Model):
     title = models.CharField(max_length=200, verbose_name = "Ürün Başlığı")
     category = models.ForeignKey(Category, on_delete = models.CASCADE, verbose_name = "Kategori")
     categories = models.JSONField(null = True, blank = True,verbose_name = "Kategoriler")
-    descripiton = RichTextField(blank = True, verbose_name = "Ürün Açıklaması")
+    description = RichTextField(blank = True, verbose_name = "Ürün Açıklaması")
     images = models.JSONField(null = True, blank = True,verbose_name = "Resimler")
     special_3 = models.CharField(null = True, blank = True, max_length=200, verbose_name = "Özel Alan 3")
     special_4 = models.CharField(null = True, blank = True, max_length=200, verbose_name = "Özel Alan 4")
