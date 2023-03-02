@@ -6,7 +6,7 @@ from django.contrib import messages
 
 from django.utils import translation
 
-from .models import Category
+from .models import Category, Product
 
 import json
 from suds.client import Client
@@ -23,49 +23,11 @@ def products(request):
     
     translation.activate('tr')
     
-    client = Client("https://www.romanodizayn.com/Servis/UrunServis.svc?wsdl",location="https://www.romanodizayn.com/Servis/UrunServis.svc")
-    
-    urunFiltre = {"Aktif" : -1,
-                  "Firsat" : -1,
-                  "Indirimli" : -1,
-                  "Vitrin" : -1,
-                  "KategoriID" : 0,
-                  "MarkaID" : 0,
-                  "UrunKartiID" : 0,
-                  "ToplamStokAdediBas" : 0,
-                  "ToplamStokAdediSon" : 1000,
-                  "TedarikciID" : 0}
-    urunSayfalama = {"BaslangicIndex" : 0,
-                     "KayitSayisi" : 5,
-                     "SiralamaDegeri" : "YayinTarihi",
-                     "SiralamaYonu" : "desc"}
-    
-    dd=client.service.SelectUrun("057N2SQ8WPUV1Y0QPD49RK3BBYPB3K", urunFiltre, urunSayfalama)
-    
-    def recursive_dict(d):
-        out = {}
-        for k, v in asdict(d).items():
-            if hasattr(v, '__keylist__'):
-                out[k] = recursive_dict(v)
-            elif isinstance(v, list):
-                out[k] = []
-                for item in v:
-                    if hasattr(item, '__keylist__'):
-                        out[k].append(recursive_dict(item))
-                    else:
-                        out[k].append(item)
-            else:
-                out[k] = v
-        return out
-    
-    newdd = recursive_dict(dd)
-    
-    productsData = newdd["UrunKarti"]
-    
-    print(round(productsData[0]["Varyasyonlar"]["Varyasyon"][0]["SatisFiyati"]))
+    products = Product.objects.filter()
     
     context = {
-                "tag" : tag
+                "tag" : tag,
+                "products" : products
             }
 
     return render(request, "product/products.html", context)
@@ -113,12 +75,42 @@ def updateProducts(request):
     
     productsData = newdd["UrunKarti"]
     
-
-    
-    context = {
-                "tag" : tag
-            }
-
+    for product in productsData:
+        if not Product.objects.filter(product_id = product["ID"]).exists():
+            theCategory = get_object_or_404(Category, id = product["AnaKategoriID"])
+            productVariations = []
+            
+            try:
+                for productVariation in product["Varyasyonlar"]["Varyasyon"]:
+                    productVariations.append({"variationID" : productVariation["ID"],
+                                              "variationBarcode" : productVariation["Barkod"],
+                                              "variationSKU" : productVariation["StokKodu"],
+                                              "variationSalePrice" : float(productVariation["SatisFiyati"]),
+                                              "variationDiscountPrice" : float(productVariation["İndirimliFiyati"]),
+                                              "variationCartPrice" : 0.00})
+                newProduct = Product(product_id = product["ID"],
+                                     title = product["UrunAdi"],
+                                     category = theCategory,
+                                     categories = product["Kategoriler"],
+                                     description = product["Aciklama"],
+                                     images = product["Resimler"],
+                                     special_3 = product["OzelAlan3"],
+                                     special_4 = product["OzelAlan4"],
+                                     special_5 = product["OzelAlan5"],
+                                     variations = productVariations)
+                newProduct.save()
+                theProduct = get_object_or_404(Product, id = product["ID"])
+                for i in range(len(theProduct.variations)):
+                    if theProduct.special_3 == "%30":
+                        theProduct.variations[i]["variationCartPrice"] = theProduct.variations[i]["variationDiscountPrice"] * 0.7
+                    if theProduct.special_4 == "%40":
+                        theProduct.variations[i]["variationCartPrice"] = theProduct.variations[i]["variationDiscountPrice"] * 0.6
+                    if theProduct.special_5 == "%50":
+                        theProduct.variations[i]["variationCartPrice"] = theProduct.variations[i]["variationDiscountPrice"] * 0.5
+                theProduct.save()
+            except Exception as e:
+                print(e)    
+                
     messages.success(request, "Ürünler Güncellendi")
     
     return redirect("products")
