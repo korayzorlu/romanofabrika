@@ -1,19 +1,17 @@
 import os
 from celery import Celery
 
-app = Celery('tasks', backend='amqp', broker='amqp://')
+# Set the default Django settings module for the 'celery' program.
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'romanofabrika.settings')
 
-@app.task(ignore_result=True)
-def testTask():
-    print("hello task")
-    
-@app.task
-def gen_prime(x):
-    multiples = []
-    results = []
-    for i in range(2, x+1):
-        if i not in multiples:
-            results.append(i)
-            for j in range(i*i, x+1, i):
-                multiples.append(j)
-    return results
+app = Celery('romanofabrika')
+
+# Using a string here means the worker doesn't have to serialize
+# the configuration object to child processes.
+# - namespace='CELERY' means all celery-related configuration keys
+#   should have a `CELERY_` prefix.
+app.config_from_object('django.conf:settings', namespace='CELERY')
+
+# Load task modules from all registered Django apps.
+app.autodiscover_tasks()
+

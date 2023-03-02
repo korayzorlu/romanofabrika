@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.utils import translation
 
 from .models import Category, Product
+from .tasks import add
 
 import json
 from suds.client import Client
@@ -23,6 +24,8 @@ def products(request):
     tag = "Ürünler"
     
     translation.activate('tr')
+    
+    add.delay()
     
     products = Product.objects.filter()
     
