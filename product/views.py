@@ -53,7 +53,7 @@ def updateProducts(request):
                   "ToplamStokAdediBas" : 0,
                   "ToplamStokAdediSon" : 1000,
                   "TedarikciID" : 0}
-    urunSayfalama = {"BaslangicIndex" : 700,
+    urunSayfalama = {"BaslangicIndex" : 800,
                      "KayitSayisi" : 100,
                      "SiralamaDegeri" : "YayinTarihi",
                      "SiralamaYonu" : "desc"}
