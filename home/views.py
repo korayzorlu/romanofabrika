@@ -13,6 +13,7 @@ import calendar
 from expense.models import Expense
 from order.models import Order
 from loan.models import Loan
+from product.models import Product
 
 import requests
 
@@ -45,6 +46,8 @@ def dashboard(request):
  
     dataExpenses = []
     dataOrders = []
+    dataOrdersCategories = []
+    pieData = []
     
     for day in days:
         dailyExpense = []
@@ -58,10 +61,24 @@ def dashboard(request):
         for order in orders:
             if str(order.order_date) == str(day):
                 dailyOrder.append(float(order.total))
+                #for category and for pie
+                try:
+                    for pro in order.products:
+                        orderCategoryProduct = get_object_or_404(Product, product_id = pro["productID"])
+                        pieData.append({"category" : str(orderCategoryProduct.category.title), "total" : float(pro["productTotal"])})
+                except:
+                    pass
         dataOrders.append(sum(dailyOrder))
     
     lineData = []
-
+    # pieData = [
+    #     {"shop" : "Trendyol", "sale" : 12},
+    #     {"shop" : "Hepsiburada", "sale" : 30},
+    #     {"shop" : "N11", "sale" : 20},
+    #     {"shop" : "Gittigidiyor", "sale" : 7},
+    #     {"shop" : "Çiçeksepeti", "sale" : 5},
+    #     {"shop" : "Amazon", "sale" : 9}
+    # ]
     for i in range(31):
         lineData.append({
             "day" : datetime.strptime(days[i], "%Y-%m-%d").date(),
@@ -69,7 +86,8 @@ def dashboard(request):
             "orderData" : round(dataOrders[i],2)
         })
     ########################
-
+   
+   
     ######Monthly Total######
     #expenseTotal30 = round(sum(dataExpenses),2)
     expenseListCurrentMonth = []
@@ -106,8 +124,12 @@ def dashboard(request):
     ordersProductsStatusList = [] #ürün durumlarının sayısını da burada alabiliriz
     for order in orders:
         for product in order.products:
-            ordersProductsList.append({"name" : product["productName"], "img" : product["productImg"], "price" : product["productPrice"]})
-            ordersProductsStatusList.append(product["productStatus"])
+            try:
+                orderProduct = get_object_or_404(Product, product_id = product["productID"])
+                ordersProductsList.append({"id" : orderProduct.product_id})
+                ordersProductsStatusList.append(product["productStatus"])
+            except:
+                pass
     
     bekleyenCount = ordersProductsStatusList.count("Bekliyor")
     uretimCount = ordersProductsStatusList.count("Üretimde")
@@ -117,7 +139,7 @@ def dashboard(request):
 
     # tüm name değerlerinin sayısını hesapla
     for item in ordersProductsList:
-        name = item["name"]
+        name = item["id"]
         if name in productCounts:
             productCounts[name] += 1
         else:
@@ -128,23 +150,16 @@ def dashboard(request):
     if len(ordersProductsList) > 0:
         for i in range(6):
             most_common_name = max(productCounts, key=productCounts.get)
-            mostSelledProducts.append({"name" : most_common_name, "count" : productCounts[most_common_name]})
+            mostSelledProduct = get_object_or_404(Product, product_id = most_common_name)
+            mostSelledProducts.append({"name" : mostSelledProduct.title, "count" : productCounts[most_common_name], "img" : mostSelledProduct.images[0]})
             del productCounts[most_common_name]
 
     print(mostSelledProducts)
-
+    
     
     ########################
     
-    #Pie Graph
-    pieData = [
-        {"shop" : "Trendyol", "sale" : 12},
-        {"shop" : "Hepsiburada", "sale" : 30},
-        {"shop" : "N11", "sale" : 20},
-        {"shop" : "Gittigidiyor", "sale" : 7},
-        {"shop" : "Çiçeksepeti", "sale" : 5},
-        {"shop" : "Amazon", "sale" : 9}
-    ]
+    
 
     #headers = {"Authorization": "Bearer <>"}
     #dd = requests.get("https://api.ziraatbank.com.tr/portal/atms", headers = headers)
