@@ -60,7 +60,6 @@ def updateProductsTask():
     productsData = newdd["UrunKarti"]
     
     for product in productsData:
-        print(product["ID"])
         if not Product.objects.filter(product_id = product["ID"]).exists():
             theCategory = get_object_or_404(Category, category_id = product["AnaKategoriID"])
             productVariations = []
@@ -135,4 +134,4 @@ def updateProductsTask():
                 theProduct.save()
             except Exception as e:
                 print(e)
-    return "Ürünler Güncellendi"
+    return "Urunler Guncellendi"

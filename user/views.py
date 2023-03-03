@@ -30,7 +30,7 @@ def register(request):
     form = RegisterForm(request.POST or None)
 
     if form.is_valid():
-        
+        """
         username = form.cleaned_data.get("username")
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
@@ -41,7 +41,9 @@ def register(request):
         newemployee = Employee.objects.create(user = newUser)
         newemployee.save()
         login(request, newUser)
-        messages.info(request, "Başarıyla kayıt oldunuz...")
+        """
+        #messages.info(request, "Başarıyla kayıt oldunuz...")
+        messages.info(request, "Kayıtlar Şuan Kapalı...")
         
         return redirect("index")
 
