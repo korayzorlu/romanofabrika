@@ -7,7 +7,8 @@ from django.contrib import messages
 from django.utils import translation
 
 from .models import Category, Product
-from .tasks import add
+
+from .tasks import updateProductsTask, add
 
 import json
 from suds.client import Client
@@ -15,6 +16,8 @@ from suds.sudsobject import asdict
 from datetime import date, timedelta, datetime
 
 from celery.result import AsyncResult
+
+from django_celery_results.models import TaskResult
 
 
 # Create your views here.
@@ -26,7 +29,11 @@ def products(request):
     
     translation.activate('tr')
     
-    #add.delay()
+    #updateProductsTask.delay()
+    add.delay()
+    
+    #tasks = TaskResult.objects.filter()
+    #print(tasks)
     
     products = Product.objects.filter()
     
@@ -54,7 +61,7 @@ def updateProducts(request):
                   "ToplamStokAdediSon" : 1000,
                   "TedarikciID" : 0}
     urunSayfalama = {"BaslangicIndex" : 0,
-                     "KayitSayisi" : 100,
+                     "KayitSayisi" : 1500,
                      "SiralamaDegeri" : "YayinTarihi",
                      "SiralamaYonu" : "desc"}
     
