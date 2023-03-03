@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     "product",
     "loan",
     "widget_tweaks",
-    "ckeditor"
+    "ckeditor",
+    "django_celery_results"
 ]
 
 MIDDLEWARE = [
@@ -161,6 +162,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #USE_THOUSAND_SEPARATOR = True
 
 #CELERY
-CELERY_IMPORTS = [
-    'product.tasks',
-]
+# CELERY_IMPORTS = [
+#     'product.tasks',
+# ]
+
+#CELERY_TIMEZONE = "Europe/Istanbul"
+#CELERY_TASK_TRACK_STARTED = True
+#CELERY_TASK_TIME_LIMIT = 30 * 60
+
+#CELERY_RESULT_BACKEND = 'django-db'
+#CELERY_CACHE_BACKEND = 'django-cache'

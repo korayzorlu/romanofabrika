@@ -14,6 +14,7 @@ from suds.client import Client
 from suds.sudsobject import asdict
 from datetime import date, timedelta, datetime
 
+from celery.result import AsyncResult
 
 
 # Create your views here.
@@ -25,7 +26,7 @@ def products(request):
     
     translation.activate('tr')
     
-    add.delay()
+    #add.delay()
     
     products = Product.objects.filter()
     

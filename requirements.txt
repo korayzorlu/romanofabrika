@@ -12,3 +12,4 @@ psycopg2-binary==2.9.5
 django-widget-tweaks==1.4.12
 django-mptt==0.14.0
 celery==5.2.7
+django-celery-results==2.4.0
