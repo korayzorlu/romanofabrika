@@ -18,10 +18,48 @@
       <li><a class="dropdown-item" href="#">Another action</a></li>
       <li><a class="dropdown-item" href="#">Something else here</a></li>
     </ul>
-  </div>
+</div>
+
+<div class="sales-graph">
+  {% include "includes/graph/pieGraph.html" %}
+</div>
 
 
 <script>
+
+
+  const ctx = document.getElementById('pie-chart');
+  
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2,
+      scales: {
+        xAxes: [{
+          gridLines: {
+              display:false
+          }
+        }],
+        yAxes: [{
+            gridLines: {
+                display:false
+            }   
+        }]
+      }
+      
+    }
+  });
+
 
 </script>
 

@@ -17,6 +17,8 @@ from product.models import Product
 
 import requests
 
+import collections, functools, operator
+
 # Create your views here.
 
 #@user_passes_test(lambda u: u.is_superuser, login_url = "/admin")
@@ -29,6 +31,7 @@ def index(request):
 def dashboard(request):
     tag = "Kontrol Paneli"
     lineGraphTag = "Satış Grafiği (30 Gün)"
+    pieGraphTag = "Satış Kategori Dağılımı (30 Gün)"
     
     expenses = Expense.objects.filter().order_by("-created_date")
     orders = Order.objects.filter().order_by("-order_date")
@@ -47,7 +50,7 @@ def dashboard(request):
     dataExpenses = []
     dataOrders = []
     dataOrdersCategories = []
-    pieData = []
+    pieDatas = []
     
     for day in days:
         dailyExpense = []
@@ -65,26 +68,29 @@ def dashboard(request):
                 try:
                     for pro in order.products:
                         orderCategoryProduct = get_object_or_404(Product, product_id = pro["productID"])
-                        pieData.append({"category" : str(orderCategoryProduct.category.title), "total" : float(pro["productTotal"])})
+                        print(float(pro["productTotal"]))
+                        pieDatas.append({str(orderCategoryProduct.category.title) : float(pro["productTotal"])})
                 except:
                     pass
         dataOrders.append(sum(dailyOrder))
     
+    #çizgi grafği
     lineData = []
-    # pieData = [
-    #     {"shop" : "Trendyol", "sale" : 12},
-    #     {"shop" : "Hepsiburada", "sale" : 30},
-    #     {"shop" : "N11", "sale" : 20},
-    #     {"shop" : "Gittigidiyor", "sale" : 7},
-    #     {"shop" : "Çiçeksepeti", "sale" : 5},
-    #     {"shop" : "Amazon", "sale" : 9}
-    # ]
     for i in range(31):
         lineData.append({
             "day" : datetime.strptime(days[i], "%Y-%m-%d").date(),
             "data" : round(dataExpenses[i],2),
             "orderData" : round(dataOrders[i],2)
         })
+    
+    #pasta grafiği
+    pieDataConf = dict(functools.reduce(operator.add, map(collections.Counter, pieDatas)))
+    pieDataCategories = list(pieDataConf.keys())
+    pieDataTotals = list(pieDataConf.values())
+    pieData = []
+    
+    for i in range(len(pieDataCategories)):
+        pieData.append({"category" : pieDataCategories[i], "total" : pieDataTotals[i]})
     ########################
    
    
@@ -154,7 +160,7 @@ def dashboard(request):
             mostSelledProducts.append({"name" : mostSelledProduct.title, "count" : productCounts[most_common_name], "img" : mostSelledProduct.images[0]})
             del productCounts[most_common_name]
 
-    print(mostSelledProducts)
+    
     
     
     ########################
@@ -168,6 +174,7 @@ def dashboard(request):
     context = {
                 "tag" : tag,
                 "lineGraphTag": lineGraphTag,
+                "pieGraphTag" : pieGraphTag,
                 "lineData" : lineData,
                 "pieData" : pieData,
                 "expensesCurrentMonthTotal" : expensesCurrentMonthTotal,

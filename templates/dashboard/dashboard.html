@@ -225,9 +225,10 @@
             }
         }
     });
+    
 
     /*Pie Chart*/
-    const pieChart = document.getElementById('pie-chart').getContext('2d');
+    /*const pieChart = document.getElementById('pie-chart').getContext('2d');
     var dataLabels = [{% for item in pieData %} "{{ item.category }}", {% endfor %}];
     const myPieChart = new Chart(pieChart, {
         type: 'doughnut',
@@ -250,7 +251,48 @@
                 position: 'bottom',
             }
         }  
+    });*/
+
+
+    const ctx = document.getElementById('pie-chart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+        labels: [{% for item in pieData %} "{{ item.category }}", {% endfor %}],
+        datasets: [{
+            label: '',
+            data: [{% for item in pieData %} {{ item.total }}, {% endfor %}],
+            borderWidth: 1,
+            hoverOffset: 4
+        }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 1,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display:false
+                    }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        display:false
+                    }   
+                }]
+            }
+        }
     });
+
+
+
 </script>
 
 {% endblock body %}
