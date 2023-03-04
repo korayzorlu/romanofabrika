@@ -77,69 +77,80 @@
     });
 
     /*Line Chart*/
-    const lineChart = document.getElementById('line-chart').getContext('2d');
-    const myLineChart = new Chart(lineChart, {
+    const ctxLineChart = document.getElementById('line-chart').getContext('2d');
+
+    new Chart(ctxLineChart, {
         type: 'line',
         data: {
-            labels: [{% for item in lineData %} "{{ item.day }}", {% endfor %}],
-            datasets: [{
-                label: 'Günlük Gider',
-                data: [{% for item in lineData %} {{ item.data }}, {% endfor %}],
-                backgroundColor: [
-                    'rgba(255, 56, 0, 0.2)',
-                ],
-                borderColor: [
-                    '#ff3800',
-                ],
-                borderWidth: 1
-            }]
+        labels: [{% for item in lineData %} "{{ item.day }}", {% endfor %}],
+        datasets: [{
+            label: '',
+            data: [{% for item in lineData %} {{ item.data }}, {% endfor %}],
+            fill: true,
+            backgroundColor: 'rgba(255, 56, 0, 0.2)',
+            borderColor: '#ff3800',
+            borderWidth: 1,
+            tension: 0.5
+        }]
         },
         options: {
+            plugins: {
+                legend: {
+                    display:false
+                }
+            },
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    grid: {
+                        color: "rgba(0, 0, 0, 0.05)"
+                    }
                 },
-                xAxes: [{
-                gridLines: {
-                    color: "rgba(0, 0, 0, 0)",
+                x: {
+                    grid: {
+                        display:false
+                    }
                 }
-                }],
-                yAxes: [{
-                    gridLines: {
-                        color: "rgba(0, 0, 0, 0.05)",
-                    }   
-                }]
-            },
-            legend: {
-                display: false
             }
         }
     });
 
     /*Pie Chart*/
-    const pieChart = document.getElementById('pie-chart').getContext('2d');
-    var dataLabels = [{% for item in pieData %} "{{ item.category }}", {% endfor %}];
-    const myPieChart = new Chart(pieChart, {
-        type: 'doughnut',
+    const ctxPieChart = document.getElementById('pie-chart').getContext('2d');
+
+    new Chart(ctxPieChart, {
+        type: 'pie',
         data: {
-            labels: dataLabels,
-            datasets: [{
-                label: '',
-                data: [{% for item in pieData %} {{ item.data }}, {% endfor %}],
-                backgroundColor: palette(['tol', 'qualitative', 'sequential'], dataLabels.length).map(function(hex) {
-                    return '#' + hex;
-                  }),
-                hoverOffset: 4
-            }]
+        labels: [{% for item in pieData %} "{{ item.category }}", {% endfor %}],
+        datasets: [{
+            label: '',
+            data: [{% for item in pieData %} {{ item.data }}, {% endfor %}],
+            borderWidth: 1,
+            hoverOffset: 4
+        }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            aspectRatio: 1.2,
-            legend: {
-                position: 'bottom',
+            aspectRatio: 1,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display:false
+                    }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        display:false
+                    }   
+                }]
             }
-        }  
+        }
     });
 
 </script>

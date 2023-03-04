@@ -187,7 +187,7 @@
 
 <script>
     /*Line Chart*/
-    const lineChart = document.getElementById('line-chart').getContext('2d');
+    /*const lineChart = document.getElementById('line-chart').getContext('2d');
     const myLineChart = new Chart(lineChart, {
         type: 'line',
         data: {
@@ -224,7 +224,47 @@
                 display: false
             }
         }
+    });*/
+
+    //bir butona tıklandığında grafik yüklensin isteniyorsa grafik komutlarını bir fonksiyonun içine al ve butona o fonksiyonu ekle
+    const ctxLineChart = document.getElementById('line-chart').getContext('2d');
+
+    new Chart(ctxLineChart, {
+        type: 'line',
+        data: {
+        labels: [{% for item in lineData %} "{{ item.day }}", {% endfor %}],
+        datasets: [{
+            label: '',
+            data: [{% for item in lineData %} {{ item.orderData }}, {% endfor %}],
+            fill: true,
+            backgroundColor: 'rgba(255, 56, 0, 0.2)',
+            borderColor: '#ff3800',
+            borderWidth: 1,
+            tension: 0.5
+        }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display:false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: "rgba(0, 0, 0, 0.05)"
+                    }
+                },
+                x: {
+                    grid: {
+                        display:false
+                    }
+                }
+            }
+        }
     });
+    
     
 
     /*Pie Chart*/
@@ -254,9 +294,9 @@
     });*/
 
 
-    const ctx = document.getElementById('pie-chart').getContext('2d');
+    const ctxPieChart = document.getElementById('pie-chart').getContext('2d');
 
-    new Chart(ctx, {
+    new Chart(ctxPieChart, {
         type: 'pie',
         data: {
         labels: [{% for item in pieData %} "{{ item.category }}", {% endfor %}],
