@@ -7,6 +7,8 @@ from romanofabrika.celery import app
 
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 
+from django.contrib import messages
+
 from .models import Product, Category
 
 from suds.client import Client
@@ -134,4 +136,7 @@ def updateProductsTask():
                 theProduct.save()
             except Exception as e:
                 print(e)
+                
+    
+                
     return "Urunler Guncellendi"

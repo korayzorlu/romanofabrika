@@ -2,6 +2,8 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 
+from django.http.response import StreamingHttpResponse
+
 from django.contrib import messages
 
 from django.utils import translation
@@ -16,6 +18,7 @@ from suds.sudsobject import asdict
 from datetime import date, timedelta, datetime
 
 from celery.result import AsyncResult
+from romanofabrika.celery import app
 
 from django_celery_results.models import TaskResult
 
@@ -29,8 +32,9 @@ def products(request):
     
     translation.activate('tr')
     
-    #tasks = TaskResult.objects.filter()
-    #print(tasks)
+    tasks = TaskResult.objects.filter()
+    
+    
     
     products = Product.objects.filter()
     
@@ -46,7 +50,7 @@ def updateProducts(request):
     tag = "Ürünler"
     
     updateProductsTask.delay()
-                
+    
     messages.success(request, "Ürünler Arkaplanda Güncellenecek")
     
     return redirect("products")

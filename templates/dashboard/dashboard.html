@@ -228,14 +228,16 @@
 
     //bir butona tıklandığında grafik yüklensin isteniyorsa grafik komutlarını bir fonksiyonun içine al ve butona o fonksiyonu ekle
     const ctxLineChart = document.getElementById('line-chart').getContext('2d');
+    const lineLabels = [{% for item in lineData %} "{{ item.day }}", {% endfor %}];
+    const lineData = [{% for item in lineData %} {{ item.orderData }}, {% endfor %}];
 
     new Chart(ctxLineChart, {
         type: 'line',
         data: {
-        labels: [{% for item in lineData %} "{{ item.day }}", {% endfor %}],
+        labels: lineLabels,
         datasets: [{
             label: '',
-            data: [{% for item in lineData %} {{ item.orderData }}, {% endfor %}],
+            data: lineData,
             fill: true,
             backgroundColor: 'rgba(255, 56, 0, 0.2)',
             borderColor: '#ff3800',
@@ -264,7 +266,6 @@
             }
         }
     });
-    
     
 
     /*Pie Chart*/
@@ -295,14 +296,16 @@
 
 
     const ctxPieChart = document.getElementById('pie-chart').getContext('2d');
+    const labels = [{% for item in pieData %} "{{ item.category }}", {% endfor %}]
+    const data = [{% for item in pieData %} {{ item.total }}, {% endfor %}]
 
     new Chart(ctxPieChart, {
         type: 'pie',
         data: {
-        labels: [{% for item in pieData %} "{{ item.category }}", {% endfor %}],
+        labels: labels,
         datasets: [{
             label: '',
-            data: [{% for item in pieData %} {{ item.total }}, {% endfor %}],
+            data: data,
             borderWidth: 1,
             hoverOffset: 4
         }]

@@ -2,6 +2,8 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 
+from django.http.response import StreamingHttpResponse
+
 from django.utils import timezone
 from django.utils.formats import date_format
 from django.utils import translation
@@ -20,6 +22,7 @@ import requests
 import collections, functools, operator
 
 # Create your views here.
+
 
 #@user_passes_test(lambda u: u.is_superuser, login_url = "/admin")
 @login_required(login_url = "user:login")
