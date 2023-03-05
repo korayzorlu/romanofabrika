@@ -18,6 +18,8 @@ import pandas as pd
 @login_required(login_url = "user:login")
 def expenses(request):
     tag = "Giderler"
+    lineGraphTag = "Gider Grafği (30 Gün)"
+    pieGraphTag = "Gider Kategori Dağılımı (30 Gün)"
     
     expenses = Expense.objects.filter().order_by("-created_date")
     categories = Category.objects.filter()
@@ -75,6 +77,8 @@ def expenses(request):
     
     context = {
                 "tag" : tag,
+                "lineGraphTag" : lineGraphTag,
+                "pieGraphTag" : pieGraphTag,
                 "expenses" : expenses,
                 "lineData" : lineData,
                 "pieData" : pieData
