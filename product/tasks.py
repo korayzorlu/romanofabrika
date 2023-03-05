@@ -14,6 +14,8 @@ from .models import Product, Category
 from suds.client import Client
 from suds.sudsobject import asdict
 
+from datetime import datetime
+
 @shared_task
 def add():
     
@@ -136,7 +138,5 @@ def updateProductsTask():
                 theProduct.save()
             except Exception as e:
                 print(e)
-                
-    
                 
     return "Urunler Guncellendi"

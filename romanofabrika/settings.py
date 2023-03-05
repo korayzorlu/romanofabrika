@@ -166,7 +166,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     'product.tasks',
 # ]
 
-#CELERY_TIMEZONE = "Europe/Istanbul"
+CELERY_TIMEZONE = "Europe/Istanbul"
 #CELERY_TASK_TRACK_STARTED = True
 #CELERY_TASK_TIME_LIMIT = 30 * 60
 
