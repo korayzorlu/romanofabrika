@@ -19,21 +19,21 @@
         labels: lineLabels,
         datasets: [
             {
-                label: '',
+                label: 'Satış',
                 data: lineOrderData,
-                fill: true,
+                fill: false,
                 backgroundColor: 'rgba(255, 56, 0, 0.2)',
                 borderColor: '#ff3800',
-                borderWidth: 1,
+                borderWidth: 2,
                 tension: 0.5
             },
             {
-                label: '',
+                label: 'Giderler',
                 data: lineExpenseData,
-                fill: true,
+                fill: false,
                 backgroundColor: 'rgba(0, 191, 255, 0.2)',
                 borderColor: '#00bfff',
-                borderWidth: 1,
+                borderWidth: 2,
                 tension: 0.5
             }
         ]
@@ -41,7 +41,7 @@
         options: {
             plugins: {
                 legend: {
-                    display:false
+                    display:true
                 }
             },
             scales: {
@@ -53,7 +53,7 @@
                 },
                 x: {
                     grid: {
-                        display:false
+                        display:true
                     }
                 }
             },

@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
 from django.http import FileResponse
 
+from django.utils import translation
+
 from django.utils import timezone
 
 from .models import Expense, Company, Category, Unit
@@ -20,6 +22,8 @@ def expenses(request):
     tag = "Giderler"
     lineGraphTag = "Gider Grafği (30 Gün)"
     pieGraphTag = "Gider Kategori Dağılımı (30 Gün)"
+    
+    translation.activate('tr')
     
     expenses = Expense.objects.filter().order_by("-created_date")
     categories = Category.objects.filter()
