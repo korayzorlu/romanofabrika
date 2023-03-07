@@ -27,6 +27,7 @@ from order.views import orders
 from product.views import products
 from finance.views import finances
 from loan.views import loans
+from report.views import reports
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -45,6 +46,8 @@ urlpatterns = [
     path('finances/', finances, name="finances"),
     path('loans/', include("loan.urls")),
     path('loans/', loans, name="loans"),
+    path('reports/', include("report.urls")),
+    path('reports/', reports, name="reports"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,66 @@
+{% extends 'layout/dashboardLayout.html' %}
+
+{% block body %}
+
+<div class="globalBoxes">
+    {% include "includes/graph/lineGraph.html" %}
+</div>
+
+<script>
+    //bir butona tıklandığında grafik yüklensin isteniyorsa grafik komutlarını bir fonksiyonun içine al ve butona o fonksiyonu ekle
+    const ctxLineChart = document.getElementById('line-chart').getContext('2d');
+    const lineLabels = [{% for item in lineData %} "{{ item.day }}", {% endfor %}];
+    const lineOrderData = [{% for item in lineData %} {{ item.orderData }}, {% endfor %}];
+    const lineExpenseData = [{% for item in lineData %} {{ item.data }}, {% endfor %}];
+
+    new Chart(ctxLineChart, {
+        type: 'line',
+        data: {
+        labels: lineLabels,
+        datasets: [
+            {
+                label: '',
+                data: lineOrderData,
+                fill: true,
+                backgroundColor: 'rgba(255, 56, 0, 0.2)',
+                borderColor: '#ff3800',
+                borderWidth: 1,
+                tension: 0.5
+            },
+            {
+                label: '',
+                data: lineExpenseData,
+                fill: true,
+                backgroundColor: 'rgba(0, 191, 255, 0.2)',
+                borderColor: '#00bfff',
+                borderWidth: 1,
+                tension: 0.5
+            }
+        ]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display:false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: "rgba(0, 0, 0, 0.05)"
+                    }
+                },
+                x: {
+                    grid: {
+                        display:false
+                    }
+                }
+            },
+            aspectRatio: 2.5
+        }
+    });
+</script>
+
+{% endblock body %}
+

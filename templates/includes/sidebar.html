@@ -10,6 +10,8 @@
     <style>.sidebarv2 ul li a.expenses{color: #11101d;background: #ff6961;}</style>
 {% elif request.path == "/finances/" or request.path == "/loans/" %}
     <style>.sidebarv2 ul li a.finances{color: #11101d;background: #ff6961;}</style>
+{% elif request.path == "/reports/"%}
+    <style>.sidebarv2 ul li a.reports{color: #11101d;background: #ff6961;}</style>
 {% elif request.path == "/user/categories/" %}
     <style>.sidebarv2 ul li a.categories{color: #11101d;background: #ff6961;}</style>
 {% elif request.path == "/user/settings/" or request.path == "/user/settings/account/" or request.path == "/user/settings/marketplace/" or request.path == "/user/settings/shop/" %}
@@ -77,6 +79,13 @@
                     <span class="links_name">Finans</span>
                 </a>
                 <span class="tooltipv2">Finans</span>
+            </li>
+            <li>
+                <a href="{% url 'reports' %}" class="reports">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span class="links_name">Raporlar</span>
+                </a>
+                <span class="tooltipv2">Raporlar</span>
             </li>
             <li>
                 <a href="{% url 'dashboard' %}">

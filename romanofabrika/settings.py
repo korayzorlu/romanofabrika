@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     "loan",
     "widget_tweaks",
     "ckeditor",
-    "django_celery_results"
+    "django_celery_results",
+    "report"
 ]
 
 MIDDLEWARE = [
