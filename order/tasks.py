@@ -14,7 +14,7 @@ from suds.sudsobject import asdict
 
 from .models import Order, Status
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 @shared_task
 def add():
@@ -37,7 +37,8 @@ def updateOrdersTask():
                    "SiparisID" : -1,
                    "SiparisKaynagi" : "",
                    "SiparisKodu" : "",
-                   "SiparisTarihiBas" : datetime(2021, 1, 1),
+                   #"SiparisTarihiBas" : datetime(2021, 1, 1),
+                   "SiparisTarihiBas" : datetime.now() - timedelta(days=7),
                    #"SiparisTarihiSon" : datetime(2023, 2, 9),
                    "StrSiparisDurumu" : "",
                    "TedarikciID" : -1,
@@ -67,10 +68,10 @@ def updateOrdersTask():
     newdd = recursive_dict(dd)
     
     ordersData = newdd["WebSiparis"]
-    print(ordersData[0]["TeslimatAdresi"])
-    print(ordersData[0]["TeslimatAdresi"]["Il"])
-    print(ordersData[0]["TeslimatAdresi"]["Ilce"])
-    print(ordersData[0])
+    #print(ordersData[0]["TeslimatAdresi"])
+    #print(ordersData[0]["TeslimatAdresi"]["Il"])
+    #print(ordersData[0]["TeslimatAdresi"]["Ilce"])
+    #print(ordersData[0])
    
     for order in ordersData:
         if not Order.objects.filter(order_id = order["ID"]).exists():

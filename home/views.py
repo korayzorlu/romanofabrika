@@ -71,7 +71,6 @@ def dashboard(request):
                 try:
                     for pro in order.products:
                         orderCategoryProduct = get_object_or_404(Product, product_id = pro["productID"])
-                        print(float(pro["productTotal"]))
                         pieDatas.append({str(orderCategoryProduct.category.title) : float(pro["productTotal"])})
                 except:
                     pass
