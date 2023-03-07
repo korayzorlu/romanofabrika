@@ -24,7 +24,12 @@
                     <tr style="vertical-align: middle;">
                         <td>{{order.order_id}}</td>
                         <td data-order="1479686400">{{order.order_date}}</td>
-                        <td >{{order.customer_name}}</td>
+                        <td >
+                            <ul style="list-style-type: none; margin: 0; padding: 0;">
+                                <li>{{order.customer_name}}</li>
+                                <li>{{order.cargo_address.AliciTelefon}}</li>
+                            </ul>
+                        </td>
                         <td >{{order.cargo_address.Ilce}}/{{order.cargo_address.Il}}</td>
                         <td>
                             <ul style="list-style-type: none; margin: 0; padding: 0;">
