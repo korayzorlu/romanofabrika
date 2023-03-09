@@ -148,5 +148,10 @@ def updateOrdersTask():
             theOrder.cargo_address = order["TeslimatAdresi"]
             theOrder.save()
         """
+        
+        #ilgili siparişlerin teslim tarihini günceller
+        if Order.objects.filter(order_id = order["ID"]).exists():
+           theOrder = get_object_or_404(Order, order_id = order["ID"])
+           theOrder.save()
                 
     return "Siparişler Guncellendi"
