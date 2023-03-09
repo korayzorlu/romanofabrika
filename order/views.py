@@ -13,6 +13,7 @@ import json
 from suds.client import Client
 from suds.sudsobject import asdict
 from datetime import date, timedelta, datetime
+import numpy as np
 
 from .tasks import updateOrdersTask
 
@@ -25,6 +26,13 @@ def orders(request):
     tag = "Siparişler"
     
     translation.activate('tr')
+    
+    start = datetime(2022, 3, 15).date()
+    end = datetime(2022, 4, 16).date()
+
+    days = np.busday_count(start, end)
+    dayss = np.busday_offset(str(datetime.now().date()), 30, roll='forward')
+    print(datetime.strptime(str(dayss), "%Y-%m-%d").date())
     
     orders = Order.objects.filter()
     
