@@ -10,6 +10,7 @@
                 <tr>
                     <th>Sipariş ID</th>
                     <th>Sipariş Tarihi</th>
+                    <th>Teslimat</th>
                     <th>Adı Soyadı</th>
                     <th>Şehir</th>
                     <th>Görsel</th>
@@ -29,6 +30,7 @@
                             
                             <td>{{order.order_id}}</td>
                             <td data-order="1479686400">{{order.order_date}}</td>
+                            <td>{{order.delivery_date}}</td>
                             <td >{{order.customer_name}}</td>
                             <td >{{order.cargo_address.Ilce}}/{{order.cargo_address.Il}}</td>
                             <td><img src = "{{product.productImg}}" style="max-width: 120px; cursor: pointer;"></td>
@@ -87,6 +89,7 @@
                 <tr>
                     <th>Sipariş ID</th>
                     <th>Sipariş Tarihi</th>
+                    <th>Teslimat</th>
                     <th>Adı Soyadı</th>
                     <th>Şehir</th>
                     <th>Görsel</th>
