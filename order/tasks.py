@@ -38,7 +38,7 @@ def updateOrdersTask():
                    "SiparisKaynagi" : "",
                    "SiparisKodu" : "",
                    #"SiparisTarihiBas" : datetime(2021, 1, 1),
-                   "SiparisTarihiBas" : datetime.now() - timedelta(days=7),
+                   "SiparisTarihiBas" : datetime.now() - timedelta(days=300),
                    #"SiparisTarihiSon" : datetime(2023, 2, 9),
                    "StrSiparisDurumu" : "",
                    "TedarikciID" : -1,
