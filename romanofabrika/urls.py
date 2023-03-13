@@ -26,7 +26,7 @@ from expense.views import expenses
 from order.views import orders
 from product.views import products
 from finance.views import finances
-from loan.views import loans
+from loan.views import loans, bchLoans
 from report.views import reports
 
 urlpatterns = [
@@ -46,6 +46,7 @@ urlpatterns = [
     path('finances/', finances, name="finances"),
     path('loans/', include("loan.urls")),
     path('loans/', loans, name="loans"),
+    path('bch-loans/', bchLoans, name="bch-loans"),
     path('reports/', include("report.urls")),
     path('reports/', reports, name="reports"),
 ]

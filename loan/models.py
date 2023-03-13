@@ -100,8 +100,8 @@ class BCHLoan(models.Model):
             self.total_debt = self.total_debt
         else:
             self.transmitted_amount = self.amount - self.cost
-            self.total_debt = round(((self.amount * ((((self.interest / 100) * 1.15 * 1.05) * ((1 + ((self.interest / 100) * 1.15 * 1.05)) ** self.installment_count) ) / (((1 + ((self.interest / 100) * 1.15 * 1.05)) ** self.installment_count) - 1))) * self.installment_count) + (self.amount / 100), 2)
-        return super(Loan, self).save()
+            self.total_debt = self.remaining_amount + self.interest_amount
+        return super(BCHLoan, self).save()
     
     class Meta:
         ordering = ['-start_date']

@@ -14,7 +14,7 @@ import json
 from dateutil.relativedelta import relativedelta
 import ast
 
-from .models import Loan, InstallmentStatus
+from .models import Loan, InstallmentStatus, BCHLoan
 
 # Create your views here.
 
@@ -186,3 +186,24 @@ def deleteLoan(request, id):
     messages.success(request, "Kredi Silindi...")
     
     return redirect("loans")
+
+
+######BCH######
+@login_required(login_url = "user:login")
+def bchLoans(request):
+    tag = "BCH Kredileri"
+    
+    translation.activate('tr')
+    
+    loans = BCHLoan.objects.filter()
+    
+    
+
+        
+    
+    context = {
+                "tag" : tag,
+                "loans" : loans
+            }
+
+    return render(request, "loan/bchLoans.html", context)

@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Loan, InstallmentStatus
+from .models import Loan, InstallmentStatus, BCHLoan
 
 class LoanForm(forms.ModelForm):
     class Meta:
@@ -35,5 +35,14 @@ class InstallmentStatusForm(forms.ModelForm):
              "installment_status" : forms.Select(attrs = {"class" : "form-control", "style" : "background-color: #fff;"})
         }
         
-
+class BCHLoanForm(forms.ModelForm):
+    class Meta:
+        model = BCHLoan
+        fields = ["status", "bank", "title"]
+        
+        widgets = {
+            "status" : forms.Select(attrs = {"class" : "form-control", "style" : "background-color: #fff;"}),
+            "bank" : forms.Select(attrs = {"class" : "form-control", "style" : "background-color: #fff;"}),
+            "title" : forms.Textarea(attrs = {"class" : "form-control", "rows" : "1", "style" : "background-color: #fff;"})
+        }
 
