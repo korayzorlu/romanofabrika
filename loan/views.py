@@ -6,7 +6,7 @@ from django.contrib import messages
 
 from django.utils import translation
 
-from .forms import LoanForm, InstallmentStatusForm
+from .forms import LoanForm, InstallmentStatusForm, BCHLoanForm
 
 from datetime import datetime
 import calendar
@@ -207,3 +207,26 @@ def bchLoans(request):
             }
 
     return render(request, "loan/bchLoans.html", context)
+
+@login_required(login_url = "user:login")
+def addBCHLoan(request):
+    tag = "Kredi Ekle"
+    
+    form = BCHLoanForm(request.POST or None, request.FILES or None)
+    
+    if request.method == "POST":
+        if form.is_valid():
+            
+            
+            
+            messages.success(request, "Kredi Başarıyla Eklendi...")
+
+            return HttpResponse(status=204)
+
+    
+    context = {
+                "tag" : tag,
+                "form" : form
+    }
+    
+    return render(request, 'loan/loanForm.html', context)

@@ -38,7 +38,7 @@ class InstallmentStatusForm(forms.ModelForm):
 class BCHLoanForm(forms.ModelForm):
     class Meta:
         model = BCHLoan
-        fields = ["status", "bank", "title"]
+        fields = ["status", "bank", "title", "option", "amount", "remaining_amount", "cost", "transmitted_amount", "interest", "interest_amount", "total_debt", "start_date", "end_date"]
         
         widgets = {
             "status" : forms.Select(attrs = {"class" : "form-control", "style" : "background-color: #fff;"}),
