@@ -52,6 +52,10 @@
                                                 <button class="btn btn-primary" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-paint-roller"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Montajda" %}
                                                 <button class="btn btn-light" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;{{product.productStatus}}</button>
+                                            {% elif product.productStatus == "Paketlemede" %}
+                                                <button class="btn btn-light" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-box-open"></i>&nbsp;{{product.productStatus}}</button>
+                                            {% elif product.productStatus == "Paketlendi" %}
+                                                <button class="btn btn-light" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-box"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Nakliyeye Gönderildi" %}
                                                 <button class="btn btn-danger" hx-get="{% url 'order:update-status' order.id forloop.counter0 %}" hx-target="#addUpdateDataDialog"><i class="fa-solid fa-truck"></i>&nbsp;{{product.productStatus}}</button>
                                             {% elif product.productStatus == "Nakliye Teslim Aldı" %}
