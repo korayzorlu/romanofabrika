@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 from django.utils import timezone
 
@@ -56,3 +58,8 @@ class Expense(models.Model):
 
 class Excel(models.Model):
     file = models.FileField(blank =True, null = True, verbose_name = "Excel Dosyası")
+    
+@receiver(pre_save, sender = Expense)  
+def testDef(sender, instance, **kwargs):
+    print(sender.objects.get(id = instance.id).title)
+    print(instance.title)

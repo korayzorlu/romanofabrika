@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 from django.utils import timezone
 
@@ -33,5 +35,4 @@ class Order(models.Model):
 
     def __str__(self):
         return self.customer_name
-    
-    
+
